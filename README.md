@@ -33,8 +33,9 @@ Next.js (App Router, TypeScript), deployed to Cloudflare Workers via
 [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare). Data model, auth flows, and API
 surface follow `design/Backend Blueprint.html` section by section:
 
-- **Tables** (`migrations/0001_init.sql`, already applied to the live `the-margin-db`): `users`,
-  `auth_identities`, `series`, `progress`, plus `waitlist` for the marketing site.
+- **Tables** (`migrations/0001_init.sql` + `migrations/0002_cms.sql`, already applied to the live
+  `the-margin-db`): `users`, `auth_identities`, `series`, `progress`, `waitlist`, plus
+  `site_content` for the admin panel below.
 - **Auth**: email+password (bcrypt-hashed) and Google OAuth (authorization-code flow), both
   landing in the same `users` row via `auth_identities`. Sessions are a signed JWT in an
   httpOnly cookie (`jose`).
@@ -45,6 +46,28 @@ surface follow `design/Backend Blueprint.html` section by section:
   (progress track, stats, reading modal) — pixel-parity ports of `design/App (Login).html`.
 - **Seed data**: the "How to Read a Psalm" series (Psalm 23, 30 mornings) is already seeded into
   `series` from the prototype's `MOVES`/`DAYS`/`READINGS` constants.
+
+### Admin panel
+
+`app.readthemargin.net/admin` (there's no nav link — it's reached by URL) lets whoever's email
+is in the `ADMIN_EMAILS` var (`app/wrangler.toml`, comma-separated) edit the site without a code
+change:
+
+- **`/admin/site`** — every marketing-site section (`site/*.html`, wherever it carries a
+  `data-screen-label` attribute) as an editable block. Leave it alone and the page keeps using the
+  wording baked into the HTML file; type something and Save and that block is served from D1
+  instead — wording tweaks or a full HTML replacement, since whatever's in the box becomes exactly
+  what renders. "Reset to default" deletes the override. Two extra fields per page
+  (`… — extra <head> code` / `… — extra code before </body>`) are blank injection points for
+  pasting in arbitrary script/markup (analytics, embeds, etc.) without a redeploy.
+- **`/admin/series/:id`** — series title/subtitle/passage, plus the full `days_json` as raw JSON
+  for editing or adding mornings.
+
+This is served by `site/functions/_middleware.js`, which rewrites the static HTML per-request
+using the `site_content` D1 table (binding `DB`, already wired in `site/wrangler.toml`) — no
+Pages redeploy needed to change wording. If a page's section structure changes (new/renamed
+`data-screen-label`), rerun `node scripts/extract-site-content.mjs` from the repo root and commit
+the regenerated `app/src/lib/site-manifest.json` so the admin UI's labels/defaults stay in sync.
 
 ### Required secrets before deploying
 

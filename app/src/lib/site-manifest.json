@@ -1,0 +1,292 @@
+[
+  {
+    "key": "home-hero",
+    "label": "Home — Hero",
+    "page": "index",
+    "pageTitle": "Home",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"hero__grid\">\n      <div class=\"hero__rule\"></div>\n      <div>\n        <div class=\"hero__kicker\">A reading companion &middot; free in your inbox</div>\n        <h1>Read it for <em>yourself.</em></h1>\n        <p class=\"hero__deck\">You own a Bible. Maybe you even revere it. But if you're honest, you've never really <em>read</em> it. Not slowly, not in a way that felt like yours. The Margin walks you back into the text, a passage at a time, until it finally opens.</p>\n        <div class=\"hero__cta\">\n          <a class=\"btn btn--lg\" href=\"subscribe.html\">Start reading with us</a>\n          <a class=\"btn btn--ghost btn--lg\" href=\"#how\">See how it works &rarr;</a>\n        </div>\n        <p class=\"hero__meta\">Ten minutes, read or listen &middot; Free, forever &middot; No noise</p>\n      </div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "home-problem",
+    "label": "Home — Problem",
+    "page": "index",
+    "pageTitle": "Home",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">01</span><span class=\"eyebrow__txt\">If this is you</span></div>\n    <h2 class=\"h2 reveal\">You were never taught <em>how.</em></h2>\n    <p class=\"lede reveal\">Stalling out in Leviticus isn't a character flaw. Feeling lost in a book everyone around you seems to understand isn't a lack of faith. Nobody ever handed you a way in, so the most important book you own sits mostly closed.</p>\n\n    <div class=\"who reveal\" style=\"margin-top:48px;\">\n      <div class=\"who__item\">\n        <div class=\"mark\">&#10038;</div>\n        <h3>You can't get through it</h3>\n        <p>You've opened to Genesis more than once. You've bogged down in the lists and the laws, quietly closed the cover, and meant to come back. The good intention never quite becomes a habit.</p>\n      </div>\n      <div class=\"who__item\">\n        <div class=\"mark\">&#10038;</div>\n        <h3>It feels like everyone else gets it</h3>\n        <p>There's a low hum of embarrassment: that you should understand this by now, that asking the simple question out loud would give you away. So you nod along and stay quiet.</p>\n      </div>\n      <div class=\"who__item\">\n        <div class=\"mark\">&#10038;</div>\n        <h3>You shouldn't need a gatekeeper</h3>\n        <p>The most consequential book in the world shouldn't require a degree, a translation war, or someone on a stage to read it <em>to</em> you. It was always meant to be yours to open.</p>\n      </div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "home-guide",
+    "label": "Home — Guide",
+    "page": "index",
+    "pageTitle": "Home",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">02</span><span class=\"eyebrow__txt\">You don't have to do it alone</span></div>\n    <div class=\"marg reveal\">\n      <div class=\"marg__note\">\n        <span class=\"num\">A few steps ahead</span>\n        Not a stage. Not a syllabus. Someone reading carefully, just ahead of you, pointing out what's easy to miss.\n      </div>\n      <div class=\"marg__body\">\n        <p class=\"drop\">The Margin is written by an ordinary reader who sits with Scripture slowly every morning, and who remembers exactly what it felt like to find the book closed. There's no gate to get through here, and no hurry to get you to a conclusion.</p>\n        <p>Here's the quiet good news. Slow, close reading is the oldest, most reliable way to understand any text, and it's completely learnable. We do the patient work of context and careful attention, then hand the passage back to you, so the next reading is <em>yours.</em> You won't be lectured here. You'll have company.</p>\n      </div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "home-plan",
+    "label": "Home — Plan",
+    "page": "index",
+    "pageTitle": "Home",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">03</span><span class=\"eyebrow__txt\">How it works</span></div>\n    <h2 class=\"h2 reveal\">Three steps. That's the whole <em>plan.</em></h2>\n    <p class=\"lede reveal\">No app to learn, no streak to keep, no course to finish. Just a simple rhythm you could start this week.</p>\n    <div class=\"cols cols--3 reveal\" style=\"margin-top:46px;\">\n      <div class=\"card\">\n        <span class=\"plan-num\">1</span>\n        <h3>Subscribe (it's free)</h3>\n        <p>Add your email. A short welcome note arrives, and you're in. No cost, now or ever; unsubscribe anytime.</p>\n      </div>\n      <div class=\"card\">\n        <span class=\"plan-num\">2</span>\n        <h3>Read along, ten minutes a week</h3>\n        <p>Every other week, one passage lands in your inbox, read slowly alongside you. Prefer to listen? Every note comes read aloud &mdash; for the commute or the morning coffee.</p>\n      </div>\n      <div class=\"card\">\n        <span class=\"plan-num\">3</span>\n        <h3>Open your own Bible</h3>\n        <p>Then go read the chapter yourself, and watch yourself notice something new. Every note ends with one &ldquo;so what for today&rdquo; &mdash; and a question worth taking to a friend.</p>\n      </div>\n    </div>\n    <div class=\"reveal\" style=\"margin-top:38px;\"><a class=\"btn btn--lg\" href=\"subscribe.html\">Start with step one &rarr;</a></div>\n  </div>"
+  },
+  {
+    "key": "home-specimen",
+    "label": "Home — Specimen",
+    "page": "index",
+    "pageTitle": "Home",
+    "defaultHtml": "<div class=\"wrap wrap--narrow\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">04</span><span class=\"eyebrow__txt\">Here's what one looks like</span></div>\n    <h2 class=\"h2 reveal\" style=\"margin-bottom:32px;\">A passage you've heard, read <em>closely.</em></h2>\n    <div class=\"specimen reveal\">\n      <div class=\"specimen__ref\">Genesis 3 · 8&ndash;9</div>\n      <p class=\"specimen__verse\">\n        <span class=\"vn\">8</span>And they heard the sound of the <span class=\"rust\">Lord</span> God walking in the garden in the cool of the day, and the man and his wife <u>hid themselves</u> from the presence of the <span class=\"rust\">Lord</span> God among the trees of the garden. <span class=\"vn\">9</span>But the <span class=\"rust\">Lord</span> God called to the man and said to him, <mark>&ldquo;Where are you?&rdquo;</mark>\n      </p>\n      <hr style=\"border:none; border-top:1px solid var(--margin); margin:28px 0;\" />\n      <p class=\"annot\" style=\"font-size:18px;\">&ldquo;Where are you?&rdquo; is the first question in the Bible, and God already knows the answer. So He isn't gathering information. He's giving the man a chance to come out of the trees and say it himself. You could read the whole of Scripture as God asking that one question, in a hundred forms, and waiting for you to answer.</p>\n      <p style=\"font-family:var(--font-sans); font-size:12.5px; letter-spacing:0.04em; color:var(--ash); margin-top:22px;\">This is a margin note. You get one like it, free, every other week &mdash; and the first week of every series is open to read before you ever subscribe. <a class=\"rust\" href=\"read.html\" style=\"border-bottom:1px solid var(--rust);\">See a full reading &rarr;</a></p>\n    </div>\n  </div>"
+  },
+  {
+    "key": "home-transformation",
+    "label": "Home — Transformation",
+    "page": "index",
+    "pageTitle": "Home",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">05</span><span class=\"eyebrow__txt\">What changes for you</span></div>\n    <h2 class=\"h2 reveal\">You'll start <em>seeing</em> it.</h2>\n    <p class=\"lede reveal\" style=\"color:#cabfae;\">Read along for a few months and something shifts. The book stops being a wall and starts being a place you know your way around. Here's what you'll be able to do on your own.</p>\n    <div class=\"cols cols--2 reveal\" style=\"margin-top:46px;\">\n      <div class=\"card card--ink\">\n        <span class=\"card__idx\">01</span>\n        <h3>You'll slow down</h3>\n        <p>And discover that the verse you used to skim is exactly where everything was happening all along.</p>\n      </div>\n      <div class=\"card card--ink\">\n        <span class=\"card__idx\">02</span>\n        <h3>You'll read closely</h3>\n        <p>Catching the repeated word, or the name that turns up where it shouldn't, the way a careful reader does without thinking.</p>\n      </div>\n      <div class=\"card card--ink\">\n        <span class=\"card__idx\">03</span>\n        <h3>You'll read in context</h3>\n        <p>Knowing a psalm from a proverb, so the text gets to say what it actually meant to say.</p>\n      </div>\n      <div class=\"card card--ink\">\n        <span class=\"card__idx\">04</span>\n        <h3>You'll read it yourself</h3>\n        <p>Until you don't need us. You'll open the book alone and find the thread before anyone points it out. That's success.</p>\n      </div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "home-series",
+    "label": "Home — Series",
+    "page": "index",
+    "pageTitle": "Home",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">06</span><span class=\"eyebrow__txt\">Where you can start</span></div>\n    <h2 class=\"h2 reveal\">Pick a thread and <em>follow it.</em></h2>\n    <p class=\"lede reveal\">You don't begin at page one and grind forward. You pick a series, whether a whole book or a single question, and follow it the whole way through. We don't dodge the hard parts &mdash; much of the reading starts in the Old Testament, where readers tell us they feel most lost. Here's where it begins.</p>\n\n    <div class=\"series reveal\" style=\"margin-top:44px;\">\n      <article class=\"scard scard--feature\">\n        <span class=\"scard__flag\">Start here</span>\n        <div class=\"scard__inner\">\n          <div style=\"display:flex; flex-direction:column; gap:12px;\">\n            <span class=\"scard__lane\">A single idea &middot; traced across Scripture</span>\n            <h3>The Questions God Asks</h3>\n            <p class=\"scard__sub\">God as questioner, Genesis to Revelation</p>\n            <p>&ldquo;Where are you?&rdquo; &middot; &ldquo;Where is your brother?&rdquo; &middot; &ldquo;Whom shall I send?&rdquo; God asks far more than He explains. Follow the questions across the whole story &mdash; and sit, honestly, in the ones still addressed to you.</p>\n          </div>\n          <div class=\"scard__foot\" style=\"border-top:none; align-items:flex-start; flex-direction:column; gap:8px; padding-top:0;\">\n            <span>Thread series &middot; <strong>6&ndash;10 notes</strong></span>\n            <span>Begins <strong>autumn</strong></span>\n            <a class=\"btn\" href=\"subscribe.html\" style=\"margin-top:8px;\">Read from the start &rarr;</a>\n          </div>\n        </div>\n      </article>\n\n      <article class=\"scard\">\n        <span class=\"scard__lane\">A whole book &middot; the overlooked kind</span>\n        <h3>Ecclesiastes</h3>\n        <p class=\"scard__sub\">The Bible's most honest book</p>\n        <p>&ldquo;Everything is vapor.&rdquo; A short, literary read for anyone allergic to easy answers. The book that makes you say &ldquo;I didn't know <em>that</em> was in there.&rdquo;</p>\n        <div class=\"scard__foot\"><span>Book series</span><span><strong>6&ndash;8 notes</strong></span><span>For the seeker</span></div>\n      </article>\n\n      <article class=\"scard\">\n        <span class=\"scard__lane\">A whole book &middot; the overlooked kind</span>\n        <h3>Esther</h3>\n        <p class=\"scard__sub\">The book where God is never named</p>\n        <p>A whole narrative built around a striking absence. God is never mentioned once, yet His hand is everywhere. Ten chapters you won't want to put down.</p>\n        <div class=\"scard__foot\"><span>Book series</span><span><strong>6&ndash;10 notes</strong></span><span>Narrative</span></div>\n      </article>\n\n      <article class=\"scard\">\n        <span class=\"scard__lane\">A single passage &middot; dwelt in</span>\n        <h3>John, slowly</h3>\n        <p class=\"scard__sub\">The opening hymn, read daily</p>\n        <p>The long, steady read underneath everything: the Gospel of John, a passage at a time, for as long as it takes. The home you can always come back to.</p>\n        <div class=\"scard__foot\"><span>Ongoing</span><span><strong>The long read</strong></span><span>Always open</span></div>\n      </article>\n\n      <article class=\"scard\">\n        <span class=\"scard__lane\">A single person &middot; the one we skip</span>\n        <h3>The Unnamed &amp; Unexpected</h3>\n        <p class=\"scard__sub\">Tamar, Hagar, the women of Matthew 1</p>\n        <p>The people Scripture refuses to leave out: wronged, foreign, and woven straight into the line of Jesus. Read fresh, without the flannelgraph.</p>\n        <div class=\"scard__foot\"><span>Figure series</span><span><strong>Coming</strong></span><span>Read fresh</span></div>\n      </article>\n    </div>\n\n    <p class=\"lede reveal\" style=\"margin-top:34px;\"><a class=\"rust\" href=\"series.html\" style=\"border-bottom:2px solid var(--rust); padding-bottom:2px;\">Browse every series &rarr;</a></p>\n  </div>"
+  },
+  {
+    "key": "home-stakes",
+    "label": "Home — Stakes",
+    "page": "index",
+    "pageTitle": "Home",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">07</span><span class=\"eyebrow__txt\">Why it matters</span></div>\n    <h2 class=\"h2 reveal\">Two ways this <em>goes.</em></h2>\n    <div class=\"cols cols--2 reveal\" style=\"margin-top:44px; align-items:stretch;\">\n      <div class=\"card\">\n        <span class=\"card__idx\">If nothing changes</span>\n        <h3>It stays on the shelf</h3>\n        <p>Another year of meaning to. The book stays closed, faith stays something other people seem to understand better than you do, and the questions you actually carry go unasked, and unanswered.</p>\n      </div>\n      <div class=\"card card--ink\">\n        <span class=\"card__idx\">If you start reading</span>\n        <h3>It becomes yours</h3>\n        <p>The strange, vast book turns familiar, then turns personal. You stop borrowing other people's faith secondhand and start meeting God in the text directly, in your own two hands.</p>\n      </div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "home-subscribe",
+    "label": "Home — Subscribe",
+    "page": "index",
+    "pageTitle": "Home",
+    "defaultHtml": "<div class=\"wrap wrap--narrow subscribe\">\n    <div class=\"eyebrow\" style=\"justify-content:center;\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">08</span><span class=\"eyebrow__txt\">Begin</span></div>\n    <h2 class=\"h2 reveal\">Open the book this week.</h2>\n    <p class=\"subscribe__deck reveal\">Add your email and the next margin note comes straight to you. Free, unhurried, with no algorithm deciding whether you see it. The only thing between you and the text is one small step.</p>\n    <form class=\"subform reveal\" data-subscribe>\n      <input type=\"email\" placeholder=\"you@email.com\" aria-label=\"Email address\" required />\n      <button class=\"btn btn--lg\" type=\"submit\">Start reading, free</button>\n    </form>\n    <p class=\"subnote\">Free forever &middot; A welcome note arrives the moment you join &middot; Unsubscribe anytime.</p>\n  </div>"
+  },
+  {
+    "key": "global-footer",
+    "label": "Global — Footer",
+    "page": "global",
+    "pageTitle": "Global (all pages)",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"foot__grid\">\n      <div>\n        <a class=\"wm\" href=\"index.html\">\n          <span class=\"wm__bar\"></span>\n          <span>\n            <span class=\"wm__type\">the margin</span>\n            <span class=\"wm__tag\">Biblical literacy · in the margins</span>\n          </span>\n        </a>\n        <p class=\"foot__blurb\">A reading companion that helps you open the Bible and read it for yourself, slowly and without a gatekeeper.</p>\n      </div>\n      <div class=\"foot__col\">\n        <h4>Read</h4>\n        <ul>\n          <li><a href=\"read.html\">How It Works</a></li>\n          <li><a href=\"series.html\">Where to Start</a></li>\n          <li><a href=\"series.html#archive\">The Archive</a></li>\n          <li><a href=\"about.html\">About</a></li>\n        </ul>\n      </div>\n      <div class=\"foot__col\">\n        <h4>Follow</h4>\n        <ul>\n          <li><a href=\"subscribe.html\">Substack</a></li>\n          <li><a href=\"subscribe.html\">Instagram</a></li>\n          <li><a href=\"subscribe.html\">Threads</a></li>\n          <li><a href=\"subscribe.html\">X / Twitter</a></li>\n        </ul>\n      </div>\n      <div class=\"foot__col\">\n        <h4>Begin</h4>\n        <ul>\n          <li><a href=\"subscribe.html\">Subscribe free</a></li>\n          <li><a href=\"read.html\">See how it works</a></li>\n          <li><a href=\"series.html\">Pick a series</a></li>\n        </ul>\n      </div>\n    </div>\n    <div class=\"foot__bar\">\n      <span class=\"label\">&copy; 2026 The Margin &middot; readthemargin.net &middot; <a href=\"mailto:hello@readthemargin.net\">hello@readthemargin.net</a></span>\n      <span class=\"label\">&#10038; Say it slow. Say it true.</span>\n    </div>\n  </div>"
+  },
+  {
+    "key": "about-header",
+    "label": "About — Header",
+    "page": "about",
+    "pageTitle": "About",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__txt\">About the guide</span></div>\n    <h1>A guide, not a <em>guru.</em></h1>\n    <p class=\"lede\">The Margin will never be the hero of your reading life. <em>You are.</em> Our whole job is to walk a few steps ahead, point out what's easy to miss, and hand the text back to you, until the day you don't need us at all.</p>\n  </div>"
+  },
+  {
+    "key": "about-why",
+    "label": "About — Why",
+    "page": "about",
+    "pageTitle": "About",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">01</span><span class=\"eyebrow__txt\">Why this exists</span></div>\n    <div class=\"marg reveal\">\n      <div class=\"marg__note\"><span class=\"num\">The quiet problem</span>You can own a book, revere it, even argue about it, and still have never really read it.</div>\n      <div class=\"marg__body\">\n        <p class=\"drop\">If you've ever felt like a stranger to a book you're supposed to know, you are not alone, and you are not the problem. Most of us were handed proof-texts, highlight reels, and other people's conclusions. We were handed the <em>about.</em> We were never handed the <em>how.</em></p>\n        <p>So the most consequential book in the world sits on millions of shelves, owned and unread, while the people who own it quietly assume the reading must be for someone more qualified. That's not a failure of your devotion. It's a failure of method, and method can be taught.</p>\n        <p>The Margin exists to teach it back to you. To prove, one careful reading at a time, that the book rewards your attention more than almost anything else could, and that you are entirely capable of reading it yourself.</p>\n      </div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "about-name",
+    "label": "About — Name",
+    "page": "about",
+    "pageTitle": "About",
+    "defaultHtml": "<div class=\"wrap wrap--narrow\">\n    <div class=\"pull reveal\" style=\"align-items:start;\">\n      <div class=\"pull__rule\" style=\"background:var(--rust);\"></div>\n      <div>\n        <p class=\"label label--rust\" style=\"margin-bottom:18px;\">Why &ldquo;The Margin&rdquo;</p>\n        <p style=\"font-family:var(--font-serif); font-style:italic; font-size:clamp(22px,3vw,30px); line-height:1.4; color:var(--ink);\">Real reading has always happened in the margins, the white space beside the line, where readers for centuries wrote their questions, their objections, their small astonishments. That's where the text stops being someone else's and becomes <em class=\"rust\">yours.</em></p>\n        <p style=\"font-size:17px; color:var(--ink-soft); margin-top:22px; max-width:60ch;\">It's also a promise about your time. This is written in the literal margins of a full life, and it asks for the same from you. Not the center of your week. Just the margin, ten minutes at a time. We'll meet you there.</p>\n      </div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "about-promises",
+    "label": "About — Promises",
+    "page": "about",
+    "pageTitle": "About",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">02</span><span class=\"eyebrow__txt\">What we promise you</span></div>\n    <h2 class=\"h2 reveal\">Three promises.</h2>\n    <div class=\"cols cols--3 reveal\" style=\"margin-top:44px;\">\n      <div class=\"card\">\n        <span class=\"card__idx\">&#10038;</span>\n        <h3>We won't waste your inbox</h3>\n        <p>No clutter, no upselling, no posting to stay &ldquo;top of mind.&rdquo; When a reading lands, it's because it's ready, and worth your ten minutes.</p>\n      </div>\n      <div class=\"card\">\n        <span class=\"card__idx\">&#10038;</span>\n        <h3>We'll aim to make you not need us</h3>\n        <p>The goal is your independence, not your dependence. A good margin note leaves you a slightly better reader, able to find the next thread without anyone's help.</p>\n      </div>\n      <div class=\"card\">\n        <span class=\"card__idx\">&#10038;</span>\n        <h3>We'll read toward Him, not us</h3>\n        <p>We read closely because the words matter, and we read toward a Person. The point is never the cleverness of the reading. It's where the reading leads you.</p>\n      </div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "about-writer",
+    "label": "About — Writer",
+    "page": "about",
+    "pageTitle": "About",
+    "defaultHtml": "<div class=\"wrap wrap--narrow\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">03</span><span class=\"eyebrow__txt\">Who's walking with you</span></div>\n    <div class=\"marg reveal\">\n      <div class=\"marg__note\"><span class=\"num\">A real reader</span>A communications worker, a youth-ministry volunteer, someone who reads John slowly every morning.</div>\n      <div class=\"marg__body\">\n        <p>The Margin is written by one ordinary person who reads Scripture slowly every morning and couldn't stop turning those readings over. It isn't the work of an institution or a committee. It's the overflow of a daily practice, lightly edited and handed on to you.</p>\n        <p>That's on purpose. You're not being addressed by a curriculum. You're reading alongside a real person thinking out loud in the margin, the same margin you'll be reading in. If a note ever sounds too polished to be honest, we've gotten it wrong.</p>\n        <p style=\"font-style:italic; color:var(--rust); margin-top:6px;\">&ldquo;Say it slow. Say it true. And call the reader up, not to us, but to Jesus.&rdquo;</p>\n      </div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "about-cta",
+    "label": "About — CTA",
+    "page": "about",
+    "pageTitle": "About",
+    "defaultHtml": "<div class=\"wrap wrap--narrow subscribe\">\n    <h2 class=\"h2 reveal\">Let's open the book together.</h2>\n    <p class=\"subscribe__deck reveal\">The reading is just beginning. Subscribe now and you'll have the whole thing from note one, a founding reader before there's a crowd.</p>\n    <div class=\"reveal\" style=\"margin-top:32px;\"><a class=\"btn btn--lg\" href=\"subscribe.html\">Start reading, free &rarr;</a></div>\n  </div>"
+  },
+  {
+    "key": "read-header",
+    "label": "Read — Header",
+    "page": "read",
+    "pageTitle": "How It Works",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__txt\">How it works</span></div>\n    <h1>You'll learn to <em>read it.</em></h1>\n    <p class=\"lede\">Reading along with The Margin isn't a course to finish or a system to master. It's four old habits you pick up by watching them used &mdash; habits that turn a familiar text strange again, which is the only way to really see it. Here's what you'll learn to do, and here's exactly what it looks like on a real passage.</p>\n  </div>"
+  },
+  {
+    "key": "read-habits",
+    "label": "Read — Habits",
+    "page": "read",
+    "pageTitle": "How It Works",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">01</span><span class=\"eyebrow__txt\">What you'll learn to do</span></div>\n    <div style=\"margin-top:18px;\">\n      <div class=\"principle reveal\">\n        <div class=\"principle__n\">01</div>\n        <div>\n          <h3>You'll read slowly</h3>\n          <p>Speed is the enemy of Scripture, and you'll learn to resist it. The verse you used to skim is usually the one doing the work: the genealogy, the aside, the question left hanging in the air. You'll learn to linger there, and find that the slowness isn't a delay before the meaning. The slowness <em>is</em> the meaning arriving.</p>\n        </div>\n      </div>\n      <div class=\"principle reveal\">\n        <div class=\"principle__n\">02</div>\n        <div>\n          <h3>You'll read closely</h3>\n          <p>You'll start reading as though it was written on purpose, because it was. You'll catch the repetition, the contrast, the word that's almost-but-not-quite a synonym, the name that appears where it shouldn't. Close reading is really just refusing to let familiarity do your seeing for you, and it makes an over-known passage new in your hands.</p>\n        </div>\n      </div>\n      <div class=\"principle reveal\">\n        <div class=\"principle__n\">03</div>\n        <div>\n          <h3>You'll read in context</h3>\n          <p>Every book has a genre, a moment, a shape. A psalm is not a proverb; a letter is not a law; a parable is not a police report. You'll learn to ask what a passage meant before you ask what it means for you: who wrote it, to whom, and why. Context isn't homework. It's the difference between hearing and overhearing.</p>\n        </div>\n      </div>\n      <div class=\"principle reveal\">\n        <div class=\"principle__n\">04</div>\n        <div>\n          <h3>You'll read it yourself</h3>\n          <p>The goal is never that you trust us. It's that you close the note, open your own Bible, and find something we never pointed out. We'd always rather teach you to read than tell you what to think, so the day you don't need us is the day this worked.</p>\n        </div>\n      </div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "read-worked-example",
+    "label": "Read — Worked Example",
+    "page": "read",
+    "pageTitle": "How It Works",
+    "defaultHtml": "<div class=\"wrap wrap--narrow\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">02</span><span class=\"eyebrow__txt\">Watch it work, on one passage</span></div>\n    <h2 class=\"h2 reveal\">See it for yourself.</h2>\n    <p class=\"lede reveal\">Here's a passage you've almost certainly heard and almost certainly never read. The text on the left; the margin on the right. Read it slowly, and notice how much was waiting in a poem you thought you knew.</p>\n\n    <div class=\"specimen reveal\" style=\"margin-top:40px;\">\n      <div class=\"specimen__ref\">Psalm 23 · 1&ndash;4</div>\n      <p class=\"specimen__verse\">\n        <span class=\"vn\">1</span>The <span class=\"rust\">Lord</span> is my <u>shepherd</u>; I shall not want. <span class=\"vn\">2</span>He makes me lie down in green pastures. He leads me beside <mark>still waters.</mark> <span class=\"vn\">3</span>He restores my soul. He leads me in paths of righteousness for his name's sake. <span class=\"vn\">4</span>Even though I walk through the valley of the shadow of death, I will fear no evil, for <u>you are with me</u>; your rod and your staff, they comfort me.\n      </p>\n    </div>\n\n    <!-- annotations as marginal notes -->\n    <div class=\"marg reveal\" style=\"margin-top:40px;\">\n      <div class=\"marg__note\"><span class=\"num\">Note · genre</span>This is a song, not a doctrine. Read it the way you'd read any poem, for image and music, not just propositions.</div>\n      <div class=\"marg__body\">\n        <p><strong>Read in context.</strong> We've mostly met Psalm 23 at funerals, in a soft voice, on a card. But it was written by a shepherd-king who knew exactly how much a sheep can't be trusted to look after itself. The comfort isn't sentimental. It's the relief of being managed by someone competent when you are not.</p>\n      </div>\n    </div>\n    <div class=\"marg reveal\">\n      <div class=\"marg__note\"><span class=\"num\">Note · the turn</span>Watch the pronoun. Verses 1&ndash;3 say <em>He.</em> Verse 4 says <em>You.</em></div>\n      <div class=\"marg__body\">\n        <p><strong>Read closely.</strong> For three verses God is spoken <em>about</em>: He makes, He leads, He restores. Then the valley arrives, and the grammar breaks: &ldquo;<em>you</em> are with me.&rdquo; The psalm stops describing God and starts speaking to Him. It's in the dark valley, not the green pasture, that the song turns to face Him directly. That switch is the whole poem.</p>\n      </div>\n    </div>\n    <div class=\"marg reveal\">\n      <div class=\"marg__note\"><span class=\"num\">Note · for you</span>Now close this and read the rest of the psalm. Where does the <em>You</em> stay? What changes once it arrives?</div>\n      <div class=\"marg__body\">\n        <p><strong>Read it yourself.</strong> We've shown you one thread, the pronoun. There are a dozen more. Read the last two verses on your own and watch what happens to the table, the enemies, the house. We didn't point those out on purpose.</p>\n      </div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "read-principles",
+    "label": "Read — Principles",
+    "page": "read",
+    "pageTitle": "How It Works",
+    "defaultHtml": "<div class=\"wrap wrap--narrow\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">03</span><span class=\"eyebrow__txt\">What you can count on</span></div>\n    <h2 class=\"h2 reveal\">A few promises to <em>you.</em></h2>\n    <div class=\"qa reveal\" style=\"margin-top:36px;\">\n      <div class=\"qa__item\">\n        <h3>No hot takes</h3>\n        <p>You'll never get a rushed reading. A note goes out when it's true and careful, not when it's timely. If that means a quiet week, we'll take the quiet week. Your inbox is safe with us.</p>\n      </div>\n      <div class=\"qa__item\">\n        <h3>No proof-texting</h3>\n        <p>We won't pull a verse out of its passage to win you over to a point. A line means what it means inside the paragraph, the chapter, the book, and that's where we'll keep it, so you can trust what you read.</p>\n      </div>\n      <div class=\"qa__item\">\n        <h3>No performance</h3>\n        <p>This is teaching, not a show. The only measure that counts is whether <em>you</em> opened your Bible afterward, not whether anyone applauded.</p>\n      </div>\n      <div class=\"qa__item\">\n        <h3>No gatekeeping</h3>\n        <p>You don't need seminary, the &ldquo;right&rdquo; translation, or a particular tradition to belong here. You need a text and a little patience. Everything is free, always.</p>\n      </div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "read-cta",
+    "label": "Read — CTA",
+    "page": "read",
+    "pageTitle": "How It Works",
+    "defaultHtml": "<div class=\"wrap wrap--narrow subscribe\">\n    <h2 class=\"h2 reveal\">Your next reading is waiting.</h2>\n    <p class=\"subscribe__deck reveal\">Every margin note teaches by doing, so the more you read along, the more you'll catch on your own. Start this week, and the next one comes straight to you &mdash; in text and audio, wherever you read (or listen).</p>\n    <div class=\"reveal\" style=\"margin-top:32px;\"><a class=\"btn btn--lg\" href=\"subscribe.html\">Start reading, free &rarr;</a></div>\n  </div>"
+  },
+  {
+    "key": "series-header",
+    "label": "Series — Header",
+    "page": "series",
+    "pageTitle": "Where to Start",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__txt\">Where to begin</span></div>\n    <h1>Pick a thread and <em>follow it.</em></h1>\n    <p class=\"lede\">You don't have to start at page one and grind forward. You pick a series, whether a whole book, a single question, or one person, and follow it the whole way through, at ten minutes a week. Each one is a clear place to begin, and together they build an archive worth keeping. Four ways in:</p>\n  </div>"
+  },
+  {
+    "key": "series-lanes",
+    "label": "Series — Lanes",
+    "page": "series",
+    "pageTitle": "Where to Start",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"cols cols--4 reveal\">\n      <div class=\"card\"><span class=\"card__idx\">A whole book</span><h3>The overlooked book</h3><p>A book most people skip. Short, strange, surprisingly modern. Read whole, the long way.</p></div>\n      <div class=\"card\"><span class=\"card__idx\">A single idea</span><h3>The thread</h3><p>One idea traced from Genesis to Revelation. A question, a prayer, a word that won't stay put.</p></div>\n      <div class=\"card\"><span class=\"card__idx\">A single person</span><h3>The figure we skip</h3><p>A person Scripture refuses to leave out, read without the flannelgraph.</p></div>\n      <div class=\"card\"><span class=\"card__idx\">A single passage</span><h3>One text, dwelt in</h3><p>A famous passage, slowed until it stops being a clich&eacute; and starts being a text.</p></div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "series-catalogue",
+    "label": "Series — Catalogue",
+    "page": "series",
+    "pageTitle": "Where to Start",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">01</span><span class=\"eyebrow__txt\">The series</span></div>\n    <h2 class=\"h2 reveal\">Now &amp; <em>next.</em></h2>\n\n    <div class=\"series reveal\" style=\"margin-top:44px;\">\n      <article class=\"scard scard--feature\">\n        <span class=\"scard__flag\">Start here</span>\n        <div class=\"scard__inner\">\n          <div style=\"display:flex; flex-direction:column; gap:12px;\">\n            <span class=\"scard__lane\">A single idea &middot; traced across Scripture</span>\n            <h3>The Questions God Asks</h3>\n            <p class=\"scard__sub\">God as questioner, Genesis to Revelation</p>\n            <p>&ldquo;Where are you?&rdquo; &middot; &ldquo;Where is your brother?&rdquo; &middot; &ldquo;Whom shall I send?&rdquo; God asks far more than He explains, and He often already knows the answer. We follow the questions across the whole story — and learn to sit inside the ones still addressed to us. A twin thread follows: <em>the questions Jesus asks.</em></p>\n          </div>\n          <div class=\"scard__foot\" style=\"border-top:none; align-items:flex-start; flex-direction:column; gap:8px; padding-top:0;\">\n            <span>Thread series &middot; <strong>6&ndash;10 notes</strong></span>\n            <span>Opens <strong>autumn 2025</strong></span>\n            <a class=\"btn\" href=\"subscribe.html\" style=\"margin-top:8px;\">Read from the start &rarr;</a>\n          </div>\n        </div>\n      </article>\n\n      <article class=\"scard\">\n        <span class=\"scard__lane\">A single passage &middot; dwelt in</span>\n        <h3>John, slowly</h3>\n        <p class=\"scard__sub\">The opening hymn, read daily</p>\n        <p>The running series beneath everything: the Gospel of John, a passage at a time, the long way, for as long as it takes. The slow heartbeat of The Margin, and the home base for every reader.</p>\n        <div class=\"scard__foot\"><span>Ongoing</span><span><strong>The long read</strong></span></div>\n      </article>\n\n      <article class=\"scard\">\n        <span class=\"scard__lane\">A whole book &middot; the overlooked kind</span>\n        <h3>Ecclesiastes</h3>\n        <p class=\"scard__sub\">The Bible's most honest book</p>\n        <p>&ldquo;Everything is vapor.&rdquo; A contained, literary read for anyone allergic to easy answers. The book that makes a skeptic say &ldquo;I didn't know <em>that</em> was in there.&rdquo;</p>\n        <div class=\"scard__foot\"><span>Coming</span><span><strong>6&ndash;8 notes</strong></span></div>\n      </article>\n\n      <article class=\"scard\">\n        <span class=\"scard__lane\">A whole book &middot; the overlooked kind</span>\n        <h3>Esther</h3>\n        <p class=\"scard__sub\">The book where God is never named</p>\n        <p>An entire narrative built around a striking absence. God is never mentioned once, yet His hand is everywhere. Ten chapters you can't put down.</p>\n        <div class=\"scard__foot\"><span>Coming</span><span><strong>6&ndash;10 notes</strong></span></div>\n      </article>\n\n      <article class=\"scard\">\n        <span class=\"scard__lane\">A single person &middot; the one we skip</span>\n        <h3>The Unnamed &amp; Unexpected</h3>\n        <p class=\"scard__sub\">Tamar, Hagar, the women of Matthew 1</p>\n        <p>The people Scripture refuses to leave out: wronged, foreign, and woven straight into the line of Jesus. Hagar is the first person in the Bible to name God. Read fresh.</p>\n        <div class=\"scard__foot\"><span>Planned</span><span><strong>Figure series</strong></span></div>\n      </article>\n    </div>\n  </div>"
+  },
+  {
+    "key": "series-archive",
+    "label": "Series — Archive",
+    "page": "series",
+    "pageTitle": "Where to Start",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">02</span><span class=\"eyebrow__txt\">The archive</span></div>\n    <h2 class=\"h2 reveal\">Every margin note.</h2>\n    <p class=\"lede reveal\">An archive that grows with you. Each note is a slow reading you can return to any time. The first readings land this autumn; here's the shape of what's coming, in order.</p>\n\n    <div class=\"reveal\" style=\"margin-top:44px; border-top:2px solid var(--rust);\">\n      <a class=\"qa__item\" style=\"display:block; border-bottom:1px solid var(--margin); padding:26px 0;\" href=\"subscribe.html\">\n        <div style=\"display:flex; justify-content:space-between; gap:24px; align-items:baseline; flex-wrap:wrap;\">\n          <div>\n            <span class=\"label label--rust\" style=\"display:block; margin-bottom:8px;\">Note 01 &middot; The Questions God Asks</span>\n            <h3 style=\"font-family:var(--font-display); font-weight:900; font-size:25px; letter-spacing:-0.02em;\">&ldquo;Where are you?&rdquo;</h3>\n            <p style=\"font-size:16px; color:var(--ink-soft); margin-top:8px; max-width:60ch;\">God's opening words to a hiding man, and He already knows the answer. On why the Bible begins with a question, not a verdict.</p>\n          </div>\n          <span class=\"label\" style=\"white-space:nowrap;\">Autumn &middot; soon</span>\n        </div>\n      </a>\n      <a class=\"qa__item\" style=\"display:block; border-bottom:1px solid var(--margin); padding:26px 0;\" href=\"subscribe.html\">\n        <div style=\"display:flex; justify-content:space-between; gap:24px; align-items:baseline; flex-wrap:wrap;\">\n          <div>\n            <span class=\"label label--rust\" style=\"display:block; margin-bottom:8px;\">Note 02 &middot; John, slowly</span>\n            <h3 style=\"font-family:var(--font-display); font-weight:900; font-size:25px; letter-spacing:-0.02em;\">&ldquo;In the beginning was the Word&rdquo;</h3>\n            <p style=\"font-size:16px; color:var(--ink-soft); margin-top:8px; max-width:60ch;\">John opens his Gospel by rewriting the first line of the Bible. We read the prologue as the deliberate echo it is.</p>\n          </div>\n          <span class=\"label\" style=\"white-space:nowrap;\">Autumn &middot; soon</span>\n        </div>\n      </a>\n      <a class=\"qa__item\" style=\"display:block; border-bottom:1px solid var(--margin); padding:26px 0;\" href=\"subscribe.html\">\n        <div style=\"display:flex; justify-content:space-between; gap:24px; align-items:baseline; flex-wrap:wrap;\">\n          <div>\n            <span class=\"label label--rust\" style=\"display:block; margin-bottom:8px;\">Note 03 &middot; A way in</span>\n            <h3 style=\"font-family:var(--font-display); font-weight:900; font-size:25px; letter-spacing:-0.02em;\">How to read the Bible without giving up</h3>\n            <p style=\"font-size:16px; color:var(--ink-soft); margin-top:8px; max-width:60ch;\">The short, practical guide for the reader who keeps stalling in Leviticus. Genre, order, and the one habit that changes everything.</p>\n          </div>\n          <span class=\"label\" style=\"white-space:nowrap;\">Autumn &middot; soon</span>\n        </div>\n      </a>\n      <div class=\"qa__item\" style=\"padding:26px 0; text-align:center;\">\n        <p style=\"font-style:italic; color:var(--ash); font-size:17px;\">&#10038; The archive grows every other week. Subscribe to get each note as it lands.</p>\n      </div>\n    </div>\n\n    <div class=\"reveal\" style=\"margin-top:36px;\"><a class=\"btn btn--lg\" href=\"subscribe.html\">Get every note in your inbox &rarr;</a></div>\n  </div>"
+  },
+  {
+    "key": "subscribe-hero",
+    "label": "Subscribe — Hero",
+    "page": "subscribe",
+    "pageTitle": "Subscribe",
+    "defaultHtml": "<div class=\"wrap wrap--narrow subscribe\">\n    <div class=\"eyebrow\" style=\"justify-content:center;\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__txt\">Begin</span></div>\n    <h2 class=\"h2 reveal\" style=\"font-size:clamp(40px,6vw,72px);\">Open the book this week.</h2>\n    <p class=\"subscribe__deck reveal\">Add your email and the reading comes to you. One passage, read slowly, every other week, with shorter notes in between &mdash; ten minutes to read, or listen to every note read aloud. Free, forever. No noise, no selling, no algorithm deciding whether you see it. Just you and the text, with someone a few steps ahead.</p>\n    <form class=\"subform reveal\" data-subscribe>\n      <input type=\"email\" placeholder=\"you@email.com\" aria-label=\"Email address\" required />\n      <button class=\"btn btn--lg\" type=\"submit\">Subscribe free</button>\n    </form>\n    <p class=\"subnote\">A welcome note arrives the moment you join &middot; unsubscribe anytime &middot; your email is never shared.</p>\n  </div>"
+  },
+  {
+    "key": "subscribe-what-you-get",
+    "label": "Subscribe — What you get",
+    "page": "subscribe",
+    "pageTitle": "Subscribe",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">01</span><span class=\"eyebrow__txt\">What lands in your inbox</span></div>\n    <h2 class=\"h2 reveal\">What you'll <em>get.</em></h2>    <div class=\"rhythm reveal\" style=\"margin-top:44px;\">\n      <div class=\"rhythm__cell\">\n        <div class=\"rhythm__cad\">Every other week</div>\n        <h3>The margin note</h3>\n        <p>The long-form teaching essay. One passage, read slowly and closely. Ten minutes to read; longer to carry. The core of everything.</p>\n      </div>\n      <div class=\"rhythm__cell\">\n        <div class=\"rhythm__cad\">Between essays</div>\n        <h3>Short notes</h3>\n        <p>A single verse, a single observation, the occasional question that won't leave you alone. Small enough to read anywhere.</p>\n      </div>\n      <div class=\"rhythm__cell\">\n        <div class=\"rhythm__cad\">Each new series</div>\n        <h3>A way in</h3>\n        <p>A short &ldquo;how to read this book&rdquo; guide opens each series, so you always know the genre, the context, and what to watch for.</p>\n      </div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "subscribe-channels",
+    "label": "Subscribe — Channels",
+    "page": "subscribe",
+    "pageTitle": "Subscribe",
+    "defaultHtml": "<div class=\"wrap\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">02</span><span class=\"eyebrow__txt\">Or find us elsewhere</span></div>\n    <h2 class=\"h2 reveal\">Doorways, not a <em>stage.</em></h2>\n    <p class=\"lede reveal\">The email is home. It's the only place you'll never miss a note. But if you'd rather read in miniature, every doorway leads back here.</p>\n    <div class=\"cols cols--4 reveal\" style=\"margin-top:40px;\">\n      <a class=\"card\" href=\"#join\" style=\"display:block;\">\n        <span class=\"card__idx\">&rarr;</span>\n        <h3>Substack</h3>\n        <p>The home base. Every essay, the full archive, the welcome sequence. Start here.</p>\n      </a>\n      <a class=\"card\" href=\"#join\" style=\"display:block;\">\n        <span class=\"card__idx\">&rarr;</span>\n        <h3>Instagram</h3>\n        <p>Annotated passages and teaching carousels. The margin, marked up and swipeable.</p>\n      </a>\n      <a class=\"card\" href=\"#join\" style=\"display:block;\">\n        <span class=\"card__idx\">&rarr;</span>\n        <h3>Threads</h3>\n        <p>One-verse notes and open questions. The literary voice, in miniature, daily.</p>\n      </a>\n      <a class=\"card\" href=\"#join\" style=\"display:block;\">\n        <span class=\"card__idx\">&rarr;</span>\n        <h3>X / Twitter</h3>\n        <p>The same notes, plus the occasional teaching thread. Bookmark and come back.</p>\n      </a>\n    </div>\n  </div>"
+  },
+  {
+    "key": "subscribe-faq",
+    "label": "Subscribe — FAQ",
+    "page": "subscribe",
+    "pageTitle": "Subscribe",
+    "defaultHtml": "<div class=\"wrap wrap--narrow\">\n    <div class=\"eyebrow\"><span class=\"eyebrow__bar\"></span><span class=\"eyebrow__num\">03</span><span class=\"eyebrow__txt\">Before you join</span></div>\n    <h2 class=\"h2 reveal\">Honest answers.</h2>\n    <div class=\"qa reveal\" style=\"margin-top:36px;\">\n      <div class=\"qa__item\">\n        <h3>Is it really free?</h3>\n        <p>Yes, completely. Every margin note is free to read, now and as far ahead as we can see. The Margin is a ministry, not a business; the goal is readers in the text, not revenue. If the reading ever blesses you and you'd like to help it reach further, and grow into more down the road, you'll be able to give, freely and gratefully. But giving is never required, and nothing here will ever sit behind a paywall.</p>\n      </div>\n      <div class=\"qa__item\">\n        <h3>How often will you email me?</h3>\n        <p>A long-form note roughly every other week, occasionally weekly once the rhythm is deep. Short notes live mostly on social, not your inbox. We are allergic to clutter, and we won't fill your inbox to stay &ldquo;top of mind.&rdquo;</p>\n      </div>\n      <div class=\"qa__item\">\n        <h3>Do I need to be religious to read along?</h3>\n        <p>Not at all. The Margin is written for two kinds of reader at once: the <em>believer</em> who wants to know Scripture more deeply and read it for themselves, and the <em>curious seeker of truth</em> who isn't sure what they believe yet but is willing to take the text seriously. You don't need the right background, the right answers, or any certainty at all. Just an honest willingness to look closely. If that's you, you're exactly who this is for.</p>\n      </div>\n      <div class=\"qa__item\">\n        <h3>Can I see it before I subscribe?</h3>\n        <p>Yes &mdash; and you should. The first week of every series is open on the site, no email required. Read it, sit with it, and join only if it helps. Readers told us &ldquo;I’d want to see it first,&rdquo; and we think that’s exactly right.</p>\n      </div>\n      <div class=\"qa__item\">\n        <h3>What translation do you use?</h3>\n        <p>We read across translations and will always tell you which one a passage is quoted from. You're encouraged to read along in whatever Bible you already own. Part of the point is reading <em>your</em> copy.</p>\n      </div>\n      <div class=\"qa__item\">\n        <h3>Can I share the notes with my group?</h3>\n        <p>Please do. If you lead a class, a small group, or a youth night, take what's here and bring it to your people. That's not just allowed. It's the whole hope.</p>\n      </div>\n    </div>\n  </div>"
+  },
+  {
+    "key": "subscribe-final",
+    "label": "Subscribe — Final",
+    "page": "subscribe",
+    "pageTitle": "Subscribe",
+    "defaultHtml": "<div class=\"wrap wrap--narrow subscribe\">\n    <p class=\"flourish\" style=\"color:var(--gilt);\">&#10038;</p>\n    <h2 class=\"h2 reveal\" style=\"font-size:clamp(34px,5vw,52px);\">Don't read it faster. Read it <em>closer.</em></h2>\n    <form class=\"subform reveal\" data-subscribe style=\"margin-top:32px;\">\n      <input type=\"email\" placeholder=\"you@email.com\" aria-label=\"Email address\" required />\n      <button class=\"btn btn--lg\" type=\"submit\">Subscribe free</button>\n    </form>\n    <p class=\"subnote\">Join the founding readers &middot; free forever &middot; unsubscribe anytime.</p>\n  </div>"
+  },
+  {
+    "key": "index-head-extra",
+    "label": "Home — extra <head> code",
+    "page": "index",
+    "pageTitle": "Home",
+    "defaultHtml": "",
+    "injection": "head"
+  },
+  {
+    "key": "index-body-end",
+    "label": "Home — extra code before </body>",
+    "page": "index",
+    "pageTitle": "Home",
+    "defaultHtml": "",
+    "injection": "body"
+  },
+  {
+    "key": "about-head-extra",
+    "label": "About — extra <head> code",
+    "page": "about",
+    "pageTitle": "About",
+    "defaultHtml": "",
+    "injection": "head"
+  },
+  {
+    "key": "about-body-end",
+    "label": "About — extra code before </body>",
+    "page": "about",
+    "pageTitle": "About",
+    "defaultHtml": "",
+    "injection": "body"
+  },
+  {
+    "key": "read-head-extra",
+    "label": "How It Works — extra <head> code",
+    "page": "read",
+    "pageTitle": "How It Works",
+    "defaultHtml": "",
+    "injection": "head"
+  },
+  {
+    "key": "read-body-end",
+    "label": "How It Works — extra code before </body>",
+    "page": "read",
+    "pageTitle": "How It Works",
+    "defaultHtml": "",
+    "injection": "body"
+  },
+  {
+    "key": "series-head-extra",
+    "label": "Where to Start — extra <head> code",
+    "page": "series",
+    "pageTitle": "Where to Start",
+    "defaultHtml": "",
+    "injection": "head"
+  },
+  {
+    "key": "series-body-end",
+    "label": "Where to Start — extra code before </body>",
+    "page": "series",
+    "pageTitle": "Where to Start",
+    "defaultHtml": "",
+    "injection": "body"
+  },
+  {
+    "key": "subscribe-head-extra",
+    "label": "Subscribe — extra <head> code",
+    "page": "subscribe",
+    "pageTitle": "Subscribe",
+    "defaultHtml": "",
+    "injection": "head"
+  },
+  {
+    "key": "subscribe-body-end",
+    "label": "Subscribe — extra code before </body>",
+    "page": "subscribe",
+    "pageTitle": "Subscribe",
+    "defaultHtml": "",
+    "injection": "body"
+  }
+]

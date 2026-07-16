@@ -167,6 +167,64 @@ export async function getOrCreateProgress(userId: string, seriesId: string): Pro
   return (await db.prepare('SELECT * FROM progress WHERE id = ?').bind(id).first<ProgressRow>())!;
 }
 
+export async function listSeries(): Promise<SeriesRow[]> {
+  const db = getDb();
+  const { results } = await db.prepare('SELECT * FROM series ORDER BY created_at ASC').all<SeriesRow>();
+  return results ?? [];
+}
+
+export async function updateSeries(
+  id: string,
+  fields: { title?: string; subtitle?: string | null; passage?: string | null; days_json?: string; total_days?: number }
+): Promise<SeriesRow | null> {
+  const db = getDb();
+  const current = await getSeriesById(id);
+  if (!current) return null;
+
+  const defined = Object.fromEntries(Object.entries(fields).filter(([, v]) => v !== undefined));
+  const next = { ...current, ...defined };
+  await db
+    .prepare('UPDATE series SET title = ?, subtitle = ?, passage = ?, days_json = ?, total_days = ? WHERE id = ?')
+    .bind(next.title, next.subtitle, next.passage, next.days_json, next.total_days, id)
+    .run();
+  return getSeriesById(id);
+}
+
+export interface SiteContentRow {
+  key: string;
+  value: string;
+  updated_at: string;
+}
+
+export async function getSiteContentMap(keys: string[]): Promise<Record<string, string>> {
+  if (keys.length === 0) return {};
+  const db = getDb();
+  const placeholders = keys.map(() => '?').join(', ');
+  const { results } = await db
+    .prepare(`SELECT key, value FROM site_content WHERE key IN (${placeholders})`)
+    .bind(...keys)
+    .all<SiteContentRow>();
+  const map: Record<string, string> = {};
+  for (const row of results ?? []) map[row.key] = row.value;
+  return map;
+}
+
+export async function upsertSiteContent(key: string, value: string): Promise<void> {
+  const db = getDb();
+  await db
+    .prepare(
+      `INSERT INTO site_content (key, value) VALUES (?, ?)
+       ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')`
+    )
+    .bind(key, value)
+    .run();
+}
+
+export async function deleteSiteContent(key: string): Promise<void> {
+  const db = getDb();
+  await db.prepare('DELETE FROM site_content WHERE key = ?').bind(key).run();
+}
+
 export async function completeDay(userId: string, seriesId: string, day: number, totalDays: number): Promise<ProgressRow> {
   const db = getDb();
   const progress = await getOrCreateProgress(userId, seriesId);
