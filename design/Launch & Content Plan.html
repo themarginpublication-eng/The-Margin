@@ -1,0 +1,1145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Margin — Launch &amp; Content Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --parchment:#F3EEE3; --vellum:#FAF6EC; --margin:#C9BFAE;
+    --rust:#A8593C; --gilt:#B68A47; --ash:#6B5F54; --ink:#1A1814;
+    --font-display:'Fraunces',Georgia,serif;
+    --font-serif:'Newsreader',Georgia,serif;
+    --font-sans:'Inter',system-ui,sans-serif;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { background:#ddd8cd; }
+  body {
+    font-family:var(--font-serif); font-weight:400; font-size:18px; line-height:1.7;
+    color:var(--ink); background:#ddd8cd;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    padding:56px 20px;
+  }
+  .page {
+    max-width:960px; margin:0 auto; background:var(--parchment);
+    padding:88px 88px 72px;
+    box-shadow:0 40px 80px -40px rgba(26,24,20,0.28);
+  }
+  .page + .page { margin-top:40px; }
+
+  /* type helpers */
+  .label { font-family:var(--font-sans); font-weight:500; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--ash); }
+  .label--rust { color:var(--rust); }
+  .italic { font-style:italic; }
+  .rust { color:var(--rust); }
+  .ash { color:var(--ash); }
+  em { font-style:italic; }
+
+  /* masthead */
+  .masthead { display:flex; justify-content:space-between; align-items:flex-start; padding-bottom:24px; border-bottom:1px solid var(--margin); }
+  .wm { display:inline-flex; align-items:stretch; gap:13px; }
+  .wm__bar { width:2px; background:var(--rust); }
+  .wm__type { font-family:var(--font-display); font-weight:900; letter-spacing:-0.025em; line-height:1; color:var(--ink); font-size:27px; }
+  .wm__tag { font-family:var(--font-sans); font-weight:500; text-transform:uppercase; letter-spacing:0.22em; font-size:9.5px; color:var(--ash); margin-top:7px; }
+  .masthead__meta { text-align:right; }
+  .masthead__meta .label + .label { margin-top:6px; }
+
+  /* hero */
+  .hero { margin-top:60px; display:grid; grid-template-columns:auto 1fr; gap:32px; }
+  .hero__rule { width:3px; background:var(--rust); }
+  .hero h1 { font-family:var(--font-display); font-weight:900; letter-spacing:-0.035em; line-height:0.92; font-size:64px; color:var(--ink); }
+  .hero h1 em { font-family:var(--font-serif); font-weight:500; }
+  .hero__deck { font-family:var(--font-serif); font-style:italic; font-weight:500; font-size:22px; line-height:1.45; color:var(--ink); max-width:52ch; margin-top:22px; }
+
+  /* section header */
+  .sec { margin-top:68px; }
+  .sec__head { display:flex; align-items:center; gap:12px; margin-bottom:24px; }
+  .sec__bar { width:18px; height:1px; background:var(--margin); }
+  .sec__num { font-family:var(--font-sans); font-weight:500; font-size:12px; letter-spacing:0.22em; color:var(--rust); }
+  .sec__title { font-family:var(--font-sans); font-weight:600; font-size:12px; text-transform:uppercase; color:var(--ash); letter-spacing:0.2em; }
+  .sec h2 { font-family:var(--font-display); font-weight:900; letter-spacing:-0.03em; line-height:1.0; font-size:40px; color:var(--ink); margin-bottom:18px; }
+  .prose { max-width:64ch; font-size:18px; line-height:1.75; }
+  .prose + .prose { margin-top:0.9em; }
+
+  /* protected weeks */
+  .reality { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:10px; }
+  .rcard { background:var(--vellum); padding:26px 26px; display:grid; grid-template-columns:auto 1fr; gap:18px; align-items:start; }
+  .rcard__bar { width:3px; background:var(--rust); align-self:stretch; }
+  .rcard__bar--gilt { background:var(--gilt); }
+  .rcard__bar--ash { background:var(--margin); }
+  .rcard h3 { font-family:var(--font-display); font-weight:600; font-size:20px; letter-spacing:-0.01em; margin-bottom:5px; line-height:1.1; }
+  .rcard p { font-size:15.5px; line-height:1.5; color:var(--ash); }
+  .rcard .when { font-family:var(--font-sans); font-weight:600; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--rust); margin-bottom:9px; }
+
+  /* timeline / phases */
+  .phases { margin-top:14px; }
+  .phase { display:grid; grid-template-columns:200px 3px 1fr; gap:0 28px; }
+  .phase__rail { position:relative; }
+  .phase__line { width:3px; background:var(--margin); height:100%; }
+  .phase__dot { position:absolute; left:-5px; top:6px; width:13px; height:13px; border-radius:50%; background:var(--rust); }
+  .phase__when { padding-bottom:36px; }
+  .phase__when .ph { font-family:var(--font-sans); font-weight:600; font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--rust); margin-bottom:7px; }
+  .phase__when .dt { font-family:var(--font-display); font-weight:600; font-size:21px; letter-spacing:-0.01em; line-height:1.08; color:var(--ink); }
+  .phase__when .sub { font-family:var(--font-sans); font-size:11px; letter-spacing:0.04em; color:var(--ash); margin-top:5px; text-transform:uppercase; }
+  .phase__body { padding-bottom:36px; }
+  .phase__body h3 { font-family:var(--font-display); font-weight:900; font-size:25px; letter-spacing:-0.02em; margin-bottom:9px; line-height:1.05; }
+  .phase__body p { font-size:16.5px; line-height:1.6; max-width:54ch; }
+  .phase__body ul { margin-top:11px; list-style:none; display:flex; flex-direction:column; gap:7px; }
+  .phase__body li { display:flex; gap:11px; font-size:15.5px; line-height:1.45; }
+  .phase__body li::before { content:""; flex:0 0 auto; width:6px; height:6px; margin-top:8px; background:var(--rust); border-radius:50%; }
+  .phase--protected .phase__dot { background:var(--gilt); }
+  .phase--protected .phase__when .ph,
+  .phase--protected .phase__body li::before { background:var(--gilt); }
+  .phase--protected .phase__when .ph { color:var(--gilt); background:none; }
+  .phase--protected .phase__body { opacity:0.92; }
+  .protected-tag { display:inline-block; font-family:var(--font-sans); font-weight:600; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gilt); border:1px solid var(--gilt); padding:3px 9px; border-radius:2px; margin-bottom:10px; }
+
+  /* series options */
+  .options { display:flex; flex-direction:column; gap:14px; margin-top:8px; }
+  .opt { background:var(--vellum); padding:30px 32px; display:grid; grid-template-columns:auto 1fr auto; gap:24px; align-items:start; }
+  .opt__bar { width:3px; background:var(--rust); align-self:stretch; }
+  .opt__main h3 { font-family:var(--font-display); font-weight:900; font-size:25px; letter-spacing:-0.02em; line-height:1.05; margin-bottom:4px; }
+  .opt__main .ttl-sub { font-style:italic; color:var(--ash); font-size:16px; margin-bottom:11px; }
+  .opt__main p { font-size:16px; line-height:1.58; max-width:58ch; }
+  .opt__meta { text-align:right; min-width:128px; }
+  .opt__meta .m { font-family:var(--font-sans); font-size:10.5px; letter-spacing:0.04em; text-transform:uppercase; color:var(--ash); line-height:1.5; }
+  .opt__meta .m strong { color:var(--ink); font-weight:600; }
+  .opt--pick { background:#efe7d6; }
+  .pickflag { display:inline-block; font-family:var(--font-sans); font-weight:600; font-size:9.5px; letter-spacing:0.16em; text-transform:uppercase; color:#fff; background:var(--rust); padding:3px 9px; border-radius:2px; margin-bottom:10px; }
+
+  /* channel system */
+  .channels { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px; }
+  .ch { background:var(--vellum); padding:24px 26px; }
+  .ch--hub { grid-column:1 / -1; background:var(--ink); color:var(--parchment); }
+  .ch--hub .ch__name, .ch--hub p { color:var(--parchment); }
+  .ch--hub .ch__role { color:var(--gilt); }
+  .ch__name { font-family:var(--font-display); font-weight:900; font-size:21px; letter-spacing:-0.01em; margin-bottom:3px; }
+  .ch__role { font-family:var(--font-sans); font-weight:600; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--rust); margin-bottom:11px; }
+  .ch p { font-size:15px; line-height:1.5; color:var(--ash); }
+
+  /* repurpose flow */
+  .repurp { margin-top:18px; background:var(--vellum); padding:30px 32px; }
+  .repurp__top { font-family:var(--font-display); font-weight:600; font-size:18px; font-style:italic; color:var(--ink); margin-bottom:18px; }
+  .repurp__row { display:flex; flex-wrap:wrap; gap:9px; align-items:center; }
+  .chip { font-family:var(--font-sans); font-weight:500; font-size:12.5px; letter-spacing:0.02em; background:var(--parchment); border:1px solid var(--margin); color:var(--ink); padding:8px 13px; border-radius:2px; }
+  .chip--rust { background:var(--rust); color:#fff; border-color:var(--rust); }
+  .arrow { color:var(--rust); font-size:15px; }
+
+  /* cadence table */
+  .ctable { width:100%; border-collapse:collapse; margin-top:8px; font-size:15px; }
+  .ctable th { text-align:left; font-family:var(--font-sans); font-weight:600; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ash); padding:0 14px 12px; border-bottom:2px solid var(--rust); }
+  .ctable td { padding:15px 14px; border-bottom:1px solid var(--margin); vertical-align:top; line-height:1.4; }
+  .ctable tr:last-child td { border-bottom:none; }
+  .ctable .fmt { font-family:var(--font-display); font-weight:600; font-size:16px; letter-spacing:-0.01em; color:var(--ink); }
+  .ctable .cad { font-family:var(--font-sans); font-weight:600; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--rust); white-space:nowrap; }
+  .ctable .where { font-size:13.5px; color:var(--ash); }
+  .ctable .desc { font-size:14.5px; color:var(--ink); }
+
+  /* editorial calendar */
+  .cal { width:100%; border-collapse:collapse; margin-top:8px; font-size:14.5px; }
+  .cal th { text-align:left; font-family:var(--font-sans); font-weight:600; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ash); padding:0 12px 11px; border-bottom:2px solid var(--rust); }
+  .cal td { padding:13px 12px; border-bottom:1px solid var(--margin); vertical-align:top; line-height:1.4; }
+  .cal tr:last-child td { border-bottom:none; }
+  .cal .wk { font-family:var(--font-sans); font-weight:600; font-size:11px; letter-spacing:0.06em; color:var(--rust); white-space:nowrap; }
+  .cal .main { font-family:var(--font-display); font-weight:600; font-size:15px; letter-spacing:-0.01em; color:var(--ink); }
+  .cal .small { font-size:13px; color:var(--ash); line-height:1.45; }
+  .cal tr.protected td { background:rgba(182,138,71,0.10); }
+  .cal tr.protected .wk { color:var(--gilt); }
+
+  /* checklist */
+  .checks { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px; }
+  .checkcol { background:var(--vellum); padding:26px 28px; }
+  .checkcol h3 { font-family:var(--font-display); font-weight:900; font-size:18px; letter-spacing:-0.01em; margin-bottom:14px; }
+  .checkcol .label--rust { margin-bottom:14px; display:block; }
+  .check { display:flex; gap:11px; font-size:15px; line-height:1.45; margin-bottom:11px; }
+  .check:last-child { margin-bottom:0; }
+  .box { flex:0 0 auto; width:15px; height:15px; border:1.5px solid var(--rust); border-radius:2px; margin-top:3px; }
+
+  /* goals */
+  .goals { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:8px; }
+  .goal { background:var(--vellum); padding:24px 22px; }
+  .goal__bar { width:24px; height:3px; background:var(--rust); margin-bottom:14px; }
+  .goal h3 { font-family:var(--font-sans); font-weight:600; font-size:10.5px; letter-spacing:0.13em; text-transform:uppercase; color:var(--ash); margin-bottom:9px; line-height:1.3; }
+  .goal .big { font-family:var(--font-display); font-weight:900; font-size:30px; letter-spacing:-0.02em; color:var(--ink); line-height:1; margin-bottom:8px; }
+  .goal p { font-size:13.5px; line-height:1.45; color:var(--ash); }
+
+  /* closing */
+  .promise { margin-top:64px; background:var(--ink); color:var(--parchment); padding:50px 52px; display:grid; grid-template-columns:auto 1fr; gap:30px; align-items:stretch; }
+  .promise__rule { width:3px; background:var(--rust); }
+  .promise__label { font-family:var(--font-sans); font-weight:500; font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--margin); margin-bottom:18px; }
+  .promise__line { font-family:var(--font-serif); font-style:italic; font-weight:500; font-size:26px; line-height:1.34; color:var(--parchment); max-width:36ch; }
+  .promise__line em { color:var(--gilt); }
+
+  .footer { margin-top:30px; padding-top:24px; border-top:1px solid var(--margin); display:flex; justify-content:space-between; align-items:center; }
+  .footer .label { font-size:11px; }
+
+  .note { margin-top:16px; font-size:14.5px; font-style:italic; color:var(--ash); max-width:60ch; }
+
+  /* social plan helpers */
+  .plist { list-style:none; margin-top:12px; display:flex; flex-direction:column; gap:6px; }
+  .plist li { display:flex; gap:10px; font-size:14.5px; line-height:1.4; }
+  .plist li::before { content:""; flex:0 0 auto; width:5px; height:5px; margin-top:7px; background:var(--rust); border-radius:50%; }
+  .dgrid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px; }
+  .tcard { background:var(--vellum); padding:24px 26px; }
+  .tcard h3 { font-family:var(--font-display); font-weight:900; font-size:18px; letter-spacing:-0.01em; margin-bottom:3px; }
+  .tcard .where2 { font-family:var(--font-sans); font-weight:600; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--rust); margin-bottom:13px; }
+  .tcard .step { font-size:14.5px; line-height:1.55; color:var(--ink); margin-bottom:7px; }
+  .tcard .step:last-child { margin-bottom:0; }
+  .tcard .step .seq { font-family:var(--font-sans); font-weight:600; font-size:11px; color:var(--rust); letter-spacing:0.04em; margin-right:7px; }
+  .tcard .ex { margin-top:13px; padding-top:13px; border-top:1px solid var(--margin); font-style:italic; font-size:14px; line-height:1.5; color:var(--ash); }
+
+  /* post specimens + month calendar */
+  .specs { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:8px; }
+  .spec__cap { font-family:var(--font-sans); font-weight:600; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--rust); margin-top:11px; }
+  .spec__sub { font-size:12.5px; color:var(--ash); line-height:1.45; margin-top:3px; }
+  .canv { position:relative; aspect-ratio:1/1; background:var(--parchment); border:1px solid var(--margin); padding:18px; display:flex; flex-direction:column; overflow:hidden; }
+  .cwm { display:flex; align-items:center; gap:6px; }
+  .cwm i { width:2px; height:13px; background:var(--rust); display:block; }
+  .cwm span { font-family:var(--font-display); font-weight:900; font-size:12px; letter-spacing:-0.02em; color:var(--ink); }
+  .pc { display:inline-block; font-family:var(--font-sans); font-weight:600; font-size:9px; letter-spacing:0.02em; padding:2px 5px; border-radius:2px; margin:2px 3px 0 0; line-height:1.5; }
+  .pc--ig { background:#efe7d6; color:var(--rust); }
+  .pc--note { background:var(--vellum); color:var(--ash); border:1px solid var(--margin); }
+  .pc--hub { background:var(--ink); color:var(--parchment); }
+  .pc--li { background:rgba(168,89,60,0.12); color:var(--rust); }
+  .pc--fb { background:rgba(107,95,84,0.14); color:var(--ink); }
+  .monthcal { width:100%; border-collapse:collapse; margin-top:8px; table-layout:fixed; }
+  .monthcal th { font-family:var(--font-sans); font-weight:600; font-size:9.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ash); padding:0 6px 9px; text-align:left; border-bottom:2px solid var(--rust); }
+  .monthcal td { vertical-align:top; padding:9px 6px; border-bottom:1px solid var(--margin); font-size:11px; }
+  .monthcal td.wed { background:rgba(182,138,71,0.10); }
+  .monthcal .wklabel { font-family:var(--font-sans); font-weight:600; font-size:9px; color:var(--rust); letter-spacing:0.05em; display:block; margin-bottom:4px; }
+
+  @media (max-width:860px) {
+    body { padding:20px 10px; }
+    .page { padding:48px 26px; }
+    .hero h1 { font-size:44px; }
+    .reality, .channels, .checks { grid-template-columns:1fr; }
+    .goals { grid-template-columns:1fr 1fr; }
+    .phase { grid-template-columns:120px 3px 1fr; gap:0 16px; }
+    .opt { grid-template-columns:auto 1fr; }
+    .opt__meta { grid-column:2; text-align:left; margin-top:10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 ============ -->
+<div class="page" data-screen-label="Launch Plan — Overview">
+
+  <header class="masthead">
+    <div class="wm">
+      <div class="wm__bar"></div>
+      <div>
+        <div class="wm__type">the margin</div>
+        <div class="wm__tag">Teaching biblical literacy · in the margins</div>
+      </div>
+    </div>
+    <div class="masthead__meta">
+      <div class="label">Brand Playbook</div>
+      <div class="label label--rust">Launch &amp; Content Plan</div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero__rule"></div>
+    <div>
+      <h1>Launch in the <em>margins</em> of a full life.</h1>
+      <p class="hero__deck">A release plan and content rhythm built around your real calendar — the Phoenix conference, wedding season, Wednesday youth ministry — not around free time you don't have. Slow, but never soft. We build quietly, launch when you can sustain it, and let the work compound.</p>
+    </div>
+  </div>
+
+  <!-- 01 reality -->
+  <section class="sec">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">01</span><span class="sec__title">The honest starting point</span></div>
+    <h2>Protected weeks come first.</h2>
+    <p class="prose">A launch fails when it ignores the life around it. Before a single post, here's what the calendar says we must plan <em>around</em>. These are non-negotiable — the plan flexes to protect them.</p>
+    <div class="reality">
+      <div class="rcard">
+        <div class="rcard__bar rcard__bar--gilt"></div>
+        <div>
+          <div class="when">Now – Jul 10 · Crunch</div>
+          <h3>The push + Phoenix</h3>
+          <p>A heavy comms-team push right up to the conference (Jul 6–10) as deputy communications director. Through July 10, the brand asks <em>nothing</em> of you but a few captured notes. No setup pressure, no launch.</p>
+        </div>
+      </div>
+      <div class="rcard">
+        <div class="rcard__bar"></div>
+        <div>
+          <div class="when">Oct 11 – 25 · Protect</div>
+          <h3>Wedding &amp; honeymoon</h3>
+          <p>October 18. The brand goes quiet for the wedding and honeymoon — pre-scheduled notes only, nothing that needs you. We build a backlog in the fall so this fortnight runs itself.</p>
+        </div>
+      </div>
+      <div class="rcard">
+        <div class="rcard__bar"></div>
+        <div>
+          <div class="when">Every Wednesday · Recurring</div>
+          <h3>Youth ministry</h3>
+          <p>Wednesday evenings are gone. So Wednesday is never a writing or publish day — it's a great day for a pre-scheduled light post to go out on its own.</p>
+        </div>
+      </div>
+      <div class="rcard">
+        <div class="rcard__bar rcard__bar--ash"></div>
+        <div>
+          <div class="when">Daily · An asset, not a cost</div>
+          <h3>Your Lectio Divina</h3>
+          <p>You're already reading John slowly every morning. That daily study <em>is</em> the raw material for the first series — the brand is your own margin notes, lightly edited. No separate research load.</p>
+        </div>
+      </div>
+    </div>
+    <p class="note">The principle: The Margin is fueled by what you're already doing devotionally. We're not adding a second job — we're publishing the overflow of the first one.</p>
+  </section>
+
+</div>
+
+<!-- ============ PAGE 2 — ROADMAP ============ -->
+<div class="page" data-screen-label="Launch Plan — Roadmap">
+
+  <section class="sec" style="margin-top:0;">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">02</span><span class="sec__title">The release roadmap</span></div>
+    <h2>From crunch to launch.</h2>
+    <p class="prose">You're in a heavy push until the conference ends July 10 — so we don't build during it. Until then you only <em>capture</em>. The real foundation work starts mid-July, we soft-open to a founding circle in late August, and go public in September when audiences re-engage with the school-year rhythm — the same rhythm your comms work already follows.</p>
+
+    <div class="phases" style="margin-top:34px;">
+      <div class="phase phase--protected">
+        <div class="phase__when">
+          <div class="ph">Phase 0</div>
+          <div class="dt">Now → Jul 10</div>
+          <div class="sub">Capture only</div>
+        </div>
+        <div class="phase__rail"><div class="phase__dot"></div><div class="phase__line"></div></div>
+        <div class="phase__body">
+          <span class="protected-tag">Crunch — protect it</span>
+          <h3>Just collect</h3>
+          <p>You're flat-out with the comms push and the conference. The brand does not get set up now. The only "work" is frictionless capture from study you're already doing.</p>
+          <ul>
+            <li>Jot a line or two from each morning's John reading into one running note</li>
+            <li>Save passages and phrases that strike you — raw material, not drafts</li>
+            <li>That's it. No accounts, no posting, no pressure.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase phase--protected">
+        <div class="phase__when">
+          <div class="ph">Protected</div>
+          <div class="dt">Jul 6 – 10</div>
+          <div class="sub">Phoenix</div>
+        </div>
+        <div class="phase__rail"><div class="phase__dot"></div><div class="phase__line"></div></div>
+        <div class="phase__body">
+          <span class="protected-tag">Go dark — on purpose</span>
+          <h3>Conference week</h3>
+          <p>The peak of the crunch. Nothing publishes, nothing is due, nothing to set up. Rest is part of the discipline.</p>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__when">
+          <div class="ph">Phase 1</div>
+          <div class="dt">Jul 13 → Aug</div>
+          <div class="sub">Foundation</div>
+        </div>
+        <div class="phase__rail"><div class="phase__dot"></div><div class="phase__line"></div></div>
+        <div class="phase__body">
+          <h3>Build in the quiet</h3>
+          <p>Conference behind you. Now, in available pockets and around the wedding, build the things that make launch survivable.</p>
+          <ul>
+            <li>Set up Substack: wordmark, rust accent, About page, welcome email — point it at <strong>readthemargin.net</strong></li>
+            <li>Turn your captured notes into <strong>4–6 banked essays</strong> — enough that October coasts around the wedding</li>
+            <li>Lock the first series and reserve the handle on each social channel</li>
+            <li>Draft 8–10 short "one-verse notes" you can post anytime</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__when">
+          <div class="ph">Phase 2</div>
+          <div class="dt">Wk of Aug 24</div>
+          <div class="sub">Soft launch</div>
+        </div>
+        <div class="phase__rail"><div class="phase__dot"></div><div class="phase__line"></div></div>
+        <div class="phase__body">
+          <h3>Founding readers</h3>
+          <p>Open the doors quietly. No big announcement — a personal invitation to people who already trust you.</p>
+          <ul>
+            <li>Publish the <strong>first essay</strong> + welcome note on Substack</li>
+            <li>Personally invite your circle (text, not broadcast) to become founding readers</li>
+            <li>Begin a <strong>light, every-other-week</strong> cadence — protect the wedding buffer</li>
+            <li>Listen: what resonates, what questions come back</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__when">
+          <div class="ph">Phase 3</div>
+          <div class="dt">Wk of Sep 14</div>
+          <div class="sub">Public launch</div>
+        </div>
+        <div class="phase__rail"><div class="phase__dot"></div><div class="phase__line"></div></div>
+        <div class="phase__body">
+          <h3>Open to everyone</h3>
+          <p>Post-Labor Day, when people return to routine and rhythm. Now the social channels switch on and point back to the hub.</p>
+          <ul>
+            <li>Announce publicly across Instagram, Threads, X, LinkedIn, Facebook</li>
+            <li>Publish the <strong>Foundations anchor piece</strong> ("How to read the Bible") as the front door</li>
+            <li>Turn on the full repurposing engine (one essay → many posts)</li>
+            <li>Settle into a sustainable, predictable weekly-or-biweekly rhythm</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase phase--protected">
+        <div class="phase__when">
+          <div class="ph">Protected</div>
+          <div class="dt">Oct 11 – 25</div>
+          <div class="sub">Wedding</div>
+        </div>
+        <div class="phase__rail"><div class="phase__dot"></div><div class="phase__line"></div></div>
+        <div class="phase__body">
+          <span class="protected-tag">Coast — go quiet</span>
+          <h3>Wedding &amp; honeymoon</h3>
+          <p>October 18. The rhythm you proved in September now coasts on the fall backlog — a pre-scheduled note or two keeps a faint pulse, but nothing needs you. Be fully present for your marriage.</p>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__when">
+          <div class="ph">Phase 4</div>
+          <div class="dt">Late Oct onward</div>
+          <div class="sub">Rhythm</div>
+        </div>
+        <div class="phase__rail"><div class="phase__dot" style="top:6px;"></div><div class="phase__line" style="background:transparent;"></div></div>
+        <div class="phase__body">
+          <h3>Compounding</h3>
+          <p>Back from the honeymoon, you resume the rhythm you already proved in September. Each book becomes a series; each series deepens the archive; the archive becomes the reason to subscribe.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PAGE 3 — SERIES OPTIONS ============ -->
+<div class="page" data-screen-label="Launch Plan — First Series Options">
+
+  <section class="sec" style="margin-top:0;">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">03</span><span class="sec__title">What to launch with</span></div>
+    <h2>Choose it slowly. Choose it yours.</h2>
+    <p class="prose">The first series defines what The Margin <em>is</em> — so don't rush it. Live in the text through the summer and let one direction start to feel like <em>yours.</em> The one rule: <span class="rust">don't open in someone else's lane.</span> "How to read the Bible" is The Bible Project's territory — lead there and you look like a follower. Open instead by <em>doing</em> a close reading so good it proves the whole premise: you've been reading this too fast.</p>
+
+    <div class="reality" style="margin-top:18px;">
+      <div class="rcard"><div class="rcard__bar"></div><div>
+        <div class="when">Lane 01 · A book people overlook</div>
+        <h3>The overlooked book</h3>
+        <p><strong>Ecclesiastes</strong> — brutally honest; for the seeker. <strong>Ruth</strong> — a four-chapter novella. <strong>Esther</strong> — the book where God is never named. <strong>Philemon</strong> — a single radical page. <strong>Habakkuk</strong> — a prophet who argues with God.</p>
+      </div></div>
+      <div class="rcard"><div class="rcard__bar"></div><div>
+        <div class="when">Lane 02 · A thread you trace</div>
+        <h3>The thread across Scripture</h3>
+        <p><strong>The questions God asks.</strong> <strong>The questions Jesus asks.</strong> <strong>The prayers of the Bible.</strong> <strong>Sabbath &amp; rest.</strong> <strong>Covenant</strong> — the spine of the whole story. One idea, followed Genesis to Revelation.</p>
+      </div></div>
+      <div class="rcard"><div class="rcard__bar"></div><div>
+        <div class="when">Lane 03 · A person under-taught</div>
+        <h3>The figure we skip</h3>
+        <p><strong>Tamar</strong> (Genesis 38) — wronged, and in Jesus' line. <strong>The women of Matthew 1</strong> — five scandalous, foreign, unexpected names. <strong>Hagar</strong> — the first person to name God. <strong>Jacob</strong> — the deceiver, read fresh.</p>
+      </div></div>
+      <div class="rcard"><div class="rcard__bar rcard__bar--ash"></div><div>
+        <div class="when">Lane 04 · A passage you dwell in</div>
+        <h3>One text, read for weeks</h3>
+        <p><strong>Psalm 23</strong> — slowed until it stops being a funeral cliché. <strong>1 Corinthians 13</strong> — rescued from weddings, read as a knife. <strong>John 1</strong> — the opening hymn you already live in daily.</p>
+      </div></div>
+    </div>
+    <p class="note">Notice which lane you keep returning to over the summer. That's the tell. When one feels like <em>yours</em>, we build the full arc around it.</p>
+  </section>
+</div>
+
+<!-- ============ PAGE 3b — SERIES SHORTLIST ============ -->
+<div class="page" data-screen-label="Launch Plan — Series Shortlist">
+
+  <section class="sec" style="margin-top:0;">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">03</span><span class="sec__title">If I had to whisper three</span></div>
+    <h2>A shortlist for September.</h2>
+    <p class="prose">No pressure to choose from these — but given your reader (the seeker, allergic to hype) and your load, these three are the strongest, most distinctively <em>Margin</em> debuts. Each teaches slow reading <em>by doing it</em>, and none of them is a foundations course.</p>
+
+    <div class="options">
+      <div class="opt opt--pick">
+        <div class="opt__bar"></div>
+        <div class="opt__main">
+          <span class="pickflag">My favorite</span>
+          <h3>The Questions God Asks</h3>
+          <div class="ttl-sub">A thread traced across Scripture</div>
+          <p>"Where are you?" · "Where is your brother?" · "Whom shall I send?" God as questioner. It's unmistakably <em>The Margin</em> — your own voice principle is "the hook is a question, not a takeaway." Endlessly repurposable into posts, and it models slow reading on the very lines we skip. (A twin version: <em>the questions Jesus asks</em> — he asked hundreds, answered almost none.)</p>
+        </div>
+        <div class="opt__meta">
+          <div class="m"><strong>6–10 notes</strong><br />Thread series<br /><br />Study load: <strong>Med</strong><br />Gather as<br />you read</div>
+        </div>
+      </div>
+
+      <div class="opt">
+        <div class="opt__bar"></div>
+        <div class="opt__main">
+          <span class="label label--rust" style="display:block; margin-bottom:9px;">For the seeker</span>
+          <h3>Ecclesiastes</h3>
+          <div class="ttl-sub">The Bible's most honest book</div>
+          <p>"Everything is vapor." A contained, literary debut that speaks straight to the intellectually serious reader allergic to easy answers. Confident, surprising — the kind of book that makes someone say "I didn't know <em>that</em> was in there."</p>
+        </div>
+        <div class="opt__meta">
+          <div class="m"><strong>6–8 notes</strong><br />Book series<br /><br />Study load: <strong>Med</strong><br />One short book</div>
+        </div>
+      </div>
+
+      <div class="opt">
+        <div class="opt__bar"></div>
+        <div class="opt__main">
+          <span class="label label--rust" style="display:block; margin-bottom:9px;">The shareable hook</span>
+          <h3>Esther</h3>
+          <div class="ttl-sub">The book where God is never named</div>
+          <p>An entire series built around a striking absence — God is never once mentioned, yet His hand is everywhere. That premise is the kind people screenshot and pass on. A gripping narrative, contained in ten chapters.</p>
+        </div>
+        <div class="opt__meta">
+          <div class="m"><strong>6–10 notes</strong><br />Book series<br /><br />Study load: <strong>Med</strong><br />Narrative,<br />readable</div>
+        </div>
+      </div>
+    </div>
+    <p class="note">The quiet long-game: whatever you open with, <span class="rust">John</span> is always waiting as your first <em>running</em> series — it's your daily reading, so it never adds study load. Open with something distinctive; settle into John for the long haul.</p>
+  </section>
+</div>
+
+<!-- ============ PAGE 4 — CHANNELS + CADENCE ============ -->
+<div class="page" data-screen-label="Launch Plan — Channels & Cadence">
+
+  <section class="sec" style="margin-top:0;">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">04</span><span class="sec__title">The channel system</span></div>
+    <h2>One hub. Five spokes.</h2>
+    <p class="prose">Substack is home — where the real teaching lives and where readers are <em>kept</em>. Every social channel is a doorway back to it. You never create "for" social; you break the essay into pieces and point home.</p>
+
+    <div class="channels">
+      <div class="ch ch--hub">
+        <div class="ch__name">Substack</div>
+        <div class="ch__role">The home base · where readers are kept</div>
+        <p>The full margin notes, the welcome sequence, the archive that compounds. Owns the email list — the one audience no algorithm can take from you. Everything points here.</p>
+      </div>
+      <div class="ch">
+        <div class="ch__name">Instagram</div>
+        <div class="ch__role">Carousels · the teaching spoke</div>
+        <p>Annotated passage breakdowns and teaching threads as carousels. Your most visual front door.</p>
+      </div>
+      <div class="ch">
+        <div class="ch__name">Threads &amp; X</div>
+        <div class="ch__role">Notes · the conversation spoke</div>
+        <p>One-verse notes, short observations, questions. Where the literary voice lives in miniature and people reply.</p>
+      </div>
+      <div class="ch">
+        <div class="ch__name">LinkedIn</div>
+        <div class="ch__role">Credibility · the long-form spoke</div>
+        <p>The occasional fuller reflection and the "why I built this." Reaches the thoughtful, professional reader.</p>
+      </div>
+      <div class="ch">
+        <div class="ch__name">Facebook</div>
+        <div class="ch__role">Reach · the relationship spoke</div>
+        <p>Where your existing community already is. Cross-post the essay link; let trust travel through people who know you.</p>
+      </div>
+    </div>
+
+    <div class="repurp">
+      <div class="repurp__top">The repurposing engine — one essay becomes a week of presence:</div>
+      <div class="repurp__row">
+        <span class="chip chip--rust">1 Substack essay</span>
+        <span class="arrow">→</span>
+        <span class="chip">1 IG carousel (the key passage, annotated)</span>
+        <span class="chip">2–3 Threads/X notes (the best lines)</span>
+        <span class="chip">1 LinkedIn reflection</span>
+        <span class="chip">1 FB link share</span>
+        <span class="chip">1 reader question</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">05</span><span class="sec__title">Formats &amp; cadence</span></div>
+    <h2>What you make, how often.</h2>
+    <p class="prose">Cadence flexes with your study load — that's by design. The main essay anchors everything; the lighter formats keep a presence in the weeks a deep piece isn't ready. Start <em>biweekly</em> for the main note and scale to weekly once the backlog is deep.</p>
+    <table class="ctable">
+      <thead><tr><th>Format</th><th>Cadence</th><th>Home</th><th>What it is</th></tr></thead>
+      <tbody>
+        <tr><td class="fmt">Long-form teaching essay</td><td class="cad">Biweekly → weekly</td><td class="where">Substack</td><td class="desc">The core margin note on a passage. Ten minutes to read; ends with one "so what for today" and a question worth taking to a friend or group.</td></tr>
+        <tr><td class="fmt">Audio read-aloud</td><td class="cad">With every essay</td><td class="where">Substack (voiceover)</td><td class="desc">You reading the note aloud — 6 of 43 surveyed readers listen rather than read (commutes, mornings). Record in one take; zero extra writing.</td></tr>
+        <tr><td class="fmt">One-verse note</td><td class="cad">2–3× / week</td><td class="where">Threads · X</td><td class="desc">A single verse, a single observation. Low effort, high consistency — your heartbeat between essays.</td></tr>
+        <tr><td class="fmt">Teaching thread / carousel</td><td class="cad">Weekly</td><td class="where">Instagram</td><td class="desc">The essay's key idea, made visual and swipeable. Your main discovery engine.</td></tr>
+        <tr><td class="fmt">Annotated passage breakdown</td><td class="cad">Biweekly</td><td class="where">Instagram · Substack</td><td class="desc">A passage with the margin literally marked up — the brand motif made literal.</td></tr>
+        <tr><td class="fmt">"How to read this book" guide</td><td class="cad">Per series</td><td class="where">Substack</td><td class="desc">Opens each new book. Genre, context, how to read it well. Evergreen.</td></tr>
+        <tr><td class="fmt">Q&amp;A / reader questions</td><td class="cad">Monthly</td><td class="where">Substack · IG</td><td class="desc">Answer what readers actually ask. Builds relationship and signals you teach, not perform.</td></tr>
+        <tr><td class="fmt">Short video teaching</td><td class="cad">Later (Phase 3)</td><td class="where">IG · Substack</td><td class="desc">Add only once the written rhythm is steady. Don't carry it into launch.</td></tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<!-- ============ PAGE 5 — EDITORIAL CALENDAR ============ -->
+<div class="page" data-screen-label="Launch Plan — Editorial Calendar">
+
+  <section class="sec" style="margin-top:0;">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">06</span><span class="sec__title">From the crunch onward</span></div>
+    <h2>Week by week.</h2>
+    <p class="prose">A concrete editorial calendar from the crunch through public launch. Gold rows are protected — nothing is due but capture. Notice how little is asked of you in any single week: the backlog built after the conference carries the rest.</p>
+    <table class="cal">
+      <thead><tr><th>Week</th><th>Phase</th><th>Main piece</th><th>Lighter touches</th></tr></thead>
+      <tbody>
+        <tr class="protected"><td class="wk">Jun – Jul 5</td><td class="small">Crunch</td><td class="main">Capture only</td><td class="small">Jot lines from daily John reading. No setup.</td></tr>
+        <tr class="protected"><td class="wk">Jul 6–10</td><td class="small">Phoenix</td><td class="main">Go dark</td><td class="small">Conference. Nothing due.</td></tr>
+        <tr><td class="wk">Jul 13</td><td class="small">Foundation</td><td class="main">— (build)</td><td class="small">Set up Substack · turn notes into Essay 1 (John)</td></tr>
+        <tr><td class="wk">Jul 20</td><td class="small">Foundation</td><td class="main">— (build)</td><td class="small">Draft Essay 2 · bank 8 one-verse notes</td></tr>
+        <tr><td class="wk">Jul 27</td><td class="small">Foundation</td><td class="main">— (build)</td><td class="small">Draft Foundations piece 1 · reserve handles</td></tr>
+        <tr><td class="wk">Aug 10</td><td class="small">Foundation / wedding buffer</td><td class="main">— (final prep)</td><td class="small">Polish Essay 1 · welcome email. Flex around wedding.</td></tr>
+        <tr><td class="wk">Aug 24</td><td class="small">Soft launch</td><td class="main">Essay 1 → live</td><td class="small">Personal invites to founding circle · 2 notes</td></tr>
+        <tr><td class="wk">Sep 7</td><td class="small">Soft</td><td class="main">Essay 2 (John)</td><td class="small">2 notes · 1 IG carousel</td></tr>
+        <tr><td class="wk">Sep 14</td><td class="small">Public launch</td><td class="main">Foundations: "How to Read the Bible"</td><td class="small">Announce on all 5 channels · carousel · notes</td></tr>
+        <tr><td class="wk">Sep 21</td><td class="small">Rhythm</td><td class="main">Essay 3 (John)</td><td class="small">Full repurposing engine running</td></tr>
+        <tr><td class="wk">Sep 28 – Oct 5</td><td class="small">Rhythm / build</td><td class="main">Essay 4 + bank ahead</td><td class="small">Pre-schedule October's posts now</td></tr>
+        <tr class="protected"><td class="wk">Oct 11–25</td><td class="small">Wedding</td><td class="main">Coast · go quiet</td><td class="small">Pre-scheduled notes auto-post. Nothing due.</td></tr>
+        <tr><td class="wk">Nov 2+</td><td class="small">Rhythm resumes</td><td class="main">Weekly/biweekly essay</td><td class="small">Back to the proven rhythm</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Built so that no single week — outside the quiet build of June — asks for more than one finished piece plus a few short notes you can write in minutes. That's what makes it survivable.</p>
+  </section>
+</div>
+
+<!-- ============ PAGE 6 — CHECKLIST + GOALS ============ -->
+<div class="page" data-screen-label="Launch Plan — Checklist & Goals">
+
+  <section class="sec" style="margin-top:0;">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">07</span><span class="sec__title">The launch playbook</span></div>
+    <h2>Before you open the doors.</h2>
+    <div class="checks">
+      <div class="checkcol">
+        <span class="label label--rust">Foundation checklist · mid-Jul → Aug</span>
+        <div class="check"><span class="box"></span><div>Substack created — wordmark, rust accent color, About page</div></div>
+        <div class="check"><span class="box checked"></span><div>Domain secured: <strong>readthemargin.net</strong> (Cloudflare) — hello@ forwarding set up, domain verified in Sender.net ✓</div></div>
+        <div class="check"><span class="box"></span><div>Welcome email written (what this is, who it's for, what to expect)</div></div>
+        <div class="check"><span class="box"></span><div>4–6 essays drafted and banked</div></div>
+        <div class="check"><span class="box"></span><div>8–10 one-verse notes written and saved</div></div>
+        <div class="check"><span class="box"></span><div>Handles reserved: IG, Threads, X, LinkedIn, Facebook</div></div>
+        <div class="check"><span class="box"></span><div>First series locked (Foundations + John)</div></div>
+        <div class="check"><span class="box"></span><div>Sample week published open on the site — 12 of 43 surveyed said "I'd want to see it first"</div></div>
+        <div class="check"><span class="box"></span><div>Email the 31 survey opt-ins: thank them, name what you heard (context, time, application), promise the sample week</div></div>
+      </div>
+      <div class="checkcol">
+        <span class="label label--rust">Launch-week checklist</span>
+        <div class="check"><span class="box"></span><div>First essay scheduled, proofed, links working</div></div>
+        <div class="check"><span class="box"></span><div>Personal invite list ready (text the first 20–30 by hand)</div></div>
+        <div class="check"><span class="box"></span><div>Profile pages complete on every channel (bio + link to hub)</div></div>
+        <div class="check"><span class="box"></span><div>First week of repurposed posts pre-scheduled</div></div>
+        <div class="check"><span class="box"></span><div>A reply plan — you teach, so answer every early comment</div></div>
+        <div class="check"><span class="box"></span><div>Wednesday posts pre-scheduled (youth ministry night)</div></div>
+        <div class="check"><span class="box"></span><div>Audio voiceover recorded for the first essay</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">08</span><span class="sec__title">90 days in</span></div>
+    <h2>What success looks like.</h2>
+    <p class="prose">Equal weight across the four goals you named. These are honest, reachable targets for a launch built in the margins — chosen to measure faithfulness and consistency, not vanity. The list doesn't start at zero: 31 survey respondents already asked to be kept posted.</p>
+    <div class="goals">
+      <div class="goal">
+        <div class="goal__bar"></div>
+        <h3>Build the list</h3>
+        <div class="big">100</div>
+        <p>Founding email subscribers — people, not followers. The number that actually matters.</p>
+      </div>
+      <div class="goal">
+        <div class="goal__bar"></div>
+        <h3>Establish voice</h3>
+        <div class="big">8+</div>
+        <p>Published margin notes that together prove what The Margin sounds like and stands for.</p>
+      </div>
+      <div class="goal">
+        <div class="goal__bar"></div>
+        <h3>Grow social</h3>
+        <div class="big">3</div>
+        <p>Channels posting consistently, each a working doorway back to the hub.</p>
+      </div>
+      <div class="goal">
+        <div class="goal__bar"></div>
+        <h3>Real engagement</h3>
+        <div class="big">∞</div>
+        <p>Readers actually opening their Bibles — replies, questions, "I read it for myself." The true metric.</p>
+      </div>
+    </div>
+  </section>
+
+  </section>
+</div>
+
+<!-- ============ PAGE 7 — SOCIAL STRATEGY + CHANNELS ============ -->
+<div class="page" data-screen-label="Social Plan — Channels">
+
+  <header class="masthead">
+    <div class="wm">
+      <div class="wm__bar"></div>
+      <div>
+        <div class="wm__type">the margin</div>
+        <div class="wm__tag">Teaching biblical literacy · in the margins</div>
+      </div>
+    </div>
+    <div class="masthead__meta">
+      <div class="label">Brand Playbook</div>
+      <div class="label label--rust">The Social Media Plan</div>
+    </div>
+  </header>
+
+  <div class="hero" style="margin-top:48px;">
+    <div class="hero__rule"></div>
+    <div>
+      <h1>Doorways, not a <em>stage.</em></h1>
+      <p class="hero__deck">Social isn't where The Margin lives — it's how people find their way home to it. Every post is a doorway back to the hub. We never perform for the algorithm; we teach in miniature, and we let the depth do the inviting. One scroller becomes a reader; one reader becomes a subscriber.</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">09</span><span class="sec__title">The channel playbook</span></div>
+    <h2>Five doorways, each with a job.</h2>
+    <p class="prose">Every channel plays one role — don't ask a channel to be something it isn't. Match the format to the place, keep the voice, and always point home.</p>
+
+    <div class="options" style="margin-top:18px;">
+      <div class="opt">
+        <div class="opt__bar"></div>
+        <div class="opt__main">
+          <span class="label label--rust" style="display:block; margin-bottom:9px;">The discovery engine</span>
+          <h3>Instagram</h3>
+          <div class="ttl-sub">Carousels &amp; verse graphics — where strangers find you</div>
+          <p>Your most visual front door and best discovery surface. The teaching, made swipeable. Saves and shares are the goal — they signal depth and feed reach.</p>
+          <ul class="plist">
+            <li><strong>Annotated passage</strong> carousel — the margin marked up, slide by slide</li>
+            <li><strong>One-verse graphic</strong> — a single verse, set like a page</li>
+            <li><strong>Story</strong> question stickers — re-share the latest note, ask a question</li>
+          </ul>
+        </div>
+        <div class="opt__meta">
+          <div class="m"><strong>3–4× / week</strong><br />1 carousel ·<br />1–2 graphics ·<br />1 story<br /><br />Win: <strong>saves,</strong><br />shares, link taps</div>
+        </div>
+      </div>
+
+      <div class="opt">
+        <div class="opt__bar"></div>
+        <div class="opt__main">
+          <span class="label label--rust" style="display:block; margin-bottom:9px;">The voice in miniature</span>
+          <h3>Threads</h3>
+          <div class="ttl-sub">Notes &amp; questions — where the conversation lives</div>
+          <p>The literary voice, distilled to a few lines. Lowest effort, highest consistency — your daily heartbeat. The most natural home for The Margin's tone right now.</p>
+          <ul class="plist">
+            <li><strong>One-verse note</strong> — a verse + a single reframing observation</li>
+            <li><strong>The open question</strong> — a question that makes people re-read</li>
+            <li><strong>Micro margin-note</strong> — one tight, teaching paragraph</li>
+          </ul>
+        </div>
+        <div class="opt__meta">
+          <div class="m"><strong>5–7× / week</strong><br />Short, daily,<br />low lift<br /><br />Win: <strong>replies,</strong><br />reposts, follows</div>
+        </div>
+      </div>
+
+      <div class="opt">
+        <div class="opt__bar"></div>
+        <div class="opt__main">
+          <span class="label label--rust" style="display:block; margin-bottom:9px;">Reach &amp; searchability</span>
+          <h3>X / Twitter</h3>
+          <div class="ttl-sub">The same notes, plus the teaching thread</div>
+          <p>Mirror your Threads notes here (write once, post twice), and add the occasional thread — your essay condensed into a teachable chain. Bookmarks are the depth signal.</p>
+          <ul class="plist">
+            <li><strong>Cross-posted notes</strong> — same verse notes as Threads</li>
+            <li><strong>Teaching thread</strong> — the essay's argument, one idea per post</li>
+          </ul>
+        </div>
+        <div class="opt__meta">
+          <div class="m"><strong>5–7× / week</strong><br />Mostly mirrored<br />from Threads<br /><br />Win: <strong>bookmarks,</strong><br />profile clicks</div>
+        </div>
+      </div>
+
+      <div class="opt">
+        <div class="opt__bar"></div>
+        <div class="opt__main">
+          <span class="label label--rust" style="display:block; margin-bottom:9px;">Credibility</span>
+          <h3>LinkedIn</h3>
+          <div class="ttl-sub">The reflective long-form spoke</div>
+          <p>Reaches the thoughtful, professional reader. A touch more formal, still warm. Where you teach Scripture's wisdom into work and life — and tell the "why I built this" story.</p>
+          <ul class="plist">
+            <li><strong>The reflection</strong> — a real moment, what the text says, a humane application</li>
+            <li><strong>The origin note</strong> — why The Margin exists (occasional)</li>
+          </ul>
+        </div>
+        <div class="opt__meta">
+          <div class="m"><strong>Weekly →<br />biweekly</strong><br />Quality over<br />frequency<br /><br />Win: <strong>comments,</strong><br />signups</div>
+        </div>
+      </div>
+
+      <div class="opt">
+        <div class="opt__bar"></div>
+        <div class="opt__main">
+          <span class="label label--rust" style="display:block; margin-bottom:9px;">Relationships</span>
+          <h3>Facebook</h3>
+          <div class="ttl-sub">Where trust already travels</div>
+          <p>Your existing community is here. Let people who already know you carry the brand outward. Lead with a personal line, then the essay link — warmth over polish.</p>
+          <ul class="plist">
+            <li><strong>Essay share</strong> — a personal intro + the link home</li>
+            <li><strong>Milestone note</strong> — "we launched," "100 readers," shared simply</li>
+          </ul>
+        </div>
+        <div class="opt__meta">
+          <div class="m"><strong>1–2× / week</strong><br />Mostly link<br />shares<br /><br />Win: <strong>shares</strong><br />by people who<br />know you</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PAGE 8 — PILLARS + TEMPLATES ============ -->
+<div class="page" data-screen-label="Social Plan — Pillars & Templates">
+
+  <section class="sec" style="margin-top:0;">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">10</span><span class="sec__title">Content pillars</span></div>
+    <h2>Six wells you never run dry.</h2>
+    <p class="prose">Every post belongs to one of these. When you don't know what to post, pick a pillar and a verse — the idea is already there. Rotate them so the feed stays varied but always recognizably <em>The Margin.</em></p>
+    <div class="reality" style="margin-top:14px;">
+      <div class="rcard"><div class="rcard__bar"></div><div>
+        <div class="when">Pillar 01</div><h3>The Verse</h3>
+        <p>One verse, slowed all the way down. The simplest, most repeatable post — a verse and one thing you noticed.</p>
+      </div></div>
+      <div class="rcard"><div class="rcard__bar"></div><div>
+        <div class="when">Pillar 02</div><h3>The Word Study</h3>
+        <p>One Greek or Hebrew word, opened up. Shows the craft and rewards the curious — pure literacy-building.</p>
+      </div></div>
+      <div class="rcard"><div class="rcard__bar"></div><div>
+        <div class="when">Pillar 03</div><h3>The Question</h3>
+        <p>A genuine question that makes people re-read the text. Your best engagement tool — and it's honest, not bait.</p>
+      </div></div>
+      <div class="rcard"><div class="rcard__bar"></div><div>
+        <div class="when">Pillar 04</div><h3>The Margin Note</h3>
+        <p>A short teaching observation on a passage — context, structure, a connection. The brand's core voice in miniature.</p>
+      </div></div>
+      <div class="rcard"><div class="rcard__bar"></div><div>
+        <div class="when">Pillar 05</div><h3>Why It Matters</h3>
+        <p>The ancient text, landed in now. Bridges the gap for the reader who asks "so what?" without cheapening it.</p>
+      </div></div>
+      <div class="rcard"><div class="rcard__bar rcard__bar--ash"></div><div>
+        <div class="when">Pillar 06</div><h3>Behind the Reading</h3>
+        <p>A glimpse of the practice — Lectio, how you study, the margins of your own Bible. Builds trust and shows you teach what you live.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">11</span><span class="sec__title">Post templates</span></div>
+    <h2>Skeletons you can fill in minutes.</h2>
+    <p class="prose">Reusable structures so a post is never a blank page. Keep the bones; change the passage.</p>
+    <div class="dgrid">
+      <div class="tcard">
+        <h3>The One-Verse Note</h3>
+        <div class="where2">Threads · X · 25–60 words</div>
+        <div class="step"><span class="seq">1</span>The verse, quoted and cited (note the translation).</div>
+        <div class="step"><span class="seq">2</span>One observation that reframes how you read it.</div>
+        <div class="step"><span class="seq">3</span>Optional: a question, or silence. No hashtags.</div>
+        <div class="ex">"…and the Word was with God." With — face to face. John opens not with a doctrine but a relationship. (John 1:1)</div>
+      </div>
+      <div class="tcard">
+        <h3>The Annotated Carousel</h3>
+        <div class="where2">Instagram · 6 slides</div>
+        <div class="step"><span class="seq">1</span>Cover — the passage + a hook question.</div>
+        <div class="step"><span class="seq">2</span>The tension — what we miss reading it fast.</div>
+        <div class="step"><span class="seq">3–4</span>The teaching — context, a word, the structure.</div>
+        <div class="step"><span class="seq">5</span>The turn — what it means, said plainly.</div>
+        <div class="step"><span class="seq">6</span>Invitation — "read it yourself · full note on Substack."</div>
+      </div>
+      <div class="tcard">
+        <h3>The Teaching Thread</h3>
+        <div class="where2">X · 4–7 posts</div>
+        <div class="step"><span class="seq">1</span>Hook — an observation or question, never a takeaway.</div>
+        <div class="step"><span class="seq">2</span>The context most readers skip.</div>
+        <div class="step"><span class="seq">3+</span>The insight — one idea per post, unhurried.</div>
+        <div class="step"><span class="seq">end</span>Land it, then link the full essay.</div>
+      </div>
+      <div class="tcard">
+        <h3>The LinkedIn Reflection</h3>
+        <div class="where2">LinkedIn · 120–200 words</div>
+        <div class="step"><span class="seq">1</span>A real moment or honest question.</div>
+        <div class="step"><span class="seq">2</span>What the text actually says.</div>
+        <div class="step"><span class="seq">3</span>The teaching — handed over, not preached.</div>
+        <div class="step"><span class="seq">4</span>A humane application + a soft invite home.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PAGE 9 — RHYTHM + WORKFLOW + GROWTH ============ -->
+<div class="page" data-screen-label="Social Plan — Rhythm & Growth">
+
+  <section class="sec" style="margin-top:0;">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">12</span><span class="sec__title">The weekly rhythm</span></div>
+    <h2>A week you can actually keep.</h2>
+    <p class="prose">A default posting week. Wednesday is youth-ministry night — everything that day is <em>pre-scheduled</em>, never live. The essay anchors Tuesday; the rest is cut from it.</p>
+    <table class="cal">
+      <thead><tr><th>Day</th><th>Primary post</th><th>Also</th></tr></thead>
+      <tbody>
+        <tr><td class="wk">Mon</td><td class="main">Threads/X — one-verse note</td><td class="small">Engage 15 min · IG story re-share last essay</td></tr>
+        <tr><td class="wk">Tue</td><td class="main">★ Essay publishes (Substack) + IG carousel</td><td class="small">Threads note pulled from the essay</td></tr>
+        <tr class="protected"><td class="wk">Wed</td><td class="main">Pre-scheduled note auto-posts</td><td class="small">Youth ministry — nothing live, nothing manual</td></tr>
+        <tr><td class="wk">Thu</td><td class="main">Threads/X — the Question</td><td class="small">Reply to every comment on the essay</td></tr>
+        <tr><td class="wk">Fri</td><td class="main">IG — one-verse graphic</td><td class="small">LinkedIn reflection (biweekly)</td></tr>
+        <tr><td class="wk">Sat</td><td class="main">Facebook — essay share + personal line</td><td class="small">Threads note · light engagement</td></tr>
+        <tr><td class="wk">Sun</td><td class="main">Rest — or one reflective note</td><td class="small">Batch &amp; schedule next week (see below)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="sec">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">13</span><span class="sec__title">The repurposing workflow</span></div>
+    <h2>One essay → a week of presence.</h2>
+    <p class="prose">The essay is the only heavy lift. Everything else is cutting, not creating. Batch it in one sitting — about an hour beyond the essay buys a full week.</p>
+    <div class="dgrid">
+      <div class="tcard">
+        <div class="where2">The batch — ~60 min after the essay</div>
+        <div class="step"><span class="seq">1</span>Pull the key passage → <strong>annotated carousel</strong> (~20 min)</div>
+        <div class="step"><span class="seq">2</span>Pull your 3 best lines → <strong>3 Threads/X notes</strong> (~10 min)</div>
+        <div class="step"><span class="seq">3</span>Pull the thesis → <strong>LinkedIn reflection</strong> (~15 min, biweekly)</div>
+        <div class="step"><span class="seq">4</span>Write the <strong>Facebook intro</strong> + link (~5 min)</div>
+        <div class="step"><span class="seq">5</span>Draft <strong>one reader question</strong> for Thursday (~5 min)</div>
+        <div class="step"><span class="seq">6</span><strong>Schedule it all</strong>, incl. Wednesday's note (~5 min)</div>
+      </div>
+      <div class="tcard">
+        <div class="where2">The rules of the engine</div>
+        <div class="step">Write the note once — <strong>post to Threads and X</strong> both.</div>
+        <div class="step">Schedule, don't hover. Tools: Buffer, Meta&nbsp;Planner, or native scheduling.</div>
+        <div class="step">A backlog of essays means a backlog of posts — <strong>October coasts</strong> on this.</div>
+        <div class="step">Every post ends pointing <strong>home to the hub.</strong></div>
+        <div class="step">If a week is brutal, drop to <strong>Threads notes only.</strong> Never go fully silent without it being a choice.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">14</span><span class="sec__title">How it actually grows</span></div>
+    <h2>Honest growth, on brand.</h2>
+    <p class="prose">No hacks, no hype. Growth here is the slow compound of consistency, generosity, and depth — the same things the brand teaches.</p>
+    <div class="checks">
+      <div class="checkcol">
+        <span class="label label--rust">Do</span>
+        <div class="check"><span class="box"></span><div>Engage before you expect engagement — 15 min/day replying thoughtfully in your space</div></div>
+        <div class="check"><span class="box"></span><div>Post on the same days every week; consistency outruns virality</div></div>
+        <div class="check"><span class="box"></span><div>Pin your best teaching; optimize every bio to say who it's for + link home</div></div>
+        <div class="check"><span class="box"></span><div>Reply to every comment in the first 90 days — you teach, so be present</div></div>
+        <div class="check"><span class="box"></span><div>Ask founding readers to share the one note that helped them</div></div>
+        <div class="check"><span class="box"></span><div>A few specific IG hashtags (#biblicalliteracy, #gospelofjohn); none on Threads/X</div></div>
+      </div>
+      <div class="checkcol">
+        <span class="label label--rust">Don't</span>
+        <div class="check"><span class="box"></span><div>Chase trends or sounds that cheapen the voice</div></div>
+        <div class="check"><span class="box"></span><div>Open with the takeaway — lead with an observation or question</div></div>
+        <div class="check"><span class="box"></span><div>Use exclamation marks, urgency, or "you won't believe" bait</div></div>
+        <div class="check"><span class="box"></span><div>Post a full-screen quote you didn't credit or can't source</div></div>
+        <div class="check"><span class="box"></span><div>Mistake follower count for the goal — the email list is the win</div></div>
+        <div class="check"><span class="box"></span><div>Let a channel become a dead end — always point home</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PAGE 10 — WHAT POSTS LOOK LIKE ============ -->
+<div class="page" data-screen-label="Social Plan — Post Specimens">
+
+  <section class="sec" style="margin-top:0;">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">15</span><span class="sec__title">What the posts look like</span></div>
+    <h2>Specimens, not guesses.</h2>
+    <p class="prose">A feel for the look before a word is written. Every post wears the same clothes: parchment ground, the wordmark + rust rule, Newsreader for Scripture, Inter caps for labels. One restrained system, infinitely repeatable.</p>
+
+    <div class="specs">
+      <div class="spec">
+        <div class="canv">
+          <div class="cwm"><i></i><span>the margin</span></div>
+          <div style="flex:1; display:flex; align-items:center;">
+            <div style="border-left:2px solid var(--rust); padding-left:12px;">
+              <div style="font-family:var(--font-serif); font-style:italic; font-weight:500; font-size:15px; line-height:1.32; color:var(--ink);">In the beginning was the Word, and the Word was with God&hellip;</div>
+            </div>
+          </div>
+          <div style="font-family:var(--font-sans); font-weight:600; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ash);">John 1:1 <span style="color:var(--rust);">·</span> ESV</div>
+        </div>
+        <div class="spec__cap">The verse graphic</div>
+        <div class="spec__sub">1080×1080. One verse, the rust rule, a citation. The everyday post.</div>
+      </div>
+
+      <div class="spec">
+        <div class="canv">
+          <div class="cwm"><i></i><span>the margin</span></div>
+          <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:7px; position:relative;">
+            <div style="font-family:var(--font-serif); font-size:12.5px; line-height:1.5; color:var(--ink);">&hellip;and the Word was <span style="border-bottom:2px solid var(--rust);">with</span> God,</div>
+            <div style="font-family:var(--font-serif); font-size:12.5px; line-height:1.5; color:var(--ink);">and the Word was God.</div>
+            <div style="position:absolute; right:0; top:2px; font-family:var(--font-serif); font-style:italic; font-size:10px; color:var(--rust); transform:rotate(-4deg); max-width:42%; line-height:1.25;">with — face to face, in relationship</div>
+          </div>
+          <div style="font-family:var(--font-sans); font-weight:600; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ash);">Annotated · John 1:1</div>
+        </div>
+        <div class="spec__cap">The annotated passage</div>
+        <div class="spec__sub">Hand-marked on iPad (see overleaf). The signature post.</div>
+      </div>
+
+      <div class="spec">
+        <div class="canv">
+          <div style="font-family:var(--font-sans); font-weight:600; font-size:8.5px; letter-spacing:0.18em; text-transform:uppercase; color:var(--rust);">The Gospel of John · 01</div>
+          <div style="flex:1; display:flex; align-items:center;">
+            <div style="font-family:var(--font-display); font-weight:900; font-size:21px; line-height:1.02; letter-spacing:-0.02em; color:var(--ink);">Why does John open with a <span style="font-family:var(--font-serif); font-weight:500; font-style:italic;">poem?</span></div>
+          </div>
+          <div class="cwm"><i></i><span>the margin</span></div>
+        </div>
+        <div class="spec__cap">The carousel cover</div>
+        <div class="spec__sub">1080×1350. A hook question in Fraunces. Slide 1 of 6.</div>
+      </div>
+    </div>
+
+    <table class="ctable" style="margin-top:30px;">
+      <thead><tr><th>Post type</th><th>Size</th><th>The template</th></tr></thead>
+      <tbody>
+        <tr><td class="fmt">Verse graphic</td><td class="cad">1080²</td><td class="desc">Wordmark top-left · verse centered on the rust rule · citation in Inter caps with the rust mid-dot.</td></tr>
+        <tr><td class="fmt">Annotated passage</td><td class="cad">1080²</td><td class="desc">Passage set in Newsreader · hand marks added on iPad in rust + ink · a margin note in your hand.</td></tr>
+        <tr><td class="fmt">Carousel</td><td class="cad">1080×1350</td><td class="desc">Cover (hook) → tension → teaching → turn → invitation. Fraunces headlines, Newsreader body, wordmark on every slide.</td></tr>
+        <tr><td class="fmt">Story</td><td class="cad">1080×1920</td><td class="desc">Re-share of the latest note + a question sticker. Parchment ground, generous margins.</td></tr>
+        <tr><td class="fmt">Facebook share</td><td class="cad">Link</td><td class="desc">The essay's link card + a 1–2 line personal intro. No graphic needed.</td></tr>
+        <tr><td class="fmt">Threads / X note</td><td class="cad">Text</td><td class="desc">Plain text. The look <em>is</em> the restraint — no graphic, just the words and white space.</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Build all of these once as reusable templates (Canva for the framed ones), then it's swap-the-verse forever. I can produce these templates in the brand when you're ready.</p>
+  </section>
+</div>
+
+<!-- ============ PAGE 11 — SAMPLE RELEASE MONTH ============ -->
+<div class="page" data-screen-label="Social Plan — Sample Release Month">
+
+  <section class="sec" style="margin-top:0;">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">16</span><span class="sec__title">A sample release month</span></div>
+    <h2>One month, fully mapped.</h2>
+    <p class="prose">A typical four-week month once you're in rhythm (Phase 4). Not exact content — the <em>shape</em>: what posts where, on which day. Gold = Wednesday, always pre-scheduled around youth ministry. The essay anchors every Tuesday; everything else is cut from it.</p>
+
+    <table class="monthcal">
+      <thead><tr><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="wklabel">Wk 1</span><span class="pc pc--note">Note</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--hub">Essay</span><span class="pc pc--ig">Carousel</span></td>
+          <td class="wed"><span class="wklabel">Youth min</span><span class="pc pc--note">Auto note</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--note">Question</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--ig">Verse</span><span class="pc pc--li">LinkedIn</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--fb">FB share</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--note">Rest</span></td>
+        </tr>
+        <tr>
+          <td><span class="wklabel">Wk 2</span><span class="pc pc--note">Note</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--hub">Essay</span><span class="pc pc--ig">Annotated</span></td>
+          <td class="wed"><span class="wklabel">Youth min</span><span class="pc pc--note">Auto note</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--note">Question</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--ig">Verse</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--fb">FB share</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--note">Rest</span></td>
+        </tr>
+        <tr>
+          <td><span class="wklabel">Wk 3</span><span class="pc pc--note">Note</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--hub">Essay</span><span class="pc pc--ig">Carousel</span></td>
+          <td class="wed"><span class="wklabel">Youth min</span><span class="pc pc--note">Auto note</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--note">Question</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--ig">Verse</span><span class="pc pc--li">LinkedIn</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--fb">FB share</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--note">Rest</span></td>
+        </tr>
+        <tr>
+          <td><span class="wklabel">Wk 4</span><span class="pc pc--note">Note</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--hub">Essay</span><span class="pc pc--ig">Annotated</span></td>
+          <td class="wed"><span class="wklabel">Youth min</span><span class="pc pc--note">Auto note</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--note">Q&amp;A recap</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--ig">Verse</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--fb">FB share</span></td>
+          <td><span class="wklabel">&nbsp;</span><span class="pc pc--note">Batch next mo.</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="dgrid" style="margin-top:26px;">
+      <div class="tcard">
+        <div class="where2">The month at a glance</div>
+        <div class="step"><span class="seq">4</span>Essays (the only heavy lift) → Substack</div>
+        <div class="step"><span class="seq">4</span>IG carousels / annotated passages</div>
+        <div class="step"><span class="seq">8</span>IG verse graphics &amp; stories</div>
+        <div class="step"><span class="seq">20+</span>Threads / X notes (mostly batched)</div>
+        <div class="step"><span class="seq">2</span>LinkedIn reflections · <span class="seq">4</span>FB shares</div>
+      </div>
+      <div class="tcard">
+        <div class="where2">How to run it — batch days</div>
+        <div class="step">Pick <strong>one batch day a week</strong> (Sunday works): cut that week's posts from the essay and schedule them all.</div>
+        <div class="step">One monthly <strong>graphics day</strong>: make the four verse graphics + carousels in a single Canva/iPad sitting.</div>
+        <div class="step">The result: <strong>two focused sittings</strong> carry an entire month of presence.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PAGE 12 — IPAD ANNOTATED WORKFLOW ============ -->
+<div class="page" data-screen-label="Social Plan — iPad Annotated Workflow">
+
+  <section class="sec" style="margin-top:0;">
+    <div class="sec__head"><span class="sec__bar"></span><span class="sec__num">17</span><span class="sec__title">The annotated passage</span></div>
+    <h2>Made by hand, on your iPad.</h2>
+    <p class="prose">The annotated passage is the post that <em>looks</em> like the brand — a reader's own pen in the margin. The trick is to split it: let Canva hold the consistency, let Procreate add the soul. Neither tool alone does both well.</p>
+
+    <div class="dgrid">
+      <div class="tcard">
+        <div class="where2">Why two tools</div>
+        <div class="step"><span class="seq">Canva</span>Holds the fixed brand frame — parchment, wordmark, rust rule, the typeset passage. Same every time, no rebuilding.</div>
+        <div class="step"><span class="seq">Procreate</span>Adds the hand — real pen pressure, underlines, circled words, arrows, a margin note in <em>your</em> handwriting. This is the warmth Canva can't fake.</div>
+        <div class="ex">The hand-on-template approach is exactly how the "cool annotated" accounts actually do it.</div>
+      </div>
+      <div class="tcard">
+        <div class="where2">The workflow · ~10 min a post</div>
+        <div class="step"><span class="seq">1</span>Open the Canva template; type in the passage + citation.</div>
+        <div class="step"><span class="seq">2</span>Export it as a PNG (1080×1080).</div>
+        <div class="step"><span class="seq">3</span>In Procreate, drop the PNG as the bottom layer.</div>
+        <div class="step"><span class="seq">4</span>On a new layer, annotate by hand — rust brush + ink brush only.</div>
+        <div class="step"><span class="seq">5</span>Flatten &amp; export. Post.</div>
+      </div>
+    </div>
+
+    <div class="dgrid" style="margin-top:14px;">
+      <div class="tcard">
+        <div class="where2">Your iPad toolkit</div>
+        <div class="step"><strong>Procreate</strong> ($12, one-time) — the right tool. Not the subscription apps.</div>
+        <div class="step">An <strong>Apple Pencil</strong> — pressure sensitivity is the whole point.</div>
+        <div class="step">Two brushes only: a <strong>dry-ink pen</strong> (Procreate's "Technical Pen" or "Syrup") for marks, and a soft pencil for margin notes.</div>
+        <div class="step">A saved <strong>rust + ink</strong> color palette so every mark is on-brand.</div>
+      </div>
+      <div class="tcard">
+        <div class="where2">What I'll build you (when ready)</div>
+        <div class="step"><span class="seq">1</span>A <strong>Canva annotated-passage template</strong> — the parchment frame, wordmark, rule, and a clear "annotation zone."</div>
+        <div class="step"><span class="seq">2</span>A <strong>Procreate color-swatch</strong> file (rust, ink, gilt) you import once.</div>
+        <div class="step"><span class="seq">3</span>A one-page <strong>brush + settings</strong> cheat-sheet so it's identical every time.</div>
+        <div class="step">Just say the word and I'll make all three in the brand.</div>
+      </div>
+    </div>
+    <p class="note">Start simple: one underline in rust + one margin note in your hand is already unmistakably <em>The Margin.</em> Restraint reads as craft.</p>
+  </section>
+
+  <div class="promise">
+    <div class="promise__rule"></div>
+    <div>
+      <div class="promise__label">The discipline of the plan</div>
+      <p class="promise__line">Don't launch loud. Launch <em>sustainable.</em> A small, faithful rhythm kept for a year will outrun any burst you can't repeat.</p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="wm">
+      <div class="wm__bar" style="width:1.5px;"></div>
+      <div class="wm__type" style="font-size:18px;">the margin</div>
+    </div>
+    <div class="label">Margin notes on the books of the Bible</div>
+  </footer>
+</div>
+
+</body>
+</html>

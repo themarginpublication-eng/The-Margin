@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Margin · Backend Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --parchment:#F3EEE3; --vellum:#FAF6EC; --margin:#C9BFAE; --margin-soft:#DBD3C4;
+  --rust:#A8593C; --rust-deep:#8C4730; --gilt:#B68A47; --ash:#6B5F54;
+  --ink:#1A1814; --ink-soft:#2C2822;
+  --font-display:'Fraunces',Georgia,serif; --font-serif:'Newsreader',Georgia,serif;
+  --font-sans:'Inter',system-ui,sans-serif; --font-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{background:var(--parchment);scroll-behavior:smooth;}
+body{font-family:var(--font-serif);color:var(--ink);background:var(--parchment);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(circle at 16% 8%,rgba(182,138,71,.05),transparent 44%),radial-gradient(circle at 86% 88%,rgba(168,89,60,.045),transparent 48%);}
+em{font-style:italic;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+
+/* logo */
+.wm{display:inline-flex;align-items:center;gap:13px;}
+.wm__bar{width:3px;align-self:stretch;background:var(--rust);flex:0 0 auto;}
+.wm__type{font-family:var(--font-display);font-weight:900;letter-spacing:-.03em;line-height:1;color:var(--ink);font-size:22px;}
+.wm__tag{font-family:var(--font-sans);font-weight:500;text-transform:uppercase;letter-spacing:.2em;font-size:8.5px;color:var(--ash);}
+.wm__lock{display:inline-flex;align-items:baseline;gap:11px;}
+
+/* header */
+header{padding:34px 0 0;}
+.head__row{display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.pill{font-family:var(--font-sans);font-weight:600;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);border:1px solid var(--margin);padding:6px 12px;border-radius:2px;}
+.hero{padding:48px 0 30px;border-bottom:1px solid var(--margin);}
+.eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.eyebrow .bar{width:24px;height:1px;background:var(--margin);}
+.eyebrow .num{font-family:var(--font-sans);font-weight:600;font-size:12px;letter-spacing:.22em;color:var(--rust);}
+.eyebrow .txt{font-family:var(--font-sans);font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);}
+h1{font-family:var(--font-display);font-weight:900;letter-spacing:-.035em;line-height:.98;font-size:clamp(38px,6vw,62px);}
+h1 em{font-family:var(--font-serif);font-weight:500;}
+.lede{font-family:var(--font-serif);font-size:clamp(18px,2.2vw,22px);line-height:1.55;color:var(--ink-soft);max-width:62ch;margin-top:20px;}
+.lede em{font-style:italic;}
+
+/* section scaffolding */
+.sec{padding:56px 0;border-bottom:1px solid var(--margin);}
+.sec__eye{font-family:var(--font-sans);font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:14px;}
+.sec h2{font-family:var(--font-display);font-weight:900;font-size:clamp(27px,3.6vw,38px);letter-spacing:-.025em;line-height:1.04;}
+.sec h2 em{font-family:var(--font-serif);font-weight:500;}
+.sec__sub{font-family:var(--font-serif);font-size:18px;line-height:1.55;color:var(--ink-soft);max-width:60ch;margin-top:14px;}
+
+/* now vs next */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:34px;}
+.cmp__card{background:var(--vellum);border:1px solid var(--margin);padding:30px;}
+.cmp__card.now{border-style:dashed;}
+.cmp__tag{font-family:var(--font-sans);font-weight:600;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px;display:inline-block;padding:4px 9px;border-radius:2px;}
+.cmp__tag.a{background:#e7dcc8;color:var(--ash);}
+.cmp__tag.b{background:var(--rust);color:#fff;}
+.cmp__card h3{font-family:var(--font-display);font-weight:900;font-size:21px;letter-spacing:-.02em;margin-bottom:14px;}
+.cmp__list{list-style:none;display:flex;flex-direction:column;gap:11px;}
+.cmp__list li{font-family:var(--font-serif);font-size:16px;line-height:1.4;color:var(--ink-soft);padding-left:22px;position:relative;}
+.cmp__list li::before{content:"";position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;}
+.now .cmp__list li::before{background:var(--margin);}
+.next .cmp__list li::before{background:var(--rust);}
+
+/* data model */
+.tables{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:36px;}
+.tbl{background:var(--vellum);border:1px solid var(--margin);overflow:hidden;}
+.tbl__head{background:var(--ink);color:var(--parchment);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;}
+.tbl__head .nm{font-family:var(--font-mono);font-weight:500;font-size:14px;letter-spacing:.02em;}
+.tbl__head .ic{font-family:var(--font-sans);font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gilt);}
+.tbl__rows{padding:6px 0;}
+.row{display:grid;grid-template-columns:1fr auto;gap:10px;padding:9px 18px;align-items:baseline;border-bottom:1px solid var(--margin-soft);}
+.row:last-child{border-bottom:none;}
+.row .f{font-family:var(--font-mono);font-size:13px;color:var(--ink);}
+.row .f.key{color:var(--rust);font-weight:500;}
+.row .t{font-family:var(--font-sans);font-size:10.5px;letter-spacing:.04em;color:var(--ash);text-transform:uppercase;}
+.row .note{grid-column:1/-1;font-family:var(--font-serif);font-style:italic;font-size:13px;color:var(--ash);margin-top:2px;}
+.rel{font-family:var(--font-serif);font-style:italic;font-size:14.5px;color:var(--ash);text-align:center;margin-top:24px;}
+.rel b{font-family:var(--font-mono);font-style:normal;color:var(--rust);font-size:13px;}
+
+/* flow */
+.flow{margin-top:34px;display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+.flow__col{background:var(--vellum);border:1px solid var(--margin);padding:28px;}
+.flow__col h3{font-family:var(--font-display);font-weight:900;font-size:20px;letter-spacing:-.02em;margin-bottom:6px;display:flex;align-items:center;gap:10px;}
+.flow__col .glyph{width:26px;height:26px;border-radius:50%;background:var(--rust);color:#fff;font-family:var(--font-sans);font-weight:600;font-size:12px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;}
+.flow__col .glyph.g{background:#fff;border:1px solid var(--margin);color:#4285F4;font-size:14px;}
+.steps{list-style:none;counter-reset:s;margin-top:18px;display:flex;flex-direction:column;gap:0;}
+.steps li{counter-increment:s;font-family:var(--font-serif);font-size:15.5px;line-height:1.45;color:var(--ink-soft);padding:13px 0 13px 38px;position:relative;border-top:1px solid var(--margin-soft);}
+.steps li:first-child{border-top:none;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:12px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--rust);color:var(--rust);font-family:var(--font-sans);font-weight:600;font-size:11px;display:flex;align-items:center;justify-content:center;}
+.steps li b{color:var(--ink);font-weight:600;}
+.steps code{font-family:var(--font-mono);font-size:12.5px;background:var(--parchment);border:1px solid var(--margin);padding:1px 6px;border-radius:2px;color:var(--rust-deep);}
+
+/* api */
+.api{margin-top:34px;border:1px solid var(--margin);background:var(--vellum);}
+.api__row{display:grid;grid-template-columns:78px 1fr;gap:18px;padding:15px 22px;border-top:1px solid var(--margin-soft);align-items:baseline;}
+.api__row:first-child{border-top:none;}
+.verb{font-family:var(--font-mono);font-weight:500;font-size:12px;letter-spacing:.04em;padding:3px 0;text-align:center;border-radius:2px;}
+.verb.get{color:#1F6E43;}
+.verb.post{color:var(--rust-deep);}
+.api__path{font-family:var(--font-mono);font-size:13.5px;color:var(--ink);}
+.api__desc{font-family:var(--font-serif);font-size:14.5px;color:var(--ash);font-style:italic;margin-top:3px;}
+
+/* stack */
+.stack{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px;}
+.chip{background:var(--vellum);border:1px solid var(--margin);padding:22px;}
+.chip .role{font-family:var(--font-sans);font-weight:600;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust);margin-bottom:10px;}
+.chip .pick{font-family:var(--font-display);font-weight:900;font-size:19px;letter-spacing:-.02em;}
+.chip .why{font-family:var(--font-serif);font-size:14px;line-height:1.45;color:var(--ash);margin-top:8px;}
+.chip .alt{font-family:var(--font-sans);font-size:11px;color:var(--ash);margin-top:12px;padding-top:10px;border-top:1px solid var(--margin-soft);}
+.chip .alt b{color:var(--ink-soft);font-weight:600;}
+
+/* callout */
+.note-box{background:#efe7d6;border:1px solid var(--margin);border-left:3px solid var(--rust);padding:24px 26px;margin-top:36px;}
+.note-box h4{font-family:var(--font-sans);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust);margin-bottom:10px;}
+.note-box p{font-family:var(--font-serif);font-size:16.5px;line-height:1.55;color:var(--ink-soft);}
+.note-box p + p{margin-top:10px;}
+
+/* roadmap */
+.road{margin-top:34px;display:flex;flex-direction:column;}
+.phase{display:grid;grid-template-columns:160px 1fr;gap:26px;padding:22px 0;border-top:1px solid var(--margin);}
+.phase:first-child{border-top:none;}
+.phase__when{font-family:var(--font-sans);font-weight:600;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--rust);padding-top:3px;}
+.phase__when span{display:block;font-family:var(--font-serif);font-style:italic;text-transform:none;letter-spacing:0;font-size:14px;color:var(--ash);margin-top:5px;font-weight:400;}
+.phase__what h3{font-family:var(--font-display);font-weight:900;font-size:20px;letter-spacing:-.02em;}
+.phase__what p{font-family:var(--font-serif);font-size:15.5px;line-height:1.5;color:var(--ink-soft);margin-top:7px;max-width:60ch;}
+
+footer{padding:46px 0 70px;text-align:center;}
+footer .q{font-family:var(--font-serif);font-style:italic;font-size:19px;color:var(--ink-soft);max-width:50ch;margin:0 auto;line-height:1.5;}
+
+@media (max-width:760px){
+  .cmp,.tables,.flow,.stack{grid-template-columns:1fr;}
+  .phase{grid-template-columns:1fr;gap:8px;}
+  .api__row{grid-template-columns:64px 1fr;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="head__row">
+      <div class="wm"><span class="wm__bar"></span><span class="wm__lock"><span class="wm__type">the margin</span><span class="wm__tag">Biblical literacy · in the margins</span></span></div>
+      <span class="pill">Backend Blueprint · v1</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow"><span class="bar"></span><span class="num">00</span><span class="txt">Engineering plan</span></div>
+    <h1>What the backend <em>will be.</em></h1>
+    <p class="lede">The login you're testing runs entirely inside one browser — no server, no real accounts. This is the plan to make it <em>real</em>: where data lives, how someone truly signs in (email <em>and</em> Google), and what a developer builds. Read it as the blueprint you hand to whoever writes the server.</p>
+  </section>
+
+  <!-- 1. NOW vs NEXT -->
+  <section class="sec">
+    <div class="sec__eye">01 · The shift</div>
+    <h2>From a <em>demo</em> to a real product.</h2>
+    <p class="sec__sub">The prototype fakes the parts that matter most for safety. Here's exactly what changes when there's a true backend behind it.</p>
+    <div class="cmp">
+      <div class="cmp__card now">
+        <span class="cmp__tag a">Today · prototype</span>
+        <h3>Lives in the browser</h3>
+        <ul class="cmp__list">
+          <li>Accounts saved in <em>localStorage</em> on one device only</li>
+          <li>Passwords stored as <em>plain text</em> — not safe</li>
+          <li>Google button is a visual stub</li>
+          <li>Nothing syncs phone ↔ laptop</li>
+          <li>Clear the browser and the account is gone</li>
+        </ul>
+      </div>
+      <div class="cmp__card next">
+        <span class="cmp__tag b">Next · real backend</span>
+        <ul class="cmp__list">
+          <li>Accounts in a <em>database</em>, reachable from any device</li>
+          <li>Passwords <em>hashed</em> (bcrypt) — never stored readable</li>
+          <li>Real <em>Google sign-in</em> via OAuth</li>
+          <li>Progress syncs everywhere, instantly</li>
+          <li>Email verification, password reset, backups</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. DATA MODEL -->
+  <section class="sec">
+    <div class="sec__eye">02 · Data model</div>
+    <h2>What we <em>store</em>, and how it connects.</h2>
+    <p class="sec__sub">Four tables hold the whole experience. A reader has one account, walks through series, and keeps a record for every morning they complete.</p>
+    <div class="tables">
+      <div class="tbl">
+        <div class="tbl__head"><span class="nm">users</span><span class="ic">the reader</span></div>
+        <div class="tbl__rows">
+          <div class="row"><span class="f key">id</span><span class="t">uuid · pk</span></div>
+          <div class="row"><span class="f">name</span><span class="t">text</span></div>
+          <div class="row"><span class="f">email</span><span class="t">text · unique</span></div>
+          <div class="row"><span class="f">username</span><span class="t">text · unique</span></div>
+          <div class="row"><span class="f">password_hash</span><span class="t">text · nullable</span><span class="note">null when they only use Google</span></div>
+          <div class="row"><span class="f">email_verified</span><span class="t">bool</span></div>
+          <div class="row"><span class="f">created_at</span><span class="t">timestamp</span></div>
+        </div>
+      </div>
+      <div class="tbl">
+        <div class="tbl__head"><span class="nm">auth_identities</span><span class="ic">how they log in</span></div>
+        <div class="tbl__rows">
+          <div class="row"><span class="f key">id</span><span class="t">uuid · pk</span></div>
+          <div class="row"><span class="f">user_id</span><span class="t">fk → users</span></div>
+          <div class="row"><span class="f">provider</span><span class="t">enum</span><span class="note">'password' or 'google'</span></div>
+          <div class="row"><span class="f">provider_uid</span><span class="t">text</span><span class="note">Google's account id, when applicable</span></div>
+          <div class="row"><span class="f">created_at</span><span class="t">timestamp</span></div>
+        </div>
+      </div>
+      <div class="tbl">
+        <div class="tbl__head"><span class="nm">series</span><span class="ic">the journeys</span></div>
+        <div class="tbl__rows">
+          <div class="row"><span class="f key">id</span><span class="t">uuid · pk</span></div>
+          <div class="row"><span class="f">title</span><span class="t">text</span><span class="note">"How to Read a Psalm"</span></div>
+          <div class="row"><span class="f">passage</span><span class="t">text</span></div>
+          <div class="row"><span class="f">total_days</span><span class="t">int</span></div>
+          <div class="row"><span class="f">days_json</span><span class="t">jsonb</span><span class="note">each morning's verse + reading</span></div>
+        </div>
+      </div>
+      <div class="tbl">
+        <div class="tbl__head"><span class="nm">progress</span><span class="ic">mornings kept</span></div>
+        <div class="tbl__rows">
+          <div class="row"><span class="f key">id</span><span class="t">uuid · pk</span></div>
+          <div class="row"><span class="f">user_id</span><span class="t">fk → users</span></div>
+          <div class="row"><span class="f">series_id</span><span class="t">fk → series</span></div>
+          <div class="row"><span class="f">current_day</span><span class="t">int</span></div>
+          <div class="row"><span class="f">completed_days</span><span class="t">int[]</span></div>
+          <div class="row"><span class="f">last_read_at</span><span class="t">timestamp</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="rel">One <b>user</b> has many <b>auth_identities</b> and many <b>progress</b> rows · each <b>progress</b> points at one <b>series</b></p>
+  </section>
+
+  <!-- 3. AUTH FLOWS -->
+  <section class="sec">
+    <div class="sec__eye">03 · How signing in works</div>
+    <h2>Two doors, <em>one reader.</em></h2>
+    <p class="sec__sub">Whether they use a password or Google, both paths end the same way — a verified user and a secure session. The same person can use either and land in the same account.</p>
+    <div class="flow">
+      <div class="flow__col">
+        <h3><span class="glyph">@</span> Email &amp; password</h3>
+        <ol class="steps">
+          <li>Reader submits name, email, username, password.</li>
+          <li>Server <b>hashes</b> the password with <code>bcrypt</code> and stores only the hash.</li>
+          <li>A <b>verification email</b> goes out; they click to confirm.</li>
+          <li>On login, server compares the hash and issues a <b>session token</b> (JWT or cookie).</li>
+          <li>Every request after carries that token — that's how the app knows who they are.</li>
+        </ol>
+      </div>
+      <div class="flow__col">
+        <h3><span class="glyph g">G</span> Continue with Google</h3>
+        <ol class="steps">
+          <li>Reader taps <b>Continue with Google</b>, picks their account.</li>
+          <li>Google sends back a signed <b>token</b> proving who they are (<code>OAuth 2.0</code>).</li>
+          <li>Server verifies it, then <b>finds or creates</b> a matching user.</li>
+          <li>An <code>auth_identity</code> row links that Google account to the user.</li>
+          <li>Same <b>session token</b> is issued — identical from here on.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="note-box">
+      <h4>Why it's done this way</h4>
+      <p>The server <em>never</em> sees a Google password, and <em>never</em> stores your readers' passwords in readable form. If the database ever leaked, there'd be no passwords to steal — only hashes that can't be reversed. This is the baseline standard; anything less shouldn't take real signups.</p>
+    </div>
+  </section>
+
+  <!-- 4. API -->
+  <section class="sec">
+    <div class="sec__eye">04 · The connections</div>
+    <h2>What the app <em>asks</em> the server.</h2>
+    <p class="sec__sub">A short list of endpoints covers the whole prototype. The screens you already built call these instead of the browser's local storage.</p>
+    <div class="api">
+      <div class="api__row"><span class="verb post">POST</span><div><div class="api__path">/auth/signup</div><div class="api__desc">create an account with email + password</div></div></div>
+      <div class="api__row"><span class="verb post">POST</span><div><div class="api__path">/auth/login</div><div class="api__desc">verify credentials, return a session</div></div></div>
+      <div class="api__row"><span class="verb post">POST</span><div><div class="api__path">/auth/google</div><div class="api__desc">exchange a Google token for a session</div></div></div>
+      <div class="api__row"><span class="verb get">GET</span><div><div class="api__path">/me</div><div class="api__desc">who am I — name, email, current journey</div></div></div>
+      <div class="api__row"><span class="verb get">GET</span><div><div class="api__path">/me/progress</div><div class="api__desc">mornings kept, current day, % complete</div></div></div>
+      <div class="api__row"><span class="verb post">POST</span><div><div class="api__path">/me/progress/complete</div><div class="api__desc">mark today done, advance to the next morning</div></div></div>
+      <div class="api__row"><span class="verb get">GET</span><div><div class="api__path">/series/:id/day/:n</div><div class="api__desc">fetch one morning's verse + reading</div></div></div>
+    </div>
+  </section>
+
+  <!-- 5. STACK -->
+  <section class="sec">
+    <div class="sec__eye">05 · What it's built with</div>
+    <h2>A simple, <em>boring</em> stack — on purpose.</h2>
+    <p class="sec__sub">Nothing exotic. These are well-worn, well-documented tools a single developer can run cheaply, so the ministry isn't locked to one specialist.</p>
+    <div class="stack">
+      <div class="chip">
+        <div class="role">Database</div>
+        <div class="pick">Postgres</div>
+        <div class="why">Holds the four tables. Rock-solid, free, runs anywhere.</div>
+        <div class="alt"><b>Easiest start:</b> Supabase (Postgres + auth + Google login bundled)</div>
+      </div>
+      <div class="chip">
+        <div class="role">Server / API</div>
+        <div class="pick">Node + Express</div>
+        <div class="why">Serves the endpoints above. Same language as the front-end.</div>
+        <div class="alt"><b>Or:</b> the backend built into Supabase / Firebase</div>
+      </div>
+      <div class="chip">
+        <div class="role">Auth &amp; Google</div>
+        <div class="pick">OAuth + JWT</div>
+        <div class="why">Google sign-in and secure sessions, the standard way.</div>
+        <div class="alt"><b>Managed option:</b> Auth0 or Clerk handle it for you</div>
+      </div>
+    </div>
+    <div class="note-box">
+      <h4>The shortcut worth considering</h4>
+      <p>A tool like <em>Supabase</em> gives you the database, password login, <em>and</em> Google sign-in out of the box — much of section 03 becomes configuration instead of code. For a ministry launching lean, that can turn months of backend work into a couple of weeks. Worth weighing against building it custom.</p>
+    </div>
+  </section>
+
+  <!-- 6. ROADMAP -->
+  <section class="sec">
+    <div class="sec__eye">06 · Getting there</div>
+    <h2>The order of <em>operations.</em></h2>
+    <div class="road">
+      <div class="phase">
+        <div class="phase__when">Phase 1<span>Now → prototype</span></div>
+        <div class="phase__what"><h3>Prove the experience</h3><p>The login + dashboard you're testing. Refine how it should <em>feel</em> — this is free to change and costs nothing to get right before any server exists.</p></div>
+      </div>
+      <div class="phase">
+        <div class="phase__when">Phase 2<span>Before launch</span></div>
+        <div class="phase__what"><h3>Stand up the backend</h3><p>A developer builds the four tables, the auth flows, and the endpoints above — or wires Supabase. The existing screens get pointed at the real server instead of the browser.</p></div>
+      </div>
+      <div class="phase">
+        <div class="phase__when">Phase 3<span>Launch</span></div>
+        <div class="phase__what"><h3>Real readers, real accounts</h3><p>Email verification, password reset, and Google sign-in all live. Progress syncs across devices. Now it's safe to take genuine signups — and to add giving.</p></div>
+      </div>
+      <div class="phase">
+        <div class="phase__when">Phase 4<span>Later</span></div>
+        <div class="phase__what"><h3>Grow</h3><p>More series, reading streaks, reminders, a real app shell. Each rides on the same foundation — nothing here needs to be rebuilt.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="q">This is a plan, not yet a build. When you're ready, it becomes the brief a developer works straight from — every table, flow, and endpoint already decided.</p>
+  </footer>
+
+</div>
+</body>
+</html>

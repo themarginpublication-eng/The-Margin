@@ -1,0 +1,20 @@
+name = "the-margin-app"
+main = ".open-next/worker.js"
+compatibility_date = "2025-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "the-margin-db"
+database_id = "ff187aeb-78f6-4a79-b875-9bfd913863e6"
+migrations_dir = "../migrations"
+
+# Set these as Worker secrets (`wrangler secret put <NAME>`) before deploying:
+#   SESSION_SECRET        — random 32+ byte string, signs the session cookie (JWT)
+#   GOOGLE_CLIENT_ID       — from Google Cloud Console OAuth credentials
+#   GOOGLE_CLIENT_SECRET
+#   GOOGLE_REDIRECT_URI    — e.g. https://app.readthemargin.net/api/auth/google/callback

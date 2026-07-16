@@ -1,0 +1,2528 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>The Margin, Brand Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,700;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ───────────────────────── TOKENS ───────────────────────── */
+  :root {
+    --parchment: #F3EEE3;
+    --vellum:    #FAF6EC;
+    --margin:    #C9BFAE;
+    --rust:      #A8593C;
+    --gilt:      #B68A47;
+    --ash:       #6B5F54;
+    --ink:       #1A1814;
+
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-serif:   'Newsreader', Georgia, serif;
+    --font-sans:    'Inter', system-ui, sans-serif;
+
+    --col: 1280px;
+    --gutter: 96px;
+  }
+
+  /* ───────────────────────── BASE ───────────────────────── */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--parchment); color: var(--ink); }
+  body {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  img { display: block; max-width: 100%; }
+
+  /* ─────────────────────── SHARED TYPE ─────────────────────── */
+  .label {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ash);
+  }
+  .label--rust { color: var(--rust); }
+  .label--small { font-size: 11px; letter-spacing: 0.2em; }
+  .italic { font-style: italic; font-weight: 500; color: var(--ink); }
+  .display {
+    font-family: var(--font-display);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 0.95;
+  }
+  .deck {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  .prose { max-width: 62ch; font-size: 18px; line-height: 1.75; color: var(--ink); }
+  .prose + .prose { margin-top: 1em; }
+  .ash { color: var(--ash); }
+  .rust { color: var(--rust); }
+
+  /* ─────────────────────── PAGE FRAME ─────────────────────── */
+  .frame {
+    max-width: var(--col);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* ─────────────────────── VERTICAL RULE ─────────────────────── */
+  .rule {
+    display: inline-block;
+    width: 2px;
+    background: var(--rust);
+    align-self: stretch;
+    flex-shrink: 0;
+  }
+  .rule--margin { background: var(--margin); }
+  .rule--ink    { background: var(--ink); }
+  .rule--vellum { background: var(--vellum); }
+
+  /* Wordmark lockup, used many places */
+  .wm {
+    display: inline-flex;
+    align-items: stretch;
+    gap: 18px;
+  }
+  .wm__bar { width: 2px; background: var(--rust); }
+  .wm__type {
+    font-family: var(--font-display);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    color: var(--ink);
+    font-size: 64px;
+  }
+  .wm__lockup .wm__type { margin-bottom: 10px; }
+  .wm__tag {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 10px;
+    color: var(--ash);
+  }
+  .wm--sm .wm__type { font-size: 28px; }
+  .wm--sm { gap: 10px; }
+  .wm--sm .wm__bar { width: 1.5px; }
+  .wm--xs .wm__type { font-size: 18px; }
+  .wm--xs { gap: 7px; }
+  .wm--xs .wm__bar { width: 1px; }
+  .wm--inverse .wm__type { color: var(--parchment); }
+  .wm--inverse .wm__tag  { color: var(--margin); }
+
+  /* ─────────────────────── COVER / HERO ─────────────────────── */
+  .cover {
+    min-height: 100vh;
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 64px var(--gutter);
+    background: var(--parchment);
+  }
+  .cover__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .cover__main {
+    align-self: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: end;
+  }
+  .cover__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    letter-spacing: -0.035em;
+    line-height: 0.88;
+    font-size: clamp(96px, 11vw, 168px);
+    color: var(--ink);
+  }
+  .cover__title em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .cover__deck {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-style: italic;
+    font-size: clamp(22px, 1.8vw, 28px);
+    line-height: 1.4;
+    color: var(--ink);
+    max-width: 38ch;
+    padding-left: 24px;
+    border-left: 2px solid var(--rust);
+  }
+  .cover__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    padding-top: 48px;
+  }
+
+  /* ─────────────────────── SECTIONS ─────────────────────── */
+  section.chapter {
+    padding: 128px var(--gutter) 144px;
+    position: relative;
+  }
+  section.chapter.vellum   { background: var(--vellum); }
+  section.chapter.parchment{ background: var(--parchment); }
+  section.chapter.ink      { background: var(--ink); color: var(--parchment); }
+  section.chapter.ink .ash { color: #9a8f83; }
+  section.chapter.ink .label { color: #9a8f83; }
+  section.chapter.ink .label--rust { color: var(--rust); }
+  section.chapter.ink .prose { color: var(--parchment); }
+
+  .chapter__inner { max-width: var(--col); margin: 0 auto; }
+
+  .chapter__head {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 64px;
+    align-items: end;
+    padding-bottom: 56px;
+    margin-bottom: 64px;
+    border-bottom: 1px solid var(--margin);
+  }
+  section.chapter.ink .chapter__head { border-color: rgba(255,255,255,0.15); }
+  .chapter__num {
+    display: flex;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .chapter__num .rule { width: 2px; min-height: 80px; }
+  .chapter__num-text {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--ash);
+  }
+  .chapter__num h2 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    font-size: 76px;
+    line-height: 0.95;
+    color: inherit;
+    margin-top: 14px;
+  }
+  .chapter__deck {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.4;
+    color: inherit;
+    max-width: 42ch;
+  }
+
+  /* ─────────────────────── GENERIC GRID ─────────────────────── */
+  .row {
+    display: grid;
+    gap: 64px;
+  }
+  .row--2 { grid-template-columns: 1fr 1fr; }
+  .row--3 { grid-template-columns: repeat(3, 1fr); }
+  .row--4 { grid-template-columns: repeat(4, 1fr); }
+  .row--side { grid-template-columns: 1fr 2fr; }
+  .row + .row { margin-top: 96px; }
+
+  .cap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .cap__bar { width: 14px; height: 1px; background: var(--margin); }
+
+  /* ─────────────────────── WORDMARK CARDS ─────────────────────── */
+  .wm-card {
+    background: var(--vellum);
+    padding: 64px;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+  }
+  .wm-card--dark { background: var(--ink); }
+  .wm-card--parchment { background: var(--parchment); }
+  .wm-card__label {
+    position: absolute;
+    top: 20px;
+    left: 24px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ash);
+  }
+  .wm-card--dark .wm-card__label { color: #9a8f83; }
+
+  /* Clear-space diagram */
+  .clearspace {
+    background: var(--vellum);
+    padding: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .clearspace__grid {
+    position: relative;
+    display: inline-block;
+    padding: 56px 64px;
+    background: var(--parchment);
+    outline: 1px dashed var(--margin);
+    outline-offset: 24px;
+  }
+  .clearspace__caption {
+    margin-top: 56px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  /* ─────────────────────── COLOR SWATCHES ─────────────────────── */
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--margin);
+  }
+  .swatch {
+    aspect-ratio: 1 / 1.05;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid var(--margin);
+    border-bottom: 1px solid var(--margin);
+  }
+  .swatch:nth-child(4n) { border-right: none; }
+  .swatch:nth-last-child(-n+1) { border-bottom: none; }
+  /* Manually drop borders on last row of 7 items */
+  .swatch__name {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .swatch__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .swatch__hex {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .swatch__role {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.3;
+  }
+  .swatch--parchment { background: var(--parchment); color: var(--ink); }
+  .swatch--vellum    { background: var(--vellum);    color: var(--ink); }
+  .swatch--margin    { background: var(--margin);    color: var(--ink); }
+  .swatch--rust      { background: var(--rust);      color: var(--parchment); }
+  .swatch--gilt      { background: var(--gilt);      color: var(--ink); }
+  .swatch--ash       { background: var(--ash);       color: var(--parchment); }
+  .swatch--ink       { background: var(--ink);       color: var(--parchment); }
+  .swatch--empty     { background: transparent; }
+
+  /* ─────────────────────── TYPE SPECIMENS ─────────────────────── */
+  .type-spec {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 48px;
+    padding: 48px 0;
+    border-top: 1px solid var(--margin);
+    align-items: start;
+  }
+  .type-spec:last-child { border-bottom: 1px solid var(--margin); }
+  .type-spec__meta { display: flex; flex-direction: column; gap: 12px; }
+  .type-spec__role {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--ash);
+    max-width: 28ch;
+  }
+  .type-spec__sample { color: var(--ink); }
+
+  /* ─────────────────────── DO / DON'T ─────────────────────── */
+  .dodont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    background: var(--margin);
+    border: 1px solid var(--margin);
+  }
+  .dodont__cell {
+    background: var(--vellum);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 200px;
+  }
+  .dodont__tag {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .dodont__tag--do { color: var(--rust); }
+  .dodont__tag--dont { color: var(--ash); }
+  .dodont__text {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  /* ─────────────────────── TEMPLATE FRAMES ─────────────────────── */
+  .tmpl {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .tmpl__frame {
+    background: var(--vellum);
+    box-shadow: 0 1px 0 var(--margin);
+    position: relative;
+    overflow: hidden;
+  }
+  .tmpl__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .tmpl__name {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .tmpl__spec {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ash);
+  }
+  .tmpl__note {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ash);
+    max-width: 44ch;
+  }
+
+  /* internal helper to render fixed-size designs scaled into a frame */
+  .canvas {
+    width: 100%;
+    aspect-ratio: var(--ar, 1);
+    background: var(--parchment);
+    position: relative;
+    overflow: hidden;
+  }
+  .canvas--ink { background: var(--ink); color: var(--parchment); }
+  .canvas--vellum { background: var(--vellum); }
+
+  /* ─────────────────────── PODCAST COVER ─────────────────────── */
+  .pod {
+    --ar: 1;
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 9%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .pod__top { display: flex; gap: 14px; align-items: stretch; }
+  .pod__top .bar { width: 2px; background: var(--rust); }
+  .pod__wm {
+    font-family: var(--font-display);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--parchment);
+  }
+  .pod__bottom { display: flex; flex-direction: column; gap: 18px; }
+  .pod__epnum {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+  .pod__title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 42px;
+    line-height: 1.15;
+    color: var(--parchment);
+    letter-spacing: -0.005em;
+  }
+
+  /* ─────────────────────── IG SQUARE ─────────────────────── */
+  .ig-sq {
+    --ar: 1;
+    background: var(--parchment);
+    padding: 9%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .ig-sq__mark {
+    font-family: var(--font-display);
+    font-weight: 900;
+    color: var(--rust);
+    font-size: 96px;
+    line-height: 0.7;
+  }
+  .ig-sq__body {
+    align-self: center;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 34px;
+    line-height: 1.3;
+    color: var(--ink);
+    max-width: 22ch;
+  }
+  .ig-sq__attr { display: flex; gap: 10px; align-items: stretch; }
+  .ig-sq__attr .bar { width: 1.5px; background: var(--rust); }
+  .ig-sq__attr-name {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+  }
+  .ig-sq__attr-src {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ash);
+    margin-top: 2px;
+  }
+
+  /* ─────────────────────── IG STORY (vertical) ─────────────────────── */
+  .ig-st {
+    --ar: 9 / 16;
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 12% 10%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .ig-st__wm {
+    display: flex; gap: 10px; align-items: stretch;
+  }
+  .ig-st__wm .bar { width: 1.5px; background: var(--rust); }
+  .ig-st__wm-type {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 24px;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    color: var(--parchment);
+  }
+  .ig-st__wm-tag {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 8px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--margin);
+    margin-top: 6px;
+  }
+  .ig-st__main { align-self: center; }
+  .ig-st__kicker {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 18px;
+  }
+  .ig-st__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 56px;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--parchment);
+  }
+  .ig-st__sub {
+    margin-top: 18px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--margin);
+    max-width: 22ch;
+  }
+  .ig-st__cta {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--parchment);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ig-st__cta::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--rust);
+  }
+
+  /* ─────────────────────── YOUTUBE THUMB ─────────────────────── */
+  .yt {
+    --ar: 16 / 9;
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 5% 5.5%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 5%;
+    align-items: center;
+  }
+  .yt__left { display: flex; gap: 10px; align-items: stretch; height: 100%; }
+  .yt__left .bar { width: 2px; background: var(--rust); }
+  .yt__left-type {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 38px;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--parchment);
+    max-width: 4ch;
+  }
+  .yt__left-tag {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 8px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--margin);
+    margin-top: 8px;
+  }
+  .yt__right {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 56px;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--parchment);
+  }
+  .yt__right em {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  /* ─────────────────────── ARTICLE HEADER ─────────────────────── */
+  .art {
+    --ar: 16 / 9;
+    background: var(--parchment);
+    padding: 7%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .art__kicker {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+  .art__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 64px;
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    align-self: center;
+    margin: 0;
+    max-width: 14ch;
+  }
+  .art__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    border-top: 1px solid var(--margin);
+    padding-top: 18px;
+    gap: 24px;
+  }
+  .art__deck {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--ink);
+    max-width: 38ch;
+  }
+  .art__byline { display: flex; gap: 10px; align-items: stretch; }
+  .art__byline .bar { width: 1.5px; background: var(--rust); }
+  .art__byline-name {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .art__byline-date {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ash);
+    margin-top: 4px;
+  }
+
+  /* ─────────────────────── SUBSTACK MASTHEAD ─────────────────────── */
+  .sub {
+    --ar: 1344 / 256;
+    background: var(--parchment);
+    padding: 0 4%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .sub__wm { display: flex; gap: 14px; align-items: stretch; }
+  .sub__wm .bar { width: 2px; background: var(--rust); }
+  .sub__wm-type {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 72px;
+    letter-spacing: -0.025em;
+    line-height: 1;
+  }
+  .sub__wm-tag {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ash);
+    margin-top: 10px;
+  }
+
+  /* ─────────────────────── LINKEDIN BANNER ─────────────────────── */
+  .li-ban {
+    --ar: 1584 / 396;
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+  .li-ban__left {
+    display: flex; gap: 16px; align-items: stretch;
+  }
+  .li-ban__left .bar { width: 2px; background: var(--rust); }
+  .li-ban__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 48px;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    color: var(--parchment);
+  }
+  .li-ban__sub {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--margin);
+    margin-top: 12px;
+    max-width: 30ch;
+  }
+  .li-ban__right {
+    text-align: right;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--margin);
+    line-height: 1.7;
+  }
+  /* profile circle reservation */
+  .li-ban__avatar-area {
+    position: absolute;
+    bottom: -8%;
+    left: 5%;
+    width: 11%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px dashed var(--margin);
+    background: rgba(255,255,255,0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--margin);
+  }
+
+  /* ─────────────────────── LINKEDIN POST ─────────────────────── */
+  .li-post {
+    --ar: 1;
+    background: var(--parchment);
+    padding: 8%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .li-post__kicker {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+  .li-post__title {
+    align-self: center;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 52px;
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    max-width: 12ch;
+  }
+  .li-post__title em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .li-post__foot {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+    padding-top: 16px;
+    border-top: 1px solid var(--margin);
+  }
+  .li-post__foot .bar { width: 1.5px; background: var(--rust); }
+  .li-post__foot-name {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+  }
+  .li-post__foot-tag {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ash);
+    margin-top: 3px;
+  }
+
+  /* ─────────────────────── BOOK COVER ─────────────────────── */
+  .book {
+    --ar: 1410 / 2250;
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 11% 9%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .book__wm { display: flex; gap: 8px; align-items: stretch; }
+  .book__wm .bar { width: 1.5px; background: var(--rust); }
+  .book__wm-type {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    color: var(--parchment);
+  }
+  .book__main { align-self: center; }
+  .book__kicker {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 24px;
+  }
+  .book__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 58px;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--parchment);
+  }
+  .book__sub {
+    margin-top: 20px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.35;
+    color: var(--margin);
+    max-width: 18ch;
+  }
+  .book__author {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--parchment);
+    border-top: 1px solid rgba(255,255,255,0.18);
+    padding-top: 14px;
+  }
+
+  /* ─────────────────────── SLIDE 16:9 ─────────────────────── */
+  .slide {
+    --ar: 16 / 9;
+    background: var(--parchment);
+    padding: 6%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .slide__wm { display: flex; gap: 10px; align-items: stretch; }
+  .slide__wm .bar { width: 1.5px; background: var(--rust); }
+  .slide__wm-type {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: -0.025em;
+    line-height: 1;
+  }
+  .slide__main {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 22ch;
+  }
+  .slide__kicker {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+  .slide__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 52px;
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+  .slide__deck {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--ash);
+    max-width: 30ch;
+  }
+  .slide__foot {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ash);
+    border-top: 1px solid var(--margin);
+    padding-top: 12px;
+  }
+
+  /* ─────────────────────── VOICE TABLE ─────────────────────── */
+  .voice {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    background: var(--margin);
+    border: 1px solid var(--margin);
+  }
+  .voice__cell {
+    background: var(--vellum);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 160px;
+  }
+  .voice__head {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+  .voice__head--yes { color: var(--rust); }
+  .voice__head--no  { color: var(--ash); }
+  .voice__line {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  .voice__line--strike { color: var(--ash); }
+
+  /* ─────────────────────── COLOPHON / FOOT ─────────────────────── */
+  .colophon {
+    padding: 96px var(--gutter) 80px;
+    background: var(--ink);
+    color: var(--parchment);
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .colophon__inner {
+    max-width: var(--col);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .colophon h3 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 56px;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    color: var(--parchment);
+  }
+  .colophon p {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--margin);
+    margin-top: 18px;
+    max-width: 38ch;
+  }
+  .colophon ul { list-style: none; }
+  .colophon li {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--margin);
+    padding: 6px 0;
+  }
+  .colophon li.head {
+    color: var(--rust);
+    margin-bottom: 8px;
+  }
+
+  /* ─────────────────────── TOC ─────────────────────── */
+  .toc {
+    padding: 80px var(--gutter);
+    background: var(--vellum);
+    border-top: 1px solid var(--margin);
+    border-bottom: 1px solid var(--margin);
+  }
+  .toc__inner {
+    max-width: var(--col);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .toc__list { display: grid; grid-template-columns: 1fr 1fr; column-gap: 64px; row-gap: 4px; }
+  .toc__item {
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--margin);
+    align-items: baseline;
+    text-decoration: none;
+    color: inherit;
+  }
+  .toc__num {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--rust);
+  }
+  .toc__name {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 19px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .toc__page {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--ash);
+  }
+
+  /* ─────────────────────── INTRO COPY ─────────────────────── */
+  .lead {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1.35;
+    color: var(--ink);
+    max-width: 28ch;
+    padding-left: 24px;
+    border-left: 2px solid var(--rust);
+  }
+
+  /* utility */
+  .stack > * + * { margin-top: 18px; }
+  .stack-lg > * + * { margin-top: 32px; }
+
+</style>
+</head>
+<body data-screen-label="The Margin, Brand Guide">
+
+<!-- ════════════════════════════════════════════════════════════
+     COVER
+═════════════════════════════════════════════════════════════ -->
+<div class="cover" data-screen-label="Cover">
+  <div class="cover__top">
+    <div class="wm wm--sm">
+      <div class="wm__bar"></div>
+      <div class="wm__lockup">
+        <div class="wm__type">the margin</div>
+        <div class="wm__tag">Teaching biblical literacy · in the margins</div>
+      </div>
+    </div>
+    <div style="text-align:right;">
+      <div class="label label--rust">Brand Guide</div>
+      <div class="label" style="margin-top:6px;">Edition no. 02 · 2026</div>
+    </div>
+  </div>
+
+  <div class="cover__main">
+    <h1 class="cover__title">
+      Notes<br />
+      in the<br />
+      <em>margin.</em>
+    </h1>
+    <div>
+      <div class="label label--rust" style="margin-bottom:16px;">A brand book</div>
+      <p class="cover__deck">
+        Why we exist, how we teach, and how we sound, so the everyday Christian grows in biblical literacy and learns to read Scripture for themselves.
+      </p>
+    </div>
+  </div>
+
+  <div class="cover__bottom">
+    <div class="label">For internal use · v1.0</div>
+    <div class="label">Tyler · The Margin</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     TABLE OF CONTENTS
+═════════════════════════════════════════════════════════════ -->
+<div class="toc" data-screen-label="Contents">
+  <div class="toc__inner">
+    <div>
+      <div class="cap"><span class="cap__bar"></span><span class="label">Contents</span></div>
+      <h2 class="display" style="font-size:56px;">Ten sections.<br /><em style="font-family:var(--font-serif);font-weight: 500;font-style:italic;">One quiet system.</em></h2>
+      <p class="prose ash" style="margin-top:24px;">A reference, not a rulebook. When in doubt, choose the slower, quieter option.</p>
+    </div>
+    <div class="toc__list">
+      <a class="toc__item" href="#s1"><div class="toc__num">01</div><div class="toc__name">Foundations</div><div class="toc__page">p. 01</div></a>
+      <a class="toc__item" href="#s2"><div class="toc__num">02</div><div class="toc__name">Wordmark</div><div class="toc__page">p. 02</div></a>
+      <a class="toc__item" href="#s3"><div class="toc__num">03</div><div class="toc__name">The Rule</div><div class="toc__page">p. 03</div></a>
+      <a class="toc__item" href="#s4"><div class="toc__num">04</div><div class="toc__name">Color</div><div class="toc__page">p. 04</div></a>
+      <a class="toc__item" href="#s5"><div class="toc__num">05</div><div class="toc__name">Typography</div><div class="toc__page">p. 05</div></a>
+      <a class="toc__item" href="#s6"><div class="toc__num">06</div><div class="toc__name">Do &amp; Don't</div><div class="toc__page">p. 06</div></a>
+      <a class="toc__item" href="#s7"><div class="toc__num">07</div><div class="toc__name">Templates</div><div class="toc__page">p. 07</div></a>
+      <a class="toc__item" href="#s8"><div class="toc__num">08</div><div class="toc__name">Voice in use</div><div class="toc__page">p. 08</div></a>
+      <a class="toc__item" href="#s9"><div class="toc__num">09</div><div class="toc__name">In practice</div><div class="toc__page">p. 09</div></a>
+      <a class="toc__item" href="#s10"><div class="toc__num">10</div><div class="toc__name">Checklist</div><div class="toc__page">p. 10</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     01 · FOUNDATIONS
+═════════════════════════════════════════════════════════════ -->
+<section class="chapter parchment" id="s1" data-screen-label="01 Foundations">
+  <div class="chapter__inner">
+    <div class="chapter__head">
+      <div class="chapter__num">
+        <span class="rule"></span>
+        <div>
+          <div class="chapter__num-text">Section 01</div>
+          <h2>Foundations.</h2>
+        </div>
+      </div>
+      <p class="chapter__deck">
+        The Margin exists to teach. We help the everyday Christian grow in biblical literacy, learning to read Scripture with depth and confidence, like a reader's own pen in the side of the page. Ancient depth, modern doorway.
+      </p>
+    </div>
+
+    <div class="row row--side">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Why we exist</span></div>
+        <p class="lead">To teach. We help the everyday Christian grow in biblical literacy, equipped to read Scripture with depth, confidence, and a pen in hand.</p>
+      </div>
+      <div class="stack-lg">
+        <div>
+          <div class="cap"><span class="cap__bar"></span><span class="label">Audience</span></div>
+          <p class="prose">The everyday Christian, and the curious seeker, who wants to engage Scripture deeply but has no appetite for dry academic theology. People who want to be <span class="italic">taught</span>, not performed at. The reader profile sits next to John Mark Comer, The Bible Project, and Practicing the Way, hungry to grow, hospitable, allergic to hype.</p>
+        </div>
+        <div>
+          <div class="cap"><span class="cap__bar"></span><span class="label">Thesis</span></div>
+          <p class="prose">Biblical literacy is taught the way it's actually learned, slowly, carefully, one passage at a time, like a teacher writing notes in the margin of your Bible. We don't just explain the text; we hand readers the tools to read it themselves. <span class="italic">Margin notes that teach you to read.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row row--4" style="margin-top:96px;">
+      <div class="stack">
+        <div class="label label--rust">Voice · 01</div>
+        <p class="display" style="font-size:30px;">Slow, but never soft.</p>
+        <p class="ash">Careful and patient, and unafraid to make the call.</p>
+      </div>
+      <div class="stack">
+        <div class="label label--rust">Voice · 02</div>
+        <p class="display" style="font-size:30px;">Ancient depth, said straight.</p>
+        <p class="ash">Old truth, plain words. We don't water Scripture down.</p>
+      </div>
+      <div class="stack">
+        <div class="label label--rust">Voice · 03</div>
+        <p class="display" style="font-size:30px;">Teach, never talk down.</p>
+        <p class="ash">Hand over the tools, not just the takeaway, so the reader can open the text and read it for themselves next time.</p>
+      </div>
+      <div class="stack">
+        <div class="label label--rust">Voice · 04</div>
+        <p class="display" style="font-size:30px;">Sure about Jesus.</p>
+        <p class="ash">Confident at the center. Honest about mystery at the edges.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     02 · WORDMARK
+═════════════════════════════════════════════════════════════ -->
+<section class="chapter vellum" id="s2" data-screen-label="02 Wordmark">
+  <div class="chapter__inner">
+    <div class="chapter__head">
+      <div class="chapter__num">
+        <span class="rule"></span>
+        <div>
+          <div class="chapter__num-text">Section 02</div>
+          <h2>The wordmark.</h2>
+        </div>
+      </div>
+      <p class="chapter__deck">
+        Lowercase. Tightly tracked. Always paired with the thin rust rule, the rule <span class="italic">is</span> the margin. Never set without it.
+      </p>
+    </div>
+
+    <!-- Primary lockup, full size -->
+    <div class="wm-card" style="min-height:340px;">
+      <div class="wm-card__label">Primary lockup</div>
+      <div class="wm">
+        <div class="wm__bar" style="width:3px;"></div>
+        <div class="wm__lockup">
+          <div class="wm__type" style="font-size:128px;">the margin</div>
+          <div class="wm__tag" style="font-size:14px;">Teaching biblical literacy · in the margins</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Three variants -->
+    <div class="row row--3" style="margin-top:64px;">
+      <div class="wm-card">
+        <div class="wm-card__label">Wordmark only</div>
+        <div class="wm">
+          <div class="wm__bar"></div>
+          <div class="wm__type" style="font-size:64px;">the margin</div>
+        </div>
+      </div>
+      <div class="wm-card wm-card--parchment">
+        <div class="wm-card__label">Stacked lockup</div>
+        <div class="wm">
+          <div class="wm__bar"></div>
+          <div>
+            <div class="wm__type" style="font-size:42px; line-height:0.9;">the<br />margin</div>
+            <div class="wm__tag" style="margin-top:10px;">Issue · No. 04</div>
+          </div>
+        </div>
+      </div>
+      <div class="wm-card wm-card--dark">
+        <div class="wm-card__label">Reversed (on Ink)</div>
+        <div class="wm wm--inverse">
+          <div class="wm__bar"></div>
+          <div class="wm__lockup">
+            <div class="wm__type" style="font-size:48px;">the margin</div>
+            <div class="wm__tag">Teaching biblical literacy · in the margins</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Size scale -->
+    <div class="row row--side" style="margin-top:96px;">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Minimum sizes</span></div>
+        <p class="prose">Below 16 px the tagline drops. Below 12 px the rule alone carries the system, use the wordmark without the tagline. Never compress the lockup; never alter the tracking. The wordmark is always lowercase.</p>
+      </div>
+      <div class="wm-card" style="display:flex; flex-direction:column; gap:32px; align-items:flex-start; padding:48px;">
+        <div class="wm-card__label">Size scale</div>
+        <div class="wm">
+          <div class="wm__bar"></div>
+          <div class="wm__type" style="font-size:96px;">the margin</div>
+        </div>
+        <div class="wm">
+          <div class="wm__bar" style="width:1.5px;"></div>
+          <div class="wm__type" style="font-size:48px;">the margin</div>
+        </div>
+        <div class="wm">
+          <div class="wm__bar" style="width:1.2px;"></div>
+          <div class="wm__type" style="font-size:24px;">the margin</div>
+        </div>
+        <div class="wm">
+          <div class="wm__bar" style="width:1px;"></div>
+          <div class="wm__type" style="font-size:14px;">the margin</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clear space -->
+    <div class="row row--side" style="margin-top:96px;">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Clear space</span></div>
+        <p class="prose">Reserve clear space around the wordmark equal to the cap-height of the lowercase <span class="italic">m</span>. Nothing else, type, edge, photo, anything, crosses inside that field.</p>
+      </div>
+      <div class="clearspace">
+        <div class="clearspace__grid">
+          <div class="wm">
+            <div class="wm__bar"></div>
+            <div class="wm__type" style="font-size:64px;">the margin</div>
+          </div>
+        </div>
+        <div class="clearspace__caption">
+          <span class="label">Margin = x-height of "m"</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     03 · THE RULE
+═════════════════════════════════════════════════════════════ -->
+<section class="chapter ink" id="s3" data-screen-label="03 The Rule">
+  <div class="chapter__inner">
+    <div class="chapter__head">
+      <div class="chapter__num">
+        <span class="rule"></span>
+        <div>
+          <div class="chapter__num-text" style="color:#9a8f83;">Section 03</div>
+          <h2 style="color:var(--parchment);">The rule.</h2>
+        </div>
+      </div>
+      <p class="chapter__deck" style="color:var(--margin);">
+        The single most important mark in the system. A thin rust vertical line, drawn where a reader would draw it themselves, beside what matters most on the page.
+      </p>
+    </div>
+
+    <div class="row row--2">
+      <div class="stack-lg">
+        <div>
+          <div class="label label--rust">Rule weights</div>
+          <p class="prose" style="color:var(--parchment); margin-top:14px;">Three weights, three contexts. Never thicker, the rule is a note, not a banner.</p>
+        </div>
+        <div style="display:flex; gap:48px; align-items:stretch; padding:48px 0;">
+          <div style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
+            <div style="width:1px; height:120px; background:var(--rust);"></div>
+            <span class="label" style="color:#9a8f83;">1 px · footnotes</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
+            <div style="width:2px; height:120px; background:var(--rust);"></div>
+            <span class="label" style="color:#9a8f83;">2 px · primary</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
+            <div style="width:3px; height:120px; background:var(--rust);"></div>
+            <span class="label" style="color:#9a8f83;">3 px · hero only</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack-lg">
+        <div>
+          <div class="label label--rust">Where it lives</div>
+        </div>
+        <div style="display:grid; grid-template-columns: auto 1fr; gap: 12px 24px; align-items:start; font-family: var(--font-serif); font-size:17px; line-height:1.5;">
+          <span class="label" style="color:#9a8f83;">01</span><span>Beside the wordmark, always.</span>
+          <span class="label" style="color:#9a8f83;">02</span><span>Beside pull quotes and lead paragraphs.</span>
+          <span class="label" style="color:#9a8f83;">03</span><span>Beside bylines and attribution lines.</span>
+          <span class="label" style="color:#9a8f83;">04</span><span>Section openers, in place of a header bar.</span>
+          <span class="label" style="color:#9a8f83;">05</span><span>Anywhere a horizontal divider <em class="italic">would</em> be, rotated 90°.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Examples in context -->
+    <div class="row row--3" style="margin-top:96px;">
+      <div style="background:#252220; padding:40px; min-height:240px; display:flex; align-items:center;">
+        <div class="wm wm--inverse">
+          <div class="wm__bar"></div>
+          <div class="wm__type" style="font-size:38px;">the margin</div>
+        </div>
+      </div>
+      <div style="background:#252220; padding:40px; min-height:240px; display:flex; align-items:center; gap:16px;">
+        <span class="rule" style="min-height:120px;"></span>
+        <p class="italic" style="font-size:22px; color:var(--parchment); max-width:18ch;">The first readers heard this as a letter, in one sitting.</p>
+      </div>
+      <div style="background:#252220; padding:40px; min-height:240px; display:flex; align-items:center; gap:14px;">
+        <span class="rule" style="min-height:48px;"></span>
+        <div>
+          <div class="display" style="color:var(--parchment); font-size:22px;">Tyler</div>
+          <div class="label" style="color:#9a8f83; margin-top:4px;">26 May · 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     04 · COLOR
+═════════════════════════════════════════════════════════════ -->
+<section class="chapter parchment" id="s4" data-screen-label="04 Color">
+  <div class="chapter__inner">
+    <div class="chapter__head">
+      <div class="chapter__num">
+        <span class="rule"></span>
+        <div>
+          <div class="chapter__num-text">Section 04</div>
+          <h2>Color.</h2>
+        </div>
+      </div>
+      <p class="chapter__deck">
+        Seven colors. Quiet, warm, paper-based. Rust is the only color that ever raises its voice, and only by a half-step.
+      </p>
+    </div>
+
+    <div class="swatches">
+      <div class="swatch swatch--parchment">
+        <div class="swatch__name">Parchment</div>
+        <div class="swatch__meta">
+          <div class="swatch__hex">#F3EEE3</div>
+          <div class="swatch__role">Primary background. The page.</div>
+        </div>
+      </div>
+      <div class="swatch swatch--vellum">
+        <div class="swatch__name">Vellum</div>
+        <div class="swatch__meta">
+          <div class="swatch__hex">#FAF6EC</div>
+          <div class="swatch__role">Lighter surface, cards, alternates.</div>
+        </div>
+      </div>
+      <div class="swatch swatch--margin">
+        <div class="swatch__name">Margin</div>
+        <div class="swatch__meta">
+          <div class="swatch__hex">#C9BFAE</div>
+          <div class="swatch__role">Rules, dividers, soft borders.</div>
+        </div>
+      </div>
+      <div class="swatch swatch--rust">
+        <div class="swatch__name">Rust</div>
+        <div class="swatch__meta">
+          <div class="swatch__hex">#A8593C</div>
+          <div class="swatch__role">The accent. The rule. Links.</div>
+        </div>
+      </div>
+      <div class="swatch swatch--gilt">
+        <div class="swatch__name">Gilt</div>
+        <div class="swatch__meta">
+          <div class="swatch__hex">#B68A47</div>
+          <div class="swatch__role">Special moments. Used rarely.</div>
+        </div>
+      </div>
+      <div class="swatch swatch--ash">
+        <div class="swatch__name">Ash</div>
+        <div class="swatch__meta">
+          <div class="swatch__hex">#6B5F54</div>
+          <div class="swatch__role">Muted secondary text.</div>
+        </div>
+      </div>
+      <div class="swatch swatch--ink">
+        <div class="swatch__name">Ink</div>
+        <div class="swatch__meta">
+          <div class="swatch__hex">#1A1814</div>
+          <div class="swatch__role">Primary text. The hand.</div>
+        </div>
+      </div>
+      <div class="swatch swatch--empty" style="display:flex; align-items:flex-end; padding:24px;">
+        <p class="italic ash" style="font-size:15px; max-width:18ch;">"Rust is the only color that ever shouts. Everything else stays quiet."</p>
+      </div>
+    </div>
+
+    <!-- Pairing ratios -->
+    <div class="row row--2" style="margin-top:96px;">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Default ratio</span></div>
+        <div style="display:flex; height:120px; border:1px solid var(--margin);">
+          <div style="flex:70; background:var(--parchment);"></div>
+          <div style="flex:22; background:var(--ink);"></div>
+          <div style="flex:5; background:var(--ash);"></div>
+          <div style="flex:2; background:var(--rust);"></div>
+          <div style="flex:1; background:var(--gilt);"></div>
+        </div>
+        <p class="ash" style="font-size:14px; margin-top:16px; max-width:48ch;">70 parchment / 22 ink / 5 ash / 2 rust / 1 gilt. Hold this ratio across compositions, when in doubt, more paper.</p>
+      </div>
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Don't</span></div>
+        <div style="display:flex; height:120px; border:1px solid var(--margin);">
+          <div style="flex:30; background:var(--rust);"></div>
+          <div style="flex:30; background:var(--gilt);"></div>
+          <div style="flex:40; background:var(--parchment);"></div>
+        </div>
+        <p class="ash" style="font-size:14px; margin-top:16px; max-width:48ch;">Never let rust and gilt share equal weight. Never use more than one accent color in a single composition.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     05 · TYPOGRAPHY
+═════════════════════════════════════════════════════════════ -->
+<section class="chapter vellum" id="s5" data-screen-label="05 Typography">
+  <div class="chapter__inner">
+    <div class="chapter__head">
+      <div class="chapter__num">
+        <span class="rule"></span>
+        <div>
+          <div class="chapter__num-text">Section 05</div>
+          <h2>Typography.</h2>
+        </div>
+      </div>
+      <p class="chapter__deck">
+        Three families. All three are free on Google Fonts and shipped inside Canva. Fraunces strikes; Newsreader 500 italic carries the soul voice with presence; Inter handles metadata. Nothing else.
+      </p>
+    </div>
+
+    <div class="type-spec">
+      <div class="type-spec__meta">
+        <div class="label label--rust">Display</div>
+        <div class="display" style="font-size:36px;">Fraunces 900</div>
+        <p class="type-spec__role">The bold strike. Wordmark, post titles, hero headlines. Used sparingly so it keeps its force.</p>
+      </div>
+      <div class="type-spec__sample">
+        <div style="font-family:var(--font-display); font-weight:900; letter-spacing:-0.03em; font-size:96px; line-height:0.92;">On reading Paul slowly.</div>
+      </div>
+    </div>
+
+    <div class="type-spec">
+      <div class="type-spec__meta">
+        <div class="label label--rust">Soul voice</div>
+        <div class="italic" style="font-size:34px;">Newsreader 500</div>
+        <p class="type-spec__role">Editorial italic with presence. Pull quotes, taglines, deck copy, episode titles, social cards. <strong style="font-weight:700;">500 is the floor</strong>, never thinner. Reads on a phone.</p>
+      </div>
+      <div class="type-spec__sample">
+        <div style="font-family:var(--font-serif); font-style:italic; font-weight: 500; font-size:48px; line-height:1.25; color:var(--ink); max-width:18ch;">The first readers heard this as a letter, in one sitting, with neighbors leaning in.</div>
+      </div>
+    </div>
+
+    <div class="type-spec">
+      <div class="type-spec__meta">
+        <div class="label label--rust">Body</div>
+        <div style="font-family:var(--font-serif); font-size:30px;">Newsreader 400</div>
+        <p class="type-spec__role">The reader's chair. Anywhere the reader will read more than a sentence, 17–19 px, line-height 1.7.</p>
+      </div>
+      <div class="type-spec__sample">
+        <p style="font-family:var(--font-serif); font-weight:400; font-size:18px; line-height:1.7; max-width:54ch;">Romans was not first opened as a textbook. It was a letter read aloud in a room, to a small house church, with people leaning forward to catch every word. We tend to read it in two-minute bursts on a phone. The Margin is an invitation to slow down, to underline, to ask what these sentences would have sounded like to the people who heard them first.</p>
+      </div>
+    </div>
+
+    <div class="type-spec">
+      <div class="type-spec__meta">
+        <div class="label label--rust">Emphasis</div>
+        <div style="font-family:var(--font-serif); font-weight:700; font-size:30px;">Newsreader 700</div>
+        <p class="type-spec__role">Author names, section headers within an article, occasional bolded phrases. Less than you think.</p>
+      </div>
+      <div class="type-spec__sample">
+        <p style="font-family:var(--font-serif); font-size:22px; line-height:1.55; max-width:38ch;">Paul writes to a church he has never met, and yet <strong style="font-weight:700;">he calls them family</strong> before he is two sentences in.</p>
+      </div>
+    </div>
+
+    <div class="type-spec">
+      <div class="type-spec__meta">
+        <div class="label label--rust">Labels</div>
+        <div style="font-family:var(--font-sans); font-weight:500; font-size:14px; letter-spacing:0.22em; text-transform:uppercase;">INTER 500 CAPS</div>
+        <p class="type-spec__role">Labels, dates, navigation, metadata. Always caps, 0.18–0.28 letter-spacing. Should feel almost invisible.</p>
+      </div>
+      <div class="type-spec__sample" style="display:flex; flex-direction:column; gap:14px;">
+        <div class="label">Romans · No. 04 · 8 min read</div>
+        <div class="label label--rust">Section 03 · The Rule</div>
+        <div class="label" style="font-size:14px;">Listen on Apple · Spotify · Overcast</div>
+      </div>
+    </div>
+
+    <!-- Scale chart -->
+    <div class="row row--side" style="margin-top:96px;">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Scale</span></div>
+        <p class="prose">A modest scale based on a 1.25 ratio. Pick one display size per composition; let everything else fall in line.</p>
+      </div>
+      <div style="display:grid; grid-template-columns: 60px 1fr 80px; column-gap:24px; row-gap:8px; align-items:baseline; border-top:1px solid var(--margin);">
+        <div class="label">128</div><div style="font-family:var(--font-display); font-weight:900; font-size:64px; letter-spacing:-0.03em;">Headline</div><div class="label ash">Display L</div>
+        <div class="label">72</div><div style="font-family:var(--font-display); font-weight:900; font-size:48px; letter-spacing:-0.03em;">Headline</div><div class="label ash">Display M</div>
+        <div class="label">48</div><div style="font-family:var(--font-display); font-weight:900; font-size:36px; letter-spacing:-0.03em;">Headline</div><div class="label ash">Display S</div>
+        <div class="label">28</div><div class="italic" style="font-size:28px;">Deck copy / pull quote</div><div class="label ash">Deck</div>
+        <div class="label">19</div><div style="font-family:var(--font-serif); font-size:19px;">Body, primary reading text.</div><div class="label ash">Body L</div>
+        <div class="label">16</div><div style="font-family:var(--font-serif); font-size:16px;">Body, secondary reading text.</div><div class="label ash">Body M</div>
+        <div class="label">12</div><div class="label" style="font-size:12px;">METADATA · DATES · BREADCRUMBS</div><div class="label ash">Label</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     06 · DO / DON'T
+═════════════════════════════════════════════════════════════ -->
+<section class="chapter parchment" id="s6" data-screen-label="06 Do and Dont">
+  <div class="chapter__inner">
+    <div class="chapter__head">
+      <div class="chapter__num">
+        <span class="rule"></span>
+        <div>
+          <div class="chapter__num-text">Section 06</div>
+          <h2>Boundaries.</h2>
+        </div>
+      </div>
+      <p class="chapter__deck">
+        The brand is held together more by what we refuse than what we add. Every boundary serves the same end: a page clear enough to teach from. If a choice feels louder, smaller, or busier, it's almost certainly not us.
+      </p>
+    </div>
+
+    <div class="dodont">
+      <div class="dodont__cell">
+        <div class="dodont__tag dodont__tag--do">Do</div>
+        <p class="dodont__text">Use the rust vertical rule wherever a divider naturally lives. It is the signature.</p>
+      </div>
+      <div class="dodont__cell">
+        <div class="dodont__tag dodont__tag--dont">Don't</div>
+        <p class="dodont__text">Don't use more than one accent color in a single composition. Rust <em class="italic">or</em> Gilt, not both.</p>
+      </div>
+
+      <div class="dodont__cell">
+        <div class="dodont__tag dodont__tag--do">Do</div>
+        <p class="dodont__text">Embrace breathing room and white space. The margin is part of the design, not what's left over.</p>
+      </div>
+      <div class="dodont__cell">
+        <div class="dodont__tag dodont__tag--dont">Don't</div>
+        <p class="dodont__text">Don't fill a composition edge-to-edge. Always leave room for the reader's eye to rest.</p>
+      </div>
+
+      <div class="dodont__cell">
+        <div class="dodont__tag dodont__tag--do">Do</div>
+        <p class="dodont__text">Keep type quiet except for one headline moment per piece, one strike of Fraunces 900.</p>
+      </div>
+      <div class="dodont__cell">
+        <div class="dodont__tag dodont__tag--dont">Don't</div>
+        <p class="dodont__text">Don't use a sans-serif as the primary typeface. It breaks the editorial feel. Inter is metadata only.</p>
+      </div>
+
+      <div class="dodont__cell">
+        <div class="dodont__tag dodont__tag--do">Do</div>
+        <p class="dodont__text">Use sentence case for headlines and body. LETTER-SPACED CAPS only for metadata labels.</p>
+      </div>
+      <div class="dodont__cell">
+        <div class="dodont__tag dodont__tag--dont">Don't</div>
+        <p class="dodont__text">Don't use exclamation marks, hype copy, or church-marketing language, no "epic," "level up," "game-changing."</p>
+      </div>
+
+      <div class="dodont__cell">
+        <div class="dodont__tag dodont__tag--do">Do</div>
+        <p class="dodont__text">Pair Fraunces with Newsreader only. The system is two voices, never a random third.</p>
+      </div>
+      <div class="dodont__cell">
+        <div class="dodont__tag dodont__tag--dont">Don't</div>
+        <p class="dodont__text">Don't use gradients, drop shadows, glows, or busy textures. Paper, ink, and ratio do the work.</p>
+      </div>
+
+      <div class="dodont__cell">
+        <div class="dodont__tag dodont__tag--do">Do</div>
+        <p class="dodont__text">Treat Scripture with reverence, accurate references, careful framing, paraphrase if a translation is copyrighted.</p>
+      </div>
+      <div class="dodont__cell">
+        <div class="dodont__tag dodont__tag--dont">Don't</div>
+        <p class="dodont__text">Don't sound like you have all the answers. We teach to equip, not to impress, margin notes, not lectures.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     07 · TEMPLATES
+═════════════════════════════════════════════════════════════ -->
+<section class="chapter vellum" id="s7" data-screen-label="07 Templates">
+  <div class="chapter__inner">
+    <div class="chapter__head">
+      <div class="chapter__num">
+        <span class="rule"></span>
+        <div>
+          <div class="chapter__num-text">Section 07</div>
+          <h2>Templates.</h2>
+        </div>
+      </div>
+      <p class="chapter__deck">
+        The system applied. Every surface you'll show up on, sized to spec, with the layout rules baked in, each one a small lesson in reading Scripture better. Drop in new copy; everything else holds.
+      </p>
+    </div>
+
+    <!-- ────────── PODCAST ────────── -->
+    <div class="cap" style="margin-bottom:0;"><span class="cap__bar"></span><span class="label label--rust">Audio</span><span class="label ash">· Apple Podcasts · Spotify · Overcast</span></div>
+    <div class="row row--2" style="margin-top:32px;">
+      <div class="tmpl">
+        <div class="tmpl__frame">
+          <div class="canvas pod" style="--ar:1;">
+            <div class="pod__top">
+              <div class="bar"></div>
+              <div class="pod__wm">the margin</div>
+            </div>
+            <div></div>
+            <div class="pod__bottom">
+              <div class="pod__epnum">Episode · No. 04</div>
+              <div class="pod__title">How to read a 2,000-year-old letter.</div>
+            </div>
+          </div>
+        </div>
+        <div class="tmpl__meta">
+          <div class="tmpl__name">Podcast cover</div>
+          <div class="tmpl__spec">3000 × 3000 px · .png</div>
+        </div>
+        <p class="tmpl__note">Always on Ink. Wordmark top-left with rule. Episode number small in rust caps; episode title in Newsreader 500 italic, max two lines.</p>
+      </div>
+
+      <div class="tmpl">
+        <div class="tmpl__frame">
+          <div class="canvas pod" style="--ar:1; background: var(--parchment); color: var(--ink);">
+            <div class="pod__top">
+              <div class="bar"></div>
+              <div class="pod__wm" style="color:var(--ink);">the margin</div>
+            </div>
+            <div></div>
+            <div class="pod__bottom">
+              <div class="pod__epnum">Episode · No. 07</div>
+              <div class="pod__title" style="color:var(--ink);">What the Sermon on the Mount is actually doing.</div>
+            </div>
+          </div>
+        </div>
+        <div class="tmpl__meta">
+          <div class="tmpl__name">Podcast cover · light</div>
+          <div class="tmpl__spec">3000 × 3000 px · .png</div>
+        </div>
+        <p class="tmpl__note">Alternate light variant on Parchment for series rotations. Keep one cover per series cohesive, do not mix light and dark mid-season.</p>
+      </div>
+    </div>
+
+    <!-- ────────── INSTAGRAM ────────── -->
+    <div class="cap" style="margin: 96px 0 0;"><span class="cap__bar"></span><span class="label label--rust">Instagram</span><span class="label ash">· Square posts · Stories · Reel covers</span></div>
+    <div class="row row--2" style="margin-top:32px;">
+      <div class="tmpl">
+        <div class="tmpl__frame">
+          <div class="canvas ig-sq" style="--ar:1;">
+            <div class="ig-sq__mark">"</div>
+            <div class="ig-sq__body">The first readers heard this as a letter, in one sitting, with neighbors leaning in.</div>
+            <div class="ig-sq__attr">
+              <div class="bar"></div>
+              <div>
+                <div class="ig-sq__attr-name">the margin</div>
+                <div class="ig-sq__attr-src">from "On reading Paul slowly"</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tmpl__meta">
+          <div class="tmpl__name">Instagram · pull quote</div>
+          <div class="tmpl__spec">1080 × 1080 px</div>
+        </div>
+        <p class="tmpl__note">Parchment background. Large rust quote mark (Fraunces 900) top-left. Body in Newsreader 500 italic, centered. Small wordmark attribution at the bottom.</p>
+      </div>
+
+      <div class="tmpl">
+        <div class="tmpl__frame">
+          <div class="canvas ig-sq" style="--ar:1;">
+            <div class="ig-sq__mark" style="color:var(--ink); font-size:80px;">04</div>
+            <div class="ig-sq__body" style="font-style:normal; font-family:var(--font-display); font-weight:900; font-size:54px; line-height:1.0; letter-spacing:-0.025em; max-width:13ch;">On reading Paul slowly.</div>
+            <div class="ig-sq__attr">
+              <div class="bar"></div>
+              <div>
+                <div class="ig-sq__attr-name">the margin</div>
+                <div class="ig-sq__attr-src">Romans · No. 04 · new on Substack</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tmpl__meta">
+          <div class="tmpl__name">Instagram · article teaser</div>
+          <div class="tmpl__spec">1080 × 1080 px</div>
+        </div>
+        <p class="tmpl__note">Number top-left in Inter caps. Title in Fraunces 900 dominating the center. Use this when launching a new post, never more than one strike of Fraunces per post.</p>
+      </div>
+    </div>
+
+    <div class="row row--3" style="margin-top:32px;">
+      <div class="tmpl">
+        <div class="tmpl__frame">
+          <div class="canvas ig-st" style="--ar:9/16;">
+            <div class="ig-st__wm">
+              <div class="bar"></div>
+              <div>
+                <div class="ig-st__wm-type">the margin</div>
+                <div class="ig-st__wm-tag">Teaching biblical literacy · in the margins</div>
+              </div>
+            </div>
+            <div class="ig-st__main">
+              <div class="ig-st__kicker">New · Issue 04</div>
+              <div class="ig-st__title">On reading Paul slowly.</div>
+              <div class="ig-st__sub">The first readers heard Romans in one sitting. We rarely do.</div>
+            </div>
+            <div class="ig-st__cta">Read on Substack</div>
+          </div>
+        </div>
+        <div class="tmpl__meta">
+          <div class="tmpl__name">Story · article launch</div>
+          <div class="tmpl__spec">1080 × 1920 px</div>
+        </div>
+        <p class="tmpl__note">Wordmark + tagline anchored top. Title centered. CTA bottom in Inter caps with rust hairline.</p>
+      </div>
+      <div class="tmpl">
+        <div class="tmpl__frame">
+          <div class="canvas ig-st" style="--ar:9/16; background:var(--parchment); color:var(--ink);">
+            <div class="ig-st__wm">
+              <div class="bar"></div>
+              <div>
+                <div class="ig-st__wm-type" style="color:var(--ink);">the margin</div>
+                <div class="ig-st__wm-tag" style="color:var(--ash);">Teaching biblical literacy · in the margins</div>
+              </div>
+            </div>
+            <div class="ig-st__main">
+              <div class="ig-st__kicker">From the reading</div>
+              <div class="ig-st__title" style="color:var(--ink); font-family:var(--font-serif); font-weight: 500; font-style:italic; letter-spacing:-0.005em; font-size:46px; line-height:1.15;">"Confident in Scripture. Comfortable not having every answer."</div>
+            </div>
+            <div class="ig-st__cta" style="color:var(--ink);">Listen now</div>
+          </div>
+        </div>
+        <div class="tmpl__meta">
+          <div class="tmpl__name">Story · pull quote</div>
+          <div class="tmpl__spec">1080 × 1920 px</div>
+        </div>
+        <p class="tmpl__note">Parchment variant. Centered italic quote, no display title. Use for sharing a single line from a post or episode.</p>
+      </div>
+      <div class="tmpl">
+        <div class="tmpl__frame">
+          <div class="canvas ig-st" style="--ar:9/16;">
+            <div class="ig-st__wm">
+              <div class="bar"></div>
+              <div>
+                <div class="ig-st__wm-type">the margin</div>
+                <div class="ig-st__wm-tag">Teaching biblical literacy · in the margins</div>
+              </div>
+            </div>
+            <div class="ig-st__main">
+              <div class="ig-st__kicker">Reel · ep. 04</div>
+              <div class="ig-st__title" style="font-size:48px;">How to read a 2,000-year-old letter.</div>
+              <div class="ig-st__sub">A three-minute reframe before you open Romans again.</div>
+            </div>
+            <div class="ig-st__cta">Watch the reel</div>
+          </div>
+        </div>
+        <div class="tmpl__meta">
+          <div class="tmpl__name">Reel cover</div>
+          <div class="tmpl__spec">1080 × 1920 px</div>
+        </div>
+        <p class="tmpl__note">Same vertical lockup as Story. Reserve a 250 px safe zone at top &amp; bottom for Instagram UI.</p>
+      </div>
+    </div>
+
+    <!-- ────────── YOUTUBE ────────── -->
+    <div class="cap" style="margin: 96px 0 0;"><span class="cap__bar"></span><span class="label label--rust">YouTube</span><span class="label ash">· Thumbnails</span></div>
+    <div class="row row--2" style="margin-top:32px;">
+      <div class="tmpl">
+        <div class="tmpl__frame">
+          <div class="canvas yt" style="--ar:16/9;">
+            <div class="yt__left">
+              <div class="bar"></div>
+              <div>
+                <div class="yt__left-type">the margin</div>
+                <div class="yt__left-tag">Episode · 04</div>
+              </div>
+            </div>
+            <div class="yt__right">Read Paul <em>slowly.</em></div>
+          </div>
+        </div>
+        <div class="tmpl__meta">
+          <div class="tmpl__name">YouTube thumbnail · dark</div>
+          <div class="tmpl__spec">1280 × 720 px</div>
+        </div>
+        <p class="tmpl__note">High contrast for small sizes. Four words max on the right, one in Newsreader italic rust for the eye to rest on.</p>
+      </div>
+      <div class="tmpl">
+        <div class="tmpl__frame">
+          <div class="canvas yt" style="--ar:16/9; background:var(--parchment); color:var(--ink);">
+            <div class="yt__left">
+              <div class="bar"></div>
+              <div>
+                <div class="yt__left-type" style="color:var(--ink);">the margin</div>
+                <div class="yt__left-tag" style="color:var(--ash);">Episode · 07</div>
+              </div>
+            </div>
+            <div class="yt__right" style="color:var(--ink);">The Sermon, <em>again.</em></div>
+          </div>
+        </div>
+        <div class="tmpl__meta">
+          <div class="tmpl__name">YouTube thumbnail · light</div>
+          <div class="tmpl__spec">1280 × 720 px</div>
+        </div>
+        <p class="tmpl__note">Inverse for variety. Pick one, never mix light and dark thumbnails on the same page of the channel.</p>
+      </div>
+    </div>
+
+    <!-- ────────── ARTICLE / SUBSTACK ────────── -->
+    <div class="cap" style="margin: 96px 0 0;"><span class="cap__bar"></span><span class="label label--rust">Substack &amp; web</span><span class="label ash">· Masthead · article header</span></div>
+
+    <div class="tmpl" style="margin-top:32px;">
+      <div class="tmpl__frame">
+        <div class="canvas sub" style="--ar:1344/256;">
+          <div class="sub__wm">
+            <div class="bar"></div>
+            <div>
+              <div class="sub__wm-type">the margin</div>
+              <div class="sub__wm-tag">Teaching biblical literacy · in the margins</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tmpl__meta">
+        <div class="tmpl__name">Substack masthead</div>
+        <div class="tmpl__spec">1344 × 256 px · transparent .png</div>
+      </div>
+      <p class="tmpl__note">The publication's primary signature. No flourishes, no ornament. The wordmark + rule + tagline; nothing else lives at this size.</p>
+    </div>
+
+    <div class="tmpl" style="margin-top:64px;">
+      <div class="tmpl__frame">
+        <div class="canvas art" style="--ar:16/9;">
+          <div class="art__kicker">Romans · No. 04 · 8 min read</div>
+          <div></div>
+          <div class="art__title">On reading Paul slowly.</div>
+          <div></div>
+          <div class="art__foot">
+            <p class="art__deck">The first readers heard Romans in one sitting, with neighbors leaning in. We rarely do, and it shows.</p>
+            <div class="art__byline">
+              <div class="bar"></div>
+              <div>
+                <div class="art__byline-name">Tyler</div>
+                <div class="art__byline-date">26 May 2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tmpl__meta">
+        <div class="tmpl__name">Article hero</div>
+        <div class="tmpl__spec">1600 × 900 px · web or PDF</div>
+      </div>
+      <p class="tmpl__note">Used at the top of long-form posts and PDF reprints. Kicker → Title → Deck + byline footer separated by a thin Margin-colored rule.</p>
+    </div>
+
+    <!-- ────────── LINKEDIN ────────── -->
+    <div class="cap" style="margin: 96px 0 0;"><span class="cap__bar"></span><span class="label label--rust">LinkedIn</span><span class="label ash">· Profile banner · Post graphics</span></div>
+
+    <div class="tmpl" style="margin-top:32px;">
+      <div class="tmpl__frame">
+        <div class="canvas li-ban" style="--ar:1584/396;">
+          <div class="li-ban__left">
+            <div class="bar"></div>
+            <div>
+              <div class="li-ban__title">the margin</div>
+              <div class="li-ban__sub">Teaching the everyday Christian to read Scripture: margin notes on the books of the Bible.</div>
+            </div>
+          </div>
+          <div class="li-ban__right">
+            New essay every<br />other Sunday<br /><span style="color:var(--rust);">readthemargin.net</span>
+          </div>
+          <div class="li-ban__avatar-area">Profile</div>
+        </div>
+      </div>
+      <div class="tmpl__meta">
+        <div class="tmpl__name">LinkedIn banner</div>
+        <div class="tmpl__spec">1584 × 396 px</div>
+      </div>
+      <p class="tmpl__note">Keep the left third clear, LinkedIn drops the profile circle there on most layouts. Inscription and URL live on the right.</p>
+    </div>
+
+    <div class="row row--2" style="margin-top:64px;">
+      <div class="tmpl">
+        <div class="tmpl__frame">
+          <div class="canvas li-post" style="--ar:1;">
+            <div class="li-post__kicker">A note from the margin</div>
+            <div class="li-post__title">Most of us are reading the Bible too fast.</div>
+            <div class="li-post__foot">
+              <div class="bar"></div>
+              <div>
+                <div class="li-post__foot-name">the margin</div>
+                <div class="li-post__foot-tag">essay · 8 min read</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tmpl__meta">
+          <div class="tmpl__name">LinkedIn · essay teaser</div>
+          <div class="tmpl__spec">1080 × 1080 px</div>
+        </div>
+        <p class="tmpl__note">For sharing a post hook on LinkedIn's feed. Kicker top, single Fraunces line center, attribution bottom.</p>
+      </div>
+      <div class="tmpl">
+        <div class="tmpl__frame">
+          <div class="canvas li-post" style="--ar:1; background:var(--ink); color:var(--parchment);">
+            <div class="li-post__kicker">Field note</div>
+            <div class="li-post__title" style="color:var(--parchment); font-family:var(--font-serif); font-weight: 500; font-style:italic; font-size:42px; line-height:1.25; letter-spacing:-0.005em;">"Confident in Scripture. Comfortable not having every answer."</div>
+            <div class="li-post__foot" style="border-color: rgba(255,255,255,0.15);">
+              <div class="bar"></div>
+              <div>
+                <div class="li-post__foot-name" style="color:var(--parchment);">the margin</div>
+                <div class="li-post__foot-tag" style="color:var(--margin);">on writing about Scripture</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tmpl__meta">
+          <div class="tmpl__name">LinkedIn · quote card</div>
+          <div class="tmpl__spec">1080 × 1080 px</div>
+        </div>
+        <p class="tmpl__note">Dark variant for higher-engagement posts. Use sparingly, no more than one in three LinkedIn shares.</p>
+      </div>
+    </div>
+
+    <!-- ────────── BOOK + SLIDE ────────── -->
+    <div class="cap" style="margin: 96px 0 0;"><span class="cap__bar"></span><span class="label label--rust">Long-form &amp; teaching</span><span class="label ash">· Book cover · 16:9 slide</span></div>
+    <div class="row row--2" style="margin-top:32px; grid-template-columns: 1fr 2fr;">
+      <div class="tmpl">
+        <div class="tmpl__frame">
+          <div class="canvas book" style="--ar:1410/2250;">
+            <div class="book__wm">
+              <div class="bar"></div>
+              <div class="book__wm-type">the margin</div>
+            </div>
+            <div class="book__main">
+              <div class="book__kicker">Volume 01 · Romans</div>
+              <div class="book__title">Slow Letters.</div>
+              <div class="book__sub">Twelve essays on reading Paul like the first readers did.</div>
+            </div>
+            <div class="book__author">Tyler [Last name]</div>
+          </div>
+        </div>
+        <div class="tmpl__meta">
+          <div class="tmpl__name">Book cover</div>
+          <div class="tmpl__spec">6 × 9 in · 1410 × 2250 px @ 300 dpi</div>
+        </div>
+        <p class="tmpl__note">Wordmark small at top (signals imprint/series). Title centered, dominant. Subtitle in Newsreader italic. Author in Inter caps at bottom.</p>
+      </div>
+
+      <div class="tmpl">
+        <div class="tmpl__frame">
+          <div class="canvas slide" style="--ar:16/9;">
+            <div class="slide__wm">
+              <div class="bar"></div>
+              <div class="slide__wm-type">the margin</div>
+            </div>
+            <div class="slide__main">
+              <div class="slide__kicker">Romans 1 · 1–7</div>
+              <div class="slide__title">A letter to a church Paul has never met.</div>
+              <div class="slide__deck">Why the first seven sentences matter more than we usually let them.</div>
+            </div>
+            <div class="slide__foot">Teaching · Session 01 of 04</div>
+          </div>
+        </div>
+        <div class="tmpl__meta">
+          <div class="tmpl__name">Teaching slide · 16:9</div>
+          <div class="tmpl__spec">1920 × 1080 px</div>
+        </div>
+        <p class="tmpl__note">Parchment background. Wordmark in the corner, content centered with massive breathing room. Scripture reference in rust caps as a kicker above the title.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     08 · VOICE IN USE
+═════════════════════════════════════════════════════════════ -->
+<section class="chapter parchment" id="s8" data-screen-label="08 Voice in use">
+  <div class="chapter__inner">
+    <div class="chapter__head">
+      <div class="chapter__num">
+        <span class="rule"></span>
+        <div>
+          <div class="chapter__num-text">Section 08</div>
+          <h2>Voice in use.</h2>
+        </div>
+      </div>
+      <p class="chapter__deck">
+        Slow does not mean invisible. The voice teaches, it catches attention with specificity and noticing, never with hype, and always leaves the reader more able to read Scripture themselves. The "not this / this" pairs below are the brand's working rule.
+      </p>
+    </div>
+
+    <!-- Three principles -->
+    <div class="row row--3" style="margin-bottom: 96px;">
+      <div class="stack">
+        <div class="label label--rust">Principle · 01</div>
+        <p class="display" style="font-size:30px;">Specific, never vague.</p>
+        <p class="ash">Name the book, the chapter, the sentence. Vagueness is the cousin of hype.</p>
+      </div>
+      <div class="stack">
+        <div class="label label--rust">Principle · 02</div>
+        <p class="display" style="font-size:30px;">Conviction, not hype.</p>
+        <p class="ash">Say it with a spine, not with capital letters. Truth doesn't need exclamation marks.</p>
+      </div>
+      <div class="stack">
+        <div class="label label--rust">Principle · 03</div>
+        <p class="display" style="font-size:30px;">Invite, then call.</p>
+        <p class="ash">Open with a noticing or a question, then ask the reader to actually respond.</p>
+      </div>
+    </div>
+
+    <div class="row row--side">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Instagram caption · essay launch</span></div>
+        <p class="ash" style="font-size:14px; max-width:30ch; margin-top:8px;">Lead with the observation, name the book, end with the invitation.</p>
+      </div>
+      <div class="voice">
+        <div class="voice__cell"><div class="voice__head voice__head--no">Not this</div><p class="voice__line voice__line--strike">"🔥 This Romans deep-dive is going to TRANSFORM your faith. Don't miss out, link in bio!!"</p></div>
+        <div class="voice__cell"><div class="voice__head voice__head--yes">This</div><p class="voice__line">You weren't built to skim the Bible. Romans is a letter before it's a lecture, slow down, learn to read it, and let it ask something of you. New essay, link in bio.</p></div>
+      </div>
+    </div>
+
+    <div class="row row--side">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Article headline</span></div>
+        <p class="ash" style="font-size:14px; max-width:30ch; margin-top:8px;">A noticing or an admission. Never a number. Never "you'll never believe."</p>
+      </div>
+      <div class="voice">
+        <div class="voice__cell"><div class="voice__head voice__head--no">Not this</div><p class="voice__line voice__line--strike">"5 Mind-Blowing Truths About Romans That Will Transform Your Walk"</p></div>
+        <div class="voice__cell"><div class="voice__head voice__head--yes">This</div><p class="voice__line">You've been reading Paul too fast, and it's costing you.</p></div>
+      </div>
+    </div>
+
+    <div class="row row--side">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Reel · cover text</span></div>
+        <p class="ash" style="font-size:14px; max-width:30ch; margin-top:8px;">Five words at most. A single small instruction, or a single small noticing.</p>
+      </div>
+      <div class="voice">
+        <div class="voice__cell"><div class="voice__head voice__head--no">Not this</div><p class="voice__line voice__line--strike">"MIND. BLOWN. Romans 1 will NEVER be the same 🤯"</p></div>
+        <div class="voice__cell"><div class="voice__head voice__head--yes">This</div><p class="voice__line">Stop skimming. Read Romans 1 like it's true, sentence by sentence.</p></div>
+      </div>
+    </div>
+
+    <div class="row row--side">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Quote card · pull quote</span></div>
+        <p class="ash" style="font-size:14px; max-width:30ch; margin-top:8px;">A line that earns its own card. Concrete image, no abstractions.</p>
+      </div>
+      <div class="voice">
+        <div class="voice__cell"><div class="voice__head voice__head--no">Not this</div><p class="voice__line voice__line--strike">"Faith is the FUEL for your most authentic life. ✨"</p></div>
+        <div class="voice__cell"><div class="voice__head voice__head--yes">This</div><p class="voice__line">The first readers heard Romans in one sitting, and then they had to decide what to do about it. So do we.</p></div>
+      </div>
+    </div>
+
+    <div class="row row--side">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">LinkedIn · post hook</span></div>
+        <p class="ash" style="font-size:14px; max-width:30ch; margin-top:8px;">First line is the noticing. Second line is the consequence. Then the link.</p>
+      </div>
+      <div class="voice">
+        <div class="voice__cell"><div class="voice__head voice__head--no">Not this</div><p class="voice__line voice__line--strike">"5 leadership lessons hidden in Romans 12, you won't believe #3."</p></div>
+        <div class="voice__cell"><div class="voice__head voice__head--yes">This</div><p class="voice__line">Before Romans is theology, it is a letter.<br />And a letter is written to be answered, not just admired.<br />A new essay on learning to read it well →</p></div>
+      </div>
+    </div>
+
+    <div class="row row--side">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Call to action</span></div>
+        <p class="ash" style="font-size:14px; max-width:30ch; margin-top:8px;">A direction, not a demand. Lower-case verb, simple arrow.</p>
+      </div>
+      <div class="voice">
+        <div class="voice__cell"><div class="voice__head voice__head--no">Not this</div><p class="voice__line voice__line--strike">"SUBSCRIBE NOW! Don't miss out, join the movement today!"</p></div>
+        <div class="voice__cell"><div class="voice__head voice__head--yes">This</div><p class="voice__line">Read it. Then go live it. A new essay every other Sunday →</p></div>
+      </div>
+    </div>
+
+    <div class="row row--side">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Bio · one-liner</span></div>
+        <p class="ash" style="font-size:14px; max-width:30ch; margin-top:8px;">What the work is, and who it's for. Nothing about you.</p>
+      </div>
+      <div class="voice">
+        <div class="voice__cell"><div class="voice__head voice__head--no">Not this</div><p class="voice__line voice__line--strike">"Helping you UNLOCK the Bible 🔓 and live your most authentic faith life ever."</p></div>
+        <div class="voice__cell"><div class="voice__head voice__head--yes">This</div><p class="voice__line">Margin notes for people who actually want to read, and follow, the Book they love.</p></div>
+      </div>
+    </div>
+
+    <div class="row row--side">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Substack · publication description</span></div>
+        <p class="ash" style="font-size:14px; max-width:30ch; margin-top:8px;">A sentence about the work; a sentence about the reader.</p>
+      </div>
+      <div class="voice">
+        <div class="voice__cell"><div class="voice__head voice__head--no">Not this</div><p class="voice__line voice__line--strike">"The #1 Christian newsletter for transforming your faith journey!"</p></div>
+        <div class="voice__cell"><div class="voice__head voice__head--yes">This</div><p class="voice__line">Margin notes on the books of the Bible, teaching the everyday Christian to read Scripture with depth and confidence. Slow, careful commentary for people who'd rather spend time in the text than scrolling about it.</p></div>
+      </div>
+    </div>
+
+    <!-- Words we use / don't -->
+    <div class="row row--side" style="margin-top:96px;">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Words we use</span></div>
+        <p class="ash" style="font-size:14px; max-width:30ch; margin-top:8px;">Concrete verbs and nouns. Words a careful reader might underline.</p>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap: 10px 14px;">
+        <span class="italic" style="font-size:24px;">slow</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">careful</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">notice</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">again</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">letter</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">reader</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">listen</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">underline</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">sentence</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">paragraph</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">neighbor</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">attention</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">invitation</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">mystery</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">first</span><span class="ash">·</span>
+        <span class="italic" style="font-size:24px;">before</span>
+      </div>
+    </div>
+
+    <div class="row row--side" style="margin-top:48px;">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Words we don't</span></div>
+        <p class="ash" style="font-size:14px; max-width:30ch; margin-top:8px;">Inflated verbs, marketing nouns, and church-platform jargon.</p>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap: 10px 14px; color: var(--ash);">
+        <span style="font-size:22px; text-decoration: line-through;">epic</span><span>·</span>
+        <span style="font-size:22px; text-decoration: line-through;">game-changing</span><span>·</span>
+        <span style="font-size:22px; text-decoration: line-through;">level up</span><span>·</span>
+        <span style="font-size:22px; text-decoration: line-through;">unlock</span><span>·</span>
+        <span style="font-size:22px; text-decoration: line-through;">crush it</span><span>·</span>
+        <span style="font-size:22px; text-decoration: line-through;">authentic</span><span>·</span>
+        <span style="font-size:22px; text-decoration: line-through;">journey</span><span>·</span>
+        <span style="font-size:22px; text-decoration: line-through;">movement</span><span>·</span>
+        <span style="font-size:22px; text-decoration: line-through;">community</span><span>·</span>
+        <span style="font-size:22px; text-decoration: line-through;">brand</span><span>·</span>
+        <span style="font-size:22px; text-decoration: line-through;">transform</span><span>·</span>
+        <span style="font-size:22px; text-decoration: line-through;">mind-blowing</span>
+      </div>
+    </div>
+
+    <!-- Six lines you can keep in a pocket -->
+    <div class="row row--side" style="margin-top:96px;">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Six lines in the pocket</span></div>
+        <p class="ash" style="font-size:14px; max-width:30ch; margin-top:8px;">When stuck for a caption, start here.</p>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 24px 64px;">
+        <p class="italic" style="font-size:22px; line-height:1.35;">"You weren't made to skim this."</p>
+        <p class="italic" style="font-size:22px; line-height:1.35;">"Before Romans is theology, it is a letter, and it's asking something of you."</p>
+        <p class="italic" style="font-size:22px; line-height:1.35;">"Slow down. Then don't look away."</p>
+        <p class="italic" style="font-size:22px; line-height:1.35;">"Read it like it's true, because it is."</p>
+        <p class="italic" style="font-size:22px; line-height:1.35;">"Don't just underline it. Live it."</p>
+        <p class="italic" style="font-size:22px; line-height:1.35;">"Learn to read it, and you won't need us to."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     09 · IN PRACTICE
+═════════════════════════════════════════════════════════════ -->
+<section class="chapter vellum" id="s9" data-screen-label="09 In practice">
+  <div class="chapter__inner">
+    <div class="chapter__head">
+      <div class="chapter__num">
+        <span class="rule"></span>
+        <div>
+          <div class="chapter__num-text">Section 09</div>
+          <h2>In practice.</h2>
+        </div>
+      </div>
+      <p class="chapter__deck">
+        How to actually build this in the tools you use every day. The brand is a small set of decisions you make once in Canva, Google Slides, and Google Docs, then never again.
+      </p>
+    </div>
+
+    <!-- Canva -->
+    <div class="row row--side">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label label--rust">Canva</span></div>
+        <h3 class="display" style="font-size:48px; margin-top:8px;">Brand Kit setup.</h3>
+        <p class="ash" style="font-size:14px; max-width:28ch; margin-top:16px;">A one-time configuration that makes every new design land on-brand by default.</p>
+      </div>
+      <div class="stack-lg">
+        <div>
+          <div class="label">Step 01 · Brand colors</div>
+          <p class="prose" style="margin-top:8px;">In Brand Kit → Colors, add all seven hex codes from Section 04. Label them by name (Parchment, Vellum, Margin, Rust, Gilt, Ash, Ink). Pin <span class="italic">Parchment</span> as the background default and <span class="italic">Rust</span> as the single accent.</p>
+        </div>
+        <div>
+          <div class="label">Step 02 · Brand fonts</div>
+          <p class="prose" style="margin-top:8px;">All three families are free on Canva. Set defaults: Headings, <span class="italic">Fraunces, weight 900</span>. Subheadings, <span class="italic">Newsreader, 500 italic</span>. Body, <span class="italic">Newsreader, regular 400</span>. Labels, <span class="italic">Inter, 500, letter-space 220</span>.</p>
+        </div>
+        <div>
+          <div class="label">Step 03 · The margin rule</div>
+          <p class="prose" style="margin-top:8px;">Use the rectangle tool. Set width to 2 px (3 px for hero canvases over 2000 px), height to the relevant content height, color to Rust. Group it with the wordmark and save as a Brand Element. Never use the line tool, its caps are inconsistent.</p>
+        </div>
+        <div>
+          <div class="label">Step 04 · Templates folder</div>
+          <p class="prose" style="margin-top:8px;">Create a folder called "The Margin · Templates" in Projects. Save each canvas from Section 07 as its own template. When publishing, duplicate first, edit second, never edit the master.</p>
+        </div>
+        <div>
+          <div class="label">Step 05 · Effects off</div>
+          <p class="prose" style="margin-top:8px;">Turn off Canva's default Effects panel before you start. No shadows, no glows, no curved text, no photo filters. The system does not need them.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Google Slides -->
+    <div class="row row--side" style="margin-top:96px;">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label label--rust">Google Slides</span></div>
+        <h3 class="display" style="font-size:48px; margin-top:8px;">Theme &amp; master.</h3>
+        <p class="ash" style="font-size:14px; max-width:28ch; margin-top:16px;">For teaching decks, sermons, and any 16:9 presentation.</p>
+      </div>
+      <div class="stack-lg">
+        <div>
+          <div class="label">Step 01 · Custom theme</div>
+          <p class="prose" style="margin-top:8px;">View → Theme builder. Set the master slide background to Parchment <span class="italic">(#F3EEE3)</span>. Add a 2 px Rust rectangle at the left edge with the wordmark in Fraunces 900 beside it, this is your default slide header.</p>
+        </div>
+        <div>
+          <div class="label">Step 02 · Add the fonts</div>
+          <p class="prose" style="margin-top:8px;">In any text box, open the font picker and click "More fonts." Search and add Fraunces, Newsreader, and Inter. They'll save into your account; this is a one-time step.</p>
+        </div>
+        <div>
+          <div class="label">Step 03 · Four slide layouts</div>
+          <p class="prose" style="margin-top:8px;">Build these as layouts under your theme: <em class="italic">Title slide</em> (Fraunces 900, 72 pt, centered), <em class="italic">Scripture slide</em> (rust caps label above verse text in Newsreader 500 italic), <em class="italic">Main point slide</em> (Fraunces 900, 48 pt, left-aligned), <em class="italic">Section divider</em> (Ink background, parchment wordmark only).</p>
+        </div>
+        <div>
+          <div class="label">Step 04 · Spacing rule</div>
+          <p class="prose" style="margin-top:8px;">Every slide gets a 10% margin on all four sides, minimum. Never fill the slide to the edge, the breathing room <em class="italic">is</em> the brand.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Google Docs -->
+    <div class="row row--side" style="margin-top:96px;">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label label--rust">Google Docs</span></div>
+        <h3 class="display" style="font-size:48px; margin-top:8px;">Manuscript style.</h3>
+        <p class="ash" style="font-size:14px; max-width:28ch; margin-top:16px;">For drafts, sermon notes, and printable handouts.</p>
+      </div>
+      <div class="stack-lg">
+        <div>
+          <div class="label">Step 01 · Page setup</div>
+          <p class="prose" style="margin-top:8px;">Page Color: Parchment <span class="italic">(#F3EEE3)</span>. Margins: 1.25 in on all sides. Single column. Add a 2 px Rust line on the left margin if you want the signature on the page.</p>
+        </div>
+        <div>
+          <div class="label">Step 02 · Paragraph styles</div>
+          <p class="prose" style="margin-top:8px;"><em class="italic">Title</em>, Fraunces 900, 36 pt, Ink. <em class="italic">Heading 1</em>, Fraunces 900, 22 pt. <em class="italic">Heading 2</em>, Inter 500, 11 pt, all caps, letter-spaced (use Format → Text → Capitalization). <em class="italic">Normal text</em>, Newsreader 400, 12 pt, line spacing 1.5.</p>
+        </div>
+        <div>
+          <div class="label">Step 03 · Pull quotes</div>
+          <p class="prose" style="margin-top:8px;">Indent 0.5 in. Set to Newsreader 500 italic, 14 pt. Add a Rust left border (Format → Paragraph styles → Borders &amp; shading → Left border, 2 pt, Rust).</p>
+        </div>
+        <div>
+          <div class="label">Step 04 · Save as default</div>
+          <p class="prose" style="margin-top:8px;">Format → Paragraph styles → Options → Save as my default styles. Now every new doc opens on-brand.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Substack notes -->
+    <div class="row row--side" style="margin-top:96px;">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label label--rust">Substack</span></div>
+        <h3 class="display" style="font-size:48px; margin-top:8px;">Publication settings.</h3>
+        <p class="ash" style="font-size:14px; max-width:28ch; margin-top:16px;">The few places Substack lets you control the brand, get these right and the rest mostly follows.</p>
+      </div>
+      <div class="stack-lg">
+        <div>
+          <div class="label">Logo upload (square)</div>
+          <p class="prose" style="margin-top:8px;">256 × 256 px. Wordmark stacked: "the / margin" with the rule. Ink on Parchment, exported as transparent PNG.</p>
+        </div>
+        <div>
+          <div class="label">Wordmark upload (horizontal)</div>
+          <p class="prose" style="margin-top:8px;">1344 × 256 px. Wordmark + rule + tagline lockup, left-aligned with 6% padding. Use the template in Section 07.</p>
+        </div>
+        <div>
+          <div class="label">Accent color</div>
+          <p class="prose" style="margin-top:8px;">Set Substack's accent to Rust <span class="italic">(#A8593C)</span>. This colors buttons, links, and the highlight bar in one stroke.</p>
+        </div>
+        <div>
+          <div class="label">Cover photos</div>
+          <p class="prose" style="margin-top:8px;">Use the Article Hero template (1600 × 900). Never use Substack's stock photos. If you don't have an image for the post, use the typographic hero, title in Fraunces, deck in Newsreader italic.</p>
+        </div>
+        <div>
+          <div class="label">Publication description</div>
+          <p class="prose" style="margin-top:8px;">Use the line from Section 08, "Margin notes on the books of the Bible, teaching the everyday Christian to read Scripture with depth and confidence." Don't expand it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     10 · CHECKLIST
+═════════════════════════════════════════════════════════════ -->
+<section class="chapter parchment" id="s10" data-screen-label="10 Checklist">
+  <div class="chapter__inner">
+    <div class="chapter__head">
+      <div class="chapter__num">
+        <span class="rule"></span>
+        <div>
+          <div class="chapter__num-text">Section 10</div>
+          <h2>Checklist.</h2>
+        </div>
+      </div>
+      <p class="chapter__deck">
+        Before anything goes out, a post, a slide, a header, a cover, run it past this list. If a row fails, fix it before publishing.
+      </p>
+    </div>
+
+    <div class="row row--2">
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Before you publish</span></div>
+        <div style="display:grid; grid-template-columns: 28px 1fr; gap: 18px 16px; margin-top: 24px;">
+          <span class="label label--rust">01</span><p style="font-size:18px; line-height:1.55;"><strong style="font-weight:700;">Is the margin rule present?</strong> A thin rust line beside the wordmark, the byline, or the quote, somewhere.</p>
+          <span class="label label--rust">02</span><p style="font-size:18px; line-height:1.55;"><strong style="font-weight:700;">Only one accent color?</strong> Rust <em class="italic">or</em> Gilt, never both. No third accent ever.</p>
+          <span class="label label--rust">03</span><p style="font-size:18px; line-height:1.55;"><strong style="font-weight:700;">Only one display moment?</strong> One strike of Fraunces 900 per composition. Everything else is body or label.</p>
+          <span class="label label--rust">04</span><p style="font-size:18px; line-height:1.55;"><strong style="font-weight:700;">Breathing room on all four sides?</strong> Minimum 8–10% margin. If it feels cramped, shrink the text.</p>
+          <span class="label label--rust">05</span><p style="font-size:18px; line-height:1.55;"><strong style="font-weight:700;">Wordmark in lockup, lowercase, with rule?</strong> Never set the wordmark alone. Never typed in caps. Never re-tracked.</p>
+          <span class="label label--rust">06</span><p style="font-size:18px; line-height:1.55;"><strong style="font-weight:700;">Metadata in Inter caps?</strong> Dates, episode numbers, page labels, all 500 weight, letter-spaced 0.22 em or more.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="cap"><span class="cap__bar"></span><span class="label">Before you press send</span></div>
+        <div style="display:grid; grid-template-columns: 28px 1fr; gap: 18px 16px; margin-top: 24px;">
+          <span class="label label--rust">07</span><p style="font-size:18px; line-height:1.55;"><strong style="font-weight:700;">No hype words?</strong> No "epic," "transform," "unlock," "level up," "movement," or "journey." No exclamation marks.</p>
+          <span class="label label--rust">08</span><p style="font-size:18px; line-height:1.55;"><strong style="font-weight:700;">Did I notice, not conclude?</strong> The hook is an observation or a question, not a takeaway or a tip.</p>
+          <span class="label label--rust">09</span><p style="font-size:18px; line-height:1.55;"><strong style="font-weight:700;">Specific reference?</strong> Book, chapter, verse, named. No floating "scripture says" without a citation.</p>
+          <span class="label label--rust">10</span><p style="font-size:18px; line-height:1.55;"><strong style="font-weight:700;">Scripture quoted carefully?</strong> Translation noted, or paraphrased honestly. Never a copyrighted full-screen image quote.</p>
+          <span class="label label--rust">11</span><p style="font-size:18px; line-height:1.55;"><strong style="font-weight:700;">Does it read on a phone?</strong> Body text 16 px+. Headlines hold at 480 px wide. No type smaller than 10 px on social.</p>
+          <span class="label label--rust">12</span><p style="font-size:18px; line-height:1.55;"><strong style="font-weight:700;">Does it sound like an invitation?</strong> Read it aloud. If it points at me instead of up, rewrite it.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Closing pull quote -->
+    <div style="margin-top: 128px; max-width: 64ch;">
+      <div class="cap"><span class="cap__bar"></span><span class="label">A closing note</span></div>
+      <p class="lead" style="font-size:36px; line-height:1.3; max-width:none; margin-top:24px;">Teach it slow. Teach it true. And leave the reader more able to open the Book themselves, pointed up, not at us.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     COLOPHON
+═════════════════════════════════════════════════════════════ -->
+<div class="colophon" data-screen-label="Colophon">
+  <div class="colophon__inner">
+    <div>
+      <h3>One quiet system.<br /><em style="font-family:var(--font-serif); font-style:italic; font-weight: 500;">Held lightly.</em></h3>
+      <p>This book is a reference, not a referee. When a piece of work feels off, the answer is almost always: slow it down, take something out, and let the margin do its job, teaching the reader to see what's already on the page.</p>
+    </div>
+    <div>
+      <ul>
+        <li class="head">Typefaces</li>
+        <li>Fraunces, Undercase Type</li>
+        <li>Newsreader, Production Type</li>
+        <li>Inter, Rasmus Andersson</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li class="head">Brand book</li>
+        <li>The Margin · v2.0</li>
+        <li>Edition no. 02 · 2026</li>
+        <li>For internal use</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

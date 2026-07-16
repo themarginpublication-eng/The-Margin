@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Margin · Your reading</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --parchment:#F3EEE3; --vellum:#FAF6EC; --margin:#C9BFAE; --margin-soft:#DBD3C4;
+  --rust:#A8593C; --rust-deep:#8C4730; --gilt:#B68A47; --ash:#6B5F54;
+  --ink:#1A1814; --ink-soft:#2C2822;
+  --font-display:'Fraunces',Georgia,serif; --font-serif:'Newsreader',Georgia,serif; --font-sans:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{background:var(--parchment);}
+body{font-family:var(--font-serif);color:var(--ink);background:var(--parchment);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;min-height:100vh;}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(circle at 18% 10%,rgba(182,138,71,.05),transparent 44%),radial-gradient(circle at 84% 84%,rgba(168,89,60,.045),transparent 48%);}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+em{font-style:italic;}
+.label{font-family:var(--font-sans);font-weight:600;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);}
+.label--rust{color:var(--rust);}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font-sans);font-weight:600;font-size:13.5px;letter-spacing:.03em;padding:13px 22px;border-radius:2px;background:var(--rust);color:#fff;border:1px solid var(--rust);transition:background .2s,transform .12s;}
+.btn:hover{background:var(--rust-deep);}
+.btn:active{transform:translateY(1px);}
+.btn--block{width:100%;}
+.btn--ghost{background:transparent;color:var(--rust);}
+.btn--ghost:hover{background:rgba(168,89,60,.08);}
+.wm{display:inline-flex;align-items:center;gap:13px;}
+.wm__bar{width:3px;align-self:stretch;background:var(--rust);flex:0 0 auto;}
+.wm__type{font-family:var(--font-display);font-weight:900;letter-spacing:-.03em;line-height:1;color:var(--ink);font-size:25px;}
+.wm__tag{font-family:var(--font-sans);font-weight:500;text-transform:uppercase;letter-spacing:.2em;font-size:9px;color:var(--ash);white-space:nowrap;}
+.wm__lock{display:inline-flex;align-items:baseline;gap:11px;flex-wrap:wrap;}
+
+/* ---------- AUTH ---------- */
+.auth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;}
+.authcard{width:100%;max-width:430px;background:var(--vellum);border:1px solid var(--margin);padding:clamp(30px,5vw,46px);}
+.authcard .wm{justify-content:center;margin:0 auto 26px;}
+.auth h1{font-family:var(--font-display);font-weight:900;letter-spacing:-.025em;font-size:30px;line-height:1.05;text-align:center;}
+.auth h1 em{font-family:var(--font-serif);font-weight:500;}
+.auth .sub{text-align:center;font-style:italic;color:var(--ash);font-size:16px;margin-top:10px;line-height:1.5;}
+.tabs{display:flex;border:1px solid var(--margin);margin:26px 0 22px;}
+.tabs button{flex:1;background:none;border:none;padding:11px;font-family:var(--font-sans);font-weight:600;font-size:12.5px;letter-spacing:.04em;color:var(--ash);transition:.2s;}
+.tabs button.on{background:var(--rust);color:#fff;}
+.field{margin-bottom:15px;}
+.field label{display:block;font-family:var(--font-sans);font-weight:600;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);margin-bottom:7px;}
+.field input{width:100%;font-family:var(--font-serif);font-size:16.5px;padding:12px 14px;border:1px solid var(--margin);background:var(--parchment);color:var(--ink);border-radius:2px;outline:none;transition:border .2s;}
+.field input:focus{border-color:var(--rust);}
+.err{font-family:var(--font-sans);font-size:12px;color:var(--rust-deep);margin:2px 0 14px;min-height:16px;line-height:1.4;}
+.auth .fine{text-align:center;font-family:var(--font-sans);font-size:11px;color:var(--ash);margin-top:18px;line-height:1.6;}
+.auth .fine a{color:var(--rust);border-bottom:1px solid var(--margin);}
+.demo{margin-top:18px;padding:13px 15px;background:var(--parchment);border:1px dashed var(--margin);font-family:var(--font-sans);font-size:11.5px;color:var(--ash);line-height:1.55;text-align:center;}
+.demo b{color:var(--rust);font-weight:600;}
+.orline{display:flex;align-items:center;gap:14px;margin:18px 0;color:var(--ash);font-family:var(--font-sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;}
+.orline::before,.orline::after{content:"";flex:1;height:1px;background:var(--margin);}
+.gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:11px;background:#fff;border:1px solid var(--margin);color:var(--ink-soft);font-family:var(--font-sans);font-weight:600;font-size:13.5px;padding:12px;border-radius:2px;transition:background .15s,border-color .15s;}
+.gbtn:hover{background:#fbf9f4;border-color:var(--ash);}
+.gbtn svg{width:18px;height:18px;flex:0 0 auto;}
+
+/* ---------- DASHBOARD ---------- */
+.appbar{position:sticky;top:0;z-index:30;background:rgba(243,238,227,.9);backdrop-filter:saturate(120%) blur(10px);border-bottom:1px solid var(--margin);}
+.appbar__in{max-width:980px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.appbar__r{display:flex;align-items:center;gap:18px;}
+.appbar__r .who{font-family:var(--font-sans);font-size:12.5px;color:var(--ash);}
+.appbar__r .who b{color:var(--ink);font-weight:600;}
+.linkbtn{background:none;border:none;font-family:var(--font-sans);font-weight:600;font-size:12.5px;color:var(--rust);}
+.linkbtn:hover{color:var(--rust-deep);}
+.dash{max-width:980px;margin:0 auto;padding:clamp(28px,5vw,52px) 24px 80px;}
+.greet{font-family:var(--font-display);font-weight:900;letter-spacing:-.03em;line-height:1;font-size:clamp(30px,5vw,46px);}
+.greet em{font-family:var(--font-serif);font-weight:500;}
+.greet__sub{font-family:var(--font-serif);font-style:italic;font-size:19px;color:var(--ink-soft);margin-top:12px;}
+
+.jcard{background:var(--vellum);border:1px solid var(--margin);margin-top:34px;padding:clamp(26px,3.5vw,40px);}
+.jcard__top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;}
+.jcard__lane{font-family:var(--font-sans);font-weight:600;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);}
+.jcard h2{font-family:var(--font-display);font-weight:900;font-size:clamp(26px,3vw,33px);letter-spacing:-.02em;line-height:1.05;margin-top:8px;}
+.jcard__sub{font-style:italic;color:var(--ash);font-size:17px;margin-top:4px;}
+.bigday{text-align:right;flex:0 0 auto;}
+.bigday .n{font-family:var(--font-display);font-weight:900;font-size:54px;line-height:.9;color:var(--rust);letter-spacing:-.03em;}
+.bigday .of{font-family:var(--font-sans);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);margin-top:4px;}
+
+/* progress track */
+.track{margin-top:30px;}
+.track__movs{display:flex;gap:6px;margin-bottom:10px;}
+.track__movs .seg{flex:1;}
+.track__movs .seg .nm{font-family:var(--font-sans);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ash);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.track__movs .seg.cur .nm{color:var(--rust);}
+.dots{display:flex;flex-wrap:wrap;gap:7px;}
+.dot{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--margin);background:var(--parchment);font-family:var(--font-sans);font-size:9px;font-weight:600;color:var(--ash);display:flex;align-items:center;justify-content:center;transition:.15s;}
+.dot.done{background:var(--rust);border-color:var(--rust);color:#fff;}
+.dot.cur{border-color:var(--rust);color:var(--rust);box-shadow:0 0 0 3px rgba(168,89,60,.16);transform:scale(1.12);}
+.jcard__foot{margin-top:30px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.jcard__foot .now{font-family:var(--font-serif);font-size:17px;color:var(--ink-soft);}
+.jcard__foot .now b{font-weight:600;color:var(--ink);}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--margin);margin-top:22px;}
+.stat{padding:20px 22px;border-right:1px solid var(--margin);}
+.stat:last-child{border-right:none;}
+.stat .v{font-family:var(--font-display);font-weight:900;font-size:26px;color:var(--rust);letter-spacing:-.02em;}
+.stat .k{font-family:var(--font-sans);font-weight:600;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);margin-top:4px;}
+
+/* reading modal */
+.modal{position:fixed;inset:0;z-index:60;background:rgba(26,24,20,.55);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:40px 18px;}
+.modal.open{display:flex;}
+.sheet{width:100%;max-width:660px;background:var(--parchment);border:1px solid var(--margin);}
+.sheet__head{display:flex;justify-content:space-between;align-items:baseline;padding:24px 30px;border-bottom:1px solid var(--margin);gap:14px;flex-wrap:wrap;}
+.sheet__head .dn{font-family:var(--font-display);font-weight:900;font-size:24px;letter-spacing:-.02em;}
+.sheet__head .dn em{font-family:var(--font-serif);font-weight:500;font-style:italic;color:var(--rust);}
+.sheet__close{background:none;border:none;font-size:24px;color:var(--ash);line-height:1;}
+.sheet__body{padding:30px;}
+.sheet__ref{font-family:var(--font-sans);font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);margin-bottom:14px;}
+.sheet__verse{font-family:var(--font-serif);font-size:23px;line-height:1.55;color:var(--ink);padding-bottom:24px;border-bottom:1px solid var(--margin);}
+.beat{padding:18px 0;border-bottom:1px solid var(--margin-soft);}
+.beat h4{font-family:var(--font-display);font-weight:900;font-size:14px;display:inline;}
+.beat p{font-size:16px;line-height:1.6;color:var(--ink-soft);display:inline;margin-left:5px;}
+.beat--you{background:var(--vellum);border-left:3px solid var(--gilt);padding:16px 18px;margin-top:14px;}
+.beat--you h4{color:var(--rust);}
+.beat--you p{display:block;margin:6px 0 0;font-style:italic;}
+.sheet__foot{padding:22px 30px;border-top:1px solid var(--margin);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;background:var(--vellum);}
+.sheet__foot .pg{font-family:var(--font-sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);}
+.placeholder{font-family:var(--font-sans);font-size:12px;color:var(--ash);font-style:normal;background:var(--vellum);border:1px dashed var(--margin);padding:12px 14px;line-height:1.5;margin-top:8px;}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--parchment);font-family:var(--font-sans);font-size:13px;padding:13px 22px;border-radius:3px;opacity:0;pointer-events:none;transition:.3s;z-index:80;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media (max-width:560px){
+  .stats{grid-template-columns:1fr;}
+  .stat{border-right:none;border-bottom:1px solid var(--margin);}
+  .stat:last-child{border-bottom:none;}
+  .bigday{text-align:left;}
+  .track__movs{display:none;}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   THE MARGIN — app prototype
+   NOTE: This is a front-end prototype. "Accounts" and progress
+   are stored in this browser (localStorage) and passwords are
+   NOT secure. A real launch needs a proper backend: an auth
+   server, a database, hashed passwords, and email verification.
+   ============================================================ */
+const MOVES = [
+  { name:'Read it cold',        from:1,  to:7  },
+  { name:'The world behind it', from:8,  to:15 },
+  { name:'What scholars see',   from:16, to:23 },
+  { name:'Make it yours',       from:24, to:30 },
+];
+const DAYS = [
+  {d:1, t:'Read it whole', ref:'Psalm 23', v:'The Lord is my shepherd; I shall not want. He makes me lie down in green pastures…'},
+  {d:2, t:'Read it aloud', ref:'Psalm 23 · 1', v:'The Lord is my shepherd; I shall not want.'},
+  {d:3, t:'“The Lord is my shepherd”', ref:'Psalm 23 · 1', v:'The Lord is my shepherd'},
+  {d:4, t:'“I shall not want”', ref:'Psalm 23 · 1', v:'I shall not want.'},
+  {d:5, t:'Green pastures', ref:'Psalm 23 · 2', v:'He makes me lie down in green pastures.'},
+  {d:6, t:'Still waters', ref:'Psalm 23 · 2', v:'He leads me beside still waters.'},
+  {d:7, t:'Copy it by hand', ref:'Psalm 23 · 1–2', v:'He makes me lie down in green pastures. He leads me beside still waters.'},
+  {d:8, t:'A song, not a rule', ref:'Psalm 23', v:'A Psalm of David.'},
+  {d:9, t:'David the shepherd-king', ref:'Psalm 23', v:'The Lord is my shepherd'},
+  {d:10, t:'What a shepherd did', ref:'Psalm 23 · 2–3', v:'He leads me… he restores my soul.'},
+  {d:11, t:"Sheep can't self-manage", ref:'Psalm 23 · 2', v:'He makes me lie down.'},
+  {d:12, t:'“He restores my soul”', ref:'Psalm 23 · 3', v:'He restores my soul.'},
+  {d:13, t:'Paths of righteousness', ref:'Psalm 23 · 3', v:'He leads me in paths of righteousness'},
+  {d:14, t:"“For his name's sake”", ref:'Psalm 23 · 3', v:"for his name's sake."},
+  {d:15, t:'Where it was sung', ref:'Psalm 23', v:'…the house of the Lord.'},
+  {d:16, t:'The valley arrives', ref:'Psalm 23 · 4', v:'Even though I walk through the valley of the shadow of death…'},
+  {d:17, t:'The pronoun turns', ref:'Psalm 23 · 4', v:'…for you are with me;'},
+  {d:18, t:'From “He” to “You”', ref:'Psalm 23 · 4', v:'I will fear no evil, for you are with me'},
+  {d:19, t:'Rod and staff', ref:'Psalm 23 · 4', v:'your rod and your staff, they comfort me.'},
+  {d:20, t:'The table set', ref:'Psalm 23 · 5', v:'You prepare a table before me'},
+  {d:21, t:'In front of enemies', ref:'Psalm 23 · 5', v:'in the presence of my enemies'},
+  {d:22, t:'Oil and overflow', ref:'Psalm 23 · 5', v:'you anoint my head with oil; my cup overflows.'},
+  {d:23, t:'“Follow me” — pursued', ref:'Psalm 23 · 6', v:'Surely goodness and mercy shall follow me'},
+  {d:24, t:'Read it again, cold', ref:'Psalm 23', v:'The Lord is my shepherd; I shall not want.'},
+  {d:25, t:'Pray it back', ref:'Psalm 23', v:'…I shall not want.'},
+  {d:26, t:"Where's your valley?", ref:'Psalm 23 · 4', v:'though I walk through the valley'},
+  {d:27, t:'Name your “enough”', ref:'Psalm 23 · 1', v:'I shall not want.'},
+  {d:28, t:'Memorize verse 4', ref:'Psalm 23 · 4', v:'I will fear no evil, for you are with me'},
+  {d:29, t:'Carry one line', ref:'Psalm 23 · 6', v:'goodness and mercy shall follow me all the days of my life'},
+  {d:30, t:'Dwell — the long home', ref:'Psalm 23 · 6', v:'and I shall dwell in the house of the Lord forever.'},
+];
+// full readings for the opening stretch (a new reader meets these first)
+const READINGS = {
+  1:{c:'Before we study a single line, read the whole psalm out loud, twice. Six verses — it is a song, not an essay, so let it be heard before it is analyzed.',
+     x:'Notice the frame: it opens with “the Lord” and closes with “the house of the Lord.” The entire poem lives between those two.',
+     s:'It is written almost entirely in the first person — my, me, I. A deeply private song that somehow became everyone\u2019s.',
+     y:'What word or image stops you on this first read? Don\u2019t explain it yet. Just mark it.'},
+  2:{c:'Hebrew poetry was made for the ear. Read verse 1 slowly, aloud, three times, before you think about it at all.',
+     x:'Two short clauses, cause and effect: because He shepherds, I lack nothing.',
+     s:'“Shepherd” was a royal title across the ancient Near East — kings were called the shepherds of their people. The claim is political before it is pastoral.',
+     y:'Whom do you actually trust to lead you? Say verse 1 and mean it — or notice that you can\u2019t yet.'},
+  3:{c:'David herded sheep before he ever wore a crown. He knew this job from the inside, in the dirt.',
+     x:'Not “a shepherd” but “my shepherd.” The whole psalm turns on that small possessive.',
+     s:'The name here is YHWH, the covenant name. “YHWH is my shepherd” fuses the highest title with the lowest job.',
+     y:'Is God, for you, a general truth or a personal “my”? Today\u2019s reading lives in that one word.'},
+  4:{c:'“Want” here means lack, not desire. The promise is sufficiency, not luxury.',
+     x:'It is a conclusion, not a wish: because of who leads me, I will lack nothing I truly need.',
+     s:'The verb echoes Israel\u2019s wilderness years, when “they lacked nothing.” The psalm quietly remembers the desert.',
+     y:'Name one thing you are afraid you will lack. Hold verse 1 up against it.'},
+  5:{c:'Sheep will not lie down when they are anxious, hungry, or harried. Rest is evidence of trust.',
+     x:'“He makes me” — the rest is led, even imposed. Stillness was not the sheep\u2019s idea.',
+     s:'In a dry land, those green pastures were the shepherd\u2019s labor. The peace is engineered, not accidental.',
+     y:'Where are you refusing to lie down? What would it take to let yourself be made to rest?'},
+  6:{c:'Sheep fear moving water. A good shepherd finds — or makes — the quiet pools.',
+     x:'“Still waters” is literally “waters of rest.” The place and the gift share a name.',
+     s:'It pairs with the next line, “He restores my soul”: water and breath, body and inner life, restored together.',
+     y:'What “still water” has God led you beside that you walked right past without drinking?'},
+};
+
+/* ---------- storage ---------- */
+const LS_USERS='tm_users_v1', LS_SESSION='tm_session_v1';
+const getUsers=()=>{try{return JSON.parse(localStorage.getItem(LS_USERS))||{};}catch(e){return {};}};
+const saveUsers=u=>localStorage.setItem(LS_USERS, JSON.stringify(u));
+const getSession=()=>localStorage.getItem(LS_SESSION);
+const setSession=k=>k?localStorage.setItem(LS_SESSION,k):localStorage.removeItem(LS_SESSION);
+const currentUser=()=>{const k=getSession();if(!k)return null;const u=getUsers();return u[k]?{key:k,...u[k]}:null;};
+function patchUser(key, patch){const u=getUsers();u[key]={...u[key],...patch};saveUsers(u);}
+
+const app=document.getElementById('app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200);}
+
+/* ---------- render ---------- */
+function render(){ currentUser() ? renderDash() : renderAuth(window._authMode||'login'); }
+
+function renderAuth(mode){
+  window._authMode=mode;
+  const isLogin=mode==='login';
+  app.innerHTML=`
+  <div class="auth">
+    <div class="authcard">
+      <div class="wm"><span class="wm__bar"></span><span class="wm__lock"><span class="wm__type">the margin</span><span class="wm__tag">Biblical literacy · in the margins</span></span></div>
+      <h1>${isLogin?'Welcome <em>back.</em>':'Begin your <em>reading.</em>'}</h1>
+      <p class="sub">${isLogin?'Pick up your journey where you left off.':'Make an account and start the first morning.'}</p>
+      <div class="tabs">
+        <button class="${isLogin?'on':''}" data-tab="login">Log in</button>
+        <button class="${!isLogin?'on':''}" data-tab="signup">Create account</button>
+      </div>
+      <form id="authform">
+        ${isLogin?'':`
+        <div class="field"><label>Full name</label><input name="name" type="text" autocomplete="name" placeholder="Mary Oliver" /></div>`}
+        <div class="field"><label>Username</label><input name="username" type="text" autocomplete="username" placeholder="${isLogin?'username or email':'choose a username'}" /></div>
+        ${isLogin?'':`
+        <div class="field"><label>Email</label><input name="email" type="email" autocomplete="email" placeholder="you@email.com" /></div>`}
+        <div class="field"><label>Password</label><input name="password" type="password" autocomplete="${isLogin?'current-password':'new-password'}" placeholder="${isLogin?'your password':'at least 6 characters'}" /></div>
+        <div class="err" id="err"></div>
+        <button class="btn btn--block" type="submit">${isLogin?'Log in':'Create account & start Day 1'}</button>
+      </form>
+      <div class="orline">or</div>
+      <button class="gbtn" id="gbtn" type="button"><svg viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.97 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.01-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.47.9 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/></svg>Continue with Google</button>
+      <p class="fine">${isLogin?'New here? <a data-tab="signup">Create an account</a>':'Already reading? <a data-tab="login">Log in</a>'}</p>
+      <div class="demo">This is a <b>prototype</b>. Accounts are saved only in this browser, and Google sign-in is <b>simulated</b> &mdash; both become real with the backend.</div>
+    </div>
+  </div>`;
+  app.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>renderAuth(b.dataset.tab)));
+  app.querySelector('#authform').addEventListener('submit',e=>{e.preventDefault();isLogin?doLogin(e.target):doSignup(e.target);});
+  app.querySelector('#gbtn').addEventListener('click',doGoogle);
+}
+
+function doGoogle(){
+  // SIMULATED Google sign-in. Real Google OAuth needs a backend + Google client ID;
+  // here we stand in a demo Google account so the flow can be felt end to end.
+  const users=getUsers();
+  const key='sam-google';
+  if(!users[key]){
+    users[key]={name:'Sam Reed', username:key, email:'sam.reed@gmail.com', password:null, provider:'google', series:'How to Read a Psalm', seriesSub:'30 mornings in Psalm 23', day:1, completed:[], joined:Date.now()};
+    saveUsers(users);
+  }
+  setSession(key); render(); toast('Signed in with Google (demo).');
+}
+
+function doSignup(form){
+  const f=k=>form.elements[k].value.trim();
+  const name=f('name'), username=f('username'), email=f('email'), pw=form.elements.password.value;
+  const err=document.getElementById('err');
+  if(!name) return err.textContent='Please enter your name.';
+  if(username.length<3) return err.textContent='Username needs at least 3 characters.';
+  if(!/.+@.+\..+/.test(email)) return err.textContent='Please enter a valid email.';
+  if(pw.length<6) return err.textContent='Password needs at least 6 characters.';
+  const users=getUsers();
+  const key=username.toLowerCase();
+  if(users[key]) return err.textContent='That username is taken.';
+  if(Object.values(users).some(u=>u.email&&u.email.toLowerCase()===email.toLowerCase())) return err.textContent='That email already has an account.';
+  users[key]={name, username, email, password:pw, series:'How to Read a Psalm', seriesSub:'30 mornings in Psalm 23', day:1, completed:[], joined:Date.now()};
+  saveUsers(users); setSession(key); render(); toast('Welcome, '+name.split(' ')[0]+' — your journey starts now.');
+}
+function doLogin(form){
+  const id=form.elements.username.value.trim().toLowerCase();
+  const pw=form.elements.password.value;
+  const err=document.getElementById('err');
+  if(!id||!pw) return err.textContent='Enter your username and password.';
+  const users=getUsers();
+  let key=users[id]?id:Object.keys(users).find(k=>users[k].email&&users[k].email.toLowerCase()===id);
+  if(!key||users[key].password!==pw) return err.textContent='We couldn\u2019t find that login. Check your details, or create an account.';
+  setSession(key); render(); toast('Welcome back, '+users[key].name.split(' ')[0]+'.');
+}
+
+function moveOf(day){return MOVES.find(m=>day>=m.from&&day<=m.to)||MOVES[MOVES.length-1];}
+
+function renderDash(){
+  const u=currentUser();
+  const done=u.completed.length;
+  const finished=u.day>30;
+  const cur=finished?30:u.day;
+  const curDay=DAYS[cur-1];
+  const mv=moveOf(cur);
+  const hour=new Date().getHours();
+  const tod=hour<12?'morning':hour<18?'afternoon':'evening';
+
+  const segs=MOVES.map(m=>`<div class="seg ${m===mv&&!finished?'cur':''}"><div class="nm">${esc(m.name)}</div></div>`).join('');
+  const dots=DAYS.map(x=>{
+    const cls=u.completed.includes(x.d)?'done':(x.d===cur&&!finished?'cur':'');
+    return `<div class="dot ${cls}" title="Day ${x.d}: ${esc(x.t)}">${x.d}</div>`;
+  }).join('');
+
+  app.innerHTML=`
+  <div class="appbar"><div class="appbar__in">
+    <div class="wm"><span class="wm__bar"></span><span class="wm__lock"><span class="wm__type">the margin</span><span class="wm__tag">Your reading</span></span></div>
+    <div class="appbar__r"><span class="who">Signed in as <b>${esc(u.name)}</b></span><button class="linkbtn" id="logout">Log out</button></div>
+  </div></div>
+  <div class="dash">
+    <div class="greet">Good ${tod}, <em>${esc(u.name.split(' ')[0])}.</em></div>
+    <p class="greet__sub">${finished?'You\u2019ve walked the whole psalm. Read it once more, cold — and see what changed.':'Your reading is waiting. Pick up where you left off.'}</p>
+
+    <div class="jcard">
+      <div class="jcard__top">
+        <div>
+          <span class="jcard__lane">Your journey · in progress</span>
+          <h2>${esc(u.series)}</h2>
+          <div class="jcard__sub">${esc(u.seriesSub)}</div>
+        </div>
+        <div class="bigday"><div class="n">${finished?'✦':cur}</div><div class="of">${finished?'Complete':'of 30 mornings'}</div></div>
+      </div>
+
+      <div class="track">
+        <div class="track__movs">${segs}</div>
+        <div class="dots">${dots}</div>
+      </div>
+
+      <div class="jcard__foot">
+        <button class="btn" id="continue">${finished?'Read it again, cold →':(done?'Continue':'Begin')} ${finished?'':'· Day '+cur}</button>
+        <div class="now">${finished?'<b>30 of 30</b> mornings kept':'Today: <b>Day '+cur+' — '+esc(curDay.t)+'</b> · '+esc(mv.name)}</div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="v">${done}</div><div class="k">Mornings kept</div></div>
+      <div class="stat"><div class="v">${Math.max(0,30-done)}</div><div class="k">Mornings to go</div></div>
+      <div class="stat"><div class="v">${Math.round(done/30*100)}%</div><div class="k">Through the psalm</div></div>
+    </div>
+  </div>`;
+  document.getElementById('logout').addEventListener('click',()=>{setSession(null);render();});
+  document.getElementById('continue').addEventListener('click',()=>openReading(cur));
+}
+
+/* ---------- reading modal ---------- */
+const modal=document.getElementById('modal'), sheet=document.getElementById('sheet');
+function closeModal(){modal.classList.remove('open');}
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+function openReading(day){
+  const x=DAYS[day-1], mv=moveOf(day), r=READINGS[day];
+  const u=currentUser();
+  const already=u.completed.includes(day);
+  const beats = r ? `
+    <div class="beat"><h4>Read in context.</h4><p>${esc(r.c)}</p></div>
+    <div class="beat"><h4>Read closely.</h4><p>${esc(r.x)}</p></div>
+    <div class="beat"><h4>What scholars see.</h4><p>${esc(r.s)}</p></div>
+    <div class="beat beat--you"><h4>For you</h4><p>${esc(r.y)}</p></div>`
+  : `
+    <div class="beat"><h4>Read in context.</h4><p>Read the verse in its surrounding lines first — what comes just before and after it?</p></div>
+    <div class="beat"><h4>Read closely.</h4><p>Read it word by word. Which single word is doing the most work today?</p></div>
+    <div class="beat beat--you"><h4>For you</h4><p>Sit with this one line this ${new Date().getHours()<12?'morning':'day'}. What is it asking of you?</p></div>
+    <div class="placeholder">This morning\u2019s full reading is still being written. In the live ministry, each day carries a complete note — this is where it will live.</div>`;
+  sheet.innerHTML=`
+    <div class="sheet__head">
+      <div class="dn">Day ${day} · <em>${esc(x.t)}</em></div>
+      <button class="sheet__close" id="x">×</button>
+    </div>
+    <div class="sheet__body">
+      <div class="sheet__ref">${esc(x.ref)} · ${esc(mv.name)}</div>
+      <div class="sheet__verse">${esc(x.v)}</div>
+      ${beats}
+    </div>
+    <div class="sheet__foot">
+      <span class="pg">Day ${day} of 30${already?' · already kept':''}</span>
+      <button class="btn" id="done">${already?'Done for today':(day>=30?'Finish the journey ✦':'Mark complete · next morning →')}</button>
+    </div>`;
+  modal.classList.add('open');
+  sheet.querySelector('#x').addEventListener('click',closeModal);
+  sheet.querySelector('#done').addEventListener('click',()=>completeDay(day));
+}
+function completeDay(day){
+  const u=currentUser();
+  const completed=u.completed.includes(day)?u.completed:[...u.completed,day];
+  const nextDay=Math.min(31, Math.max(u.day, day+1));
+  patchUser(u.key,{completed, day:nextDay});
+  closeModal(); renderDash();
+  toast(day>=30?'The whole psalm — kept. Well done.':'Morning kept. Day '+(day+1)+' is ready.');
+}
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+name = "the-margin-site"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "the-margin-db"
+database_id = "ff187aeb-78f6-4a79-b875-9bfd913863e6"
+
+# Set these as Pages secrets/env vars (dashboard or `wrangler pages secret put`)
+# if you want the waitlist function to also push subscribers into Sender.net:
+#   SENDER_API_KEY
+#   SENDER_GROUP_ID
