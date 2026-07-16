@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getCurrentUserId } from '@/lib/auth';
+import { isAdminEmail } from '@/lib/admin';
 import { findUserById, getDefaultSeries } from '@/lib/repo';
 
 export async function GET() {
@@ -17,6 +18,7 @@ export async function GET() {
     email: user.email,
     username: user.username,
     emailVerified: !!user.email_verified,
+    isAdmin: isAdminEmail(user.email),
     series: series ? { id: series.id, title: series.title, subtitle: series.subtitle, totalDays: series.total_days } : null,
   });
 }

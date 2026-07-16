@@ -8,6 +8,7 @@ import { MOVES, moveOf } from '@/lib/moves';
 interface Me {
   id: string;
   name: string;
+  isAdmin: boolean;
   series: { id: string; title: string; subtitle: string | null; totalDays: number } | null;
 }
 
@@ -89,6 +90,11 @@ export default function DashboardPage() {
             <span className="who">
               Signed in as <b>{me.name}</b>
             </span>
+            {me.isAdmin && (
+              <a className="linkbtn" href="/admin">
+                Admin
+              </a>
+            )}
             <button className="linkbtn" onClick={handleLogout}>
               Log out
             </button>
