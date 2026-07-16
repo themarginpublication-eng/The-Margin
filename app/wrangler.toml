@@ -16,7 +16,7 @@ migrations_dir = "../migrations"
 [vars]
 # Comma-separated emails allowed into /admin. Not sensitive — it's an allowlist,
 # not a credential — so it lives here rather than as a wrangler secret.
-ADMIN_EMAILS = "themarginpuublication@gmail.com"
+ADMIN_EMAILS = "themarginpublication@gmail.com"
 
 # Set these as Worker secrets (`wrangler secret put <NAME>`) before deploying:
 #   SESSION_SECRET        — random 32+ byte string, signs the session cookie (JWT)
