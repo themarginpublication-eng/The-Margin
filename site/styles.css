@@ -239,7 +239,7 @@ strong { font-weight:600; }
 .card--ink { background:var(--ink); color:var(--parchment); border-color:var(--ink); }
 .sec--vellum .card--ink { background:var(--ink); }
 .card--ink h3 { color:var(--parchment); }
-.card--ink p { color:#cabfae; }
+.card.card--ink p { color:#cabfae; }
 .card--ink .card__idx { color:var(--gilt); }
 .plan-num {
   font-family:var(--font-display); font-weight:900; font-size:40px;
