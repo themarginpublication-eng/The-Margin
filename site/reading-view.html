@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Margin · No. 1 — Where are you?</title>
+<link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/icons/favicon-32-light.png" media="(prefers-color-scheme: light)" sizes="32x32">
+<link rel="icon" href="/icons/favicon-32-dark.png" media="(prefers-color-scheme: dark)" sizes="32x32">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="theme-color" content="#F3EEE3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --parchment:#F3EEE3; --vellum:#FAF6EC; --margin:#C9BFAE; --margin-soft:#DBD3C4;
+  --rust:#A8593C; --rust-deep:#8C4730; --gilt:#B68A47; --ash:#6B5F54; --ink:#1A1814;
+  --font-display:'Fraunces',Georgia,serif; --font-serif:'Newsreader',Georgia,serif; --font-sans:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--parchment);color:var(--ink);font-family:var(--font-serif);line-height:1.6}
+a{color:var(--rust)}a:hover{color:var(--rust-deep)}
+.sheet{max-width:1180px;margin:clamp(16px,4vw,56px) auto;background:var(--vellum);border:1px solid var(--margin-soft);border-top:5px solid var(--rust);box-shadow:0 30px 70px -40px rgba(26,24,20,.35)}
+.head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:clamp(20px,3.5vw,32px) clamp(22px,5vw,64px);border-bottom:1px solid var(--margin-soft)}
+.mark{display:flex;align-items:center;gap:10px}
+.mark__bar{width:4px;height:26px;background:var(--rust)}
+.mark__type{font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:.01em}
+.issue{font-family:var(--font-sans);font-weight:600;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash)}
+.toggle{display:flex;border:1px solid var(--margin);border-radius:999px;overflow:hidden;font-family:var(--font-sans)}
+.toggle button{appearance:none;border:none;background:transparent;padding:9px 18px;font-family:inherit;font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ash);cursor:pointer;min-height:44px}
+.toggle button[aria-pressed="true"]{background:var(--ink);color:var(--parchment)}
+.body{padding:clamp(28px,5vw,64px) clamp(22px,5vw,64px) clamp(40px,6vw,72px)}
+.ref{font-family:var(--font-sans);font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gilt);margin:0 0 8px}
+.title{font-family:var(--font-display);font-weight:900;letter-spacing:-.02em;font-size:clamp(30px,5vw,46px);line-height:1.06;margin:0 0 6px}
+.dek{font-family:var(--font-serif);font-style:italic;font-size:clamp(17px,2.2vw,20px);color:var(--ash);margin:0 0 40px}
+/* two-column margin layout */
+.spread{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:56px}
+.text{min-width:0}
+.rail{position:relative;border-left:1px solid var(--margin-soft)}
+.passage{font-family:var(--font-serif);font-size:clamp(20px,2.6vw,27px);line-height:1.72;margin:0 0 1.4em}
+.passage sup.v{font-family:var(--font-sans);font-weight:600;font-size:.45em;color:var(--gilt);letter-spacing:.05em;margin-right:.35em}
+.lord{color:var(--rust);font-variant:small-caps;letter-spacing:.02em}
+.prose{font-size:clamp(17px,2vw,19px);line-height:1.75;color:var(--ink);margin:0 0 1.3em}
+/* annotation anchors */
+.ann{display:inline;text-align:inherit;cursor:pointer;border:none;background:none;padding:0;font:inherit;color:inherit;position:relative;transition:background .2s}
+.ann--underline{border-bottom:2px solid var(--rust);padding-bottom:1px}
+.ann--highlight{background:linear-gradient(transparent 55%, rgba(182,138,71,.32) 55%)}
+.ann sup.n{font-family:var(--font-sans);font-weight:600;font-size:.42em;color:var(--rust);margin-left:2px;letter-spacing:.03em}
+.ann:hover,.ann.active{background:rgba(168,89,60,.1)}
+.ann.active{outline:2px solid rgba(168,89,60,.35);outline-offset:2px}
+/* margin notes */
+.mnote{position:absolute;left:0;width:100%;padding:0 0 0 22px;opacity:.92;transition:opacity .2s}
+.mnote::before{content:"";position:absolute;left:-1px;top:6px;bottom:6px;width:2px;background:var(--margin)}
+.mnote__num{font-family:var(--font-sans);font-weight:600;font-size:10.5px;letter-spacing:.16em;color:var(--rust);text-transform:uppercase;display:block;margin-bottom:6px}
+.mnote__txt{font-family:var(--font-serif);font-style:italic;font-size:15.5px;line-height:1.6;color:var(--rust-deep);margin:0}
+.mnote.active::before{background:var(--rust)}
+.mnote.active{opacity:1}
+.mnote.active .mnote__txt{color:var(--rust)}
+.mnote{cursor:pointer}
+/* connector line from anchor to rail */
+.wire{position:absolute;height:1px;background:var(--rust);opacity:0;transition:opacity .25s;pointer-events:none}
+.wire.on{opacity:.55}
+/* inline note (mobile + reading view) */
+.inote{display:none;margin:18px 0 24px;padding:16px 20px;border-left:3px solid var(--rust);background:rgba(168,89,60,.05)}
+.inote .mnote__txt{font-size:16.5px}
+.inote.open{display:block}
+/* footer */
+.foot{margin-top:56px;padding-top:28px;border-top:1px solid var(--margin-soft);font-family:var(--font-sans);font-size:14px;line-height:1.65;color:var(--ash)}
+.foot a{font-weight:500}
+/* ============ READING VIEW ============ */
+body.mode-read .spread{display:block}
+body.mode-read .rail{display:none}
+body.mode-read .text{max-width:680px;margin:0 auto}
+body.mode-read .sheet{max-width:820px}
+body.mode-read .ann{cursor:text}
+body.mode-read .inote{display:block}
+body.mode-read .ann.active{outline:none;background:none}
+body.mode-read .ann--highlight{background:linear-gradient(transparent 55%, rgba(182,138,71,.32) 55%)}
+body.mode-read .head,body.mode-read .body>.ref,body.mode-read .body>.title,body.mode-read .body>.dek,body.mode-read .foot{max-width:680px;margin-left:auto;margin-right:auto}
+body.mode-read .head{padding-left:clamp(22px,5vw,40px);padding-right:clamp(22px,5vw,40px)}
+/* ============ NARROW SCREENS ============ */
+@media (max-width:900px){
+  .spread{display:block}
+  .rail{display:none}
+  .inote.open{display:block}
+  .ann sup.n{font-size:.5em}
+}
+@media (max-width:480px){
+  .head{padding:16px 20px}
+  .toggle button{padding:8px 13px;font-size:11px}
+  .passage{font-size:21px}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="head">
+    <div class="mark"><span class="mark__bar"></span><span class="mark__type">the margin</span></div>
+    <span class="issue">No. 1 · Hiding &amp; Being Found</span>
+    <div class="toggle" role="group" aria-label="View mode">
+      <button type="button" data-mode="margin" aria-pressed="true">Margin view</button>
+      <button type="button" data-mode="read" aria-pressed="false">Reading view</button>
+    </div>
+  </header>
+  <div class="body">
+    <p class="ref">Genesis 3 · 8–9</p>
+    <h1 class="title">Where are you?</h1>
+    <p class="dek">The first question in the Bible — and God already knows the answer.</p>
+    <div class="spread" id="spread">
+      <div class="text" id="text">
+        <p class="passage"><sup class="v">8</sup>And they heard the sound of the <span class="lord">Lord</span> God walking in the garden in the cool of the day, and the man and his wife <button class="ann ann--underline" data-note="a">hid themselves<sup class="n">a</sup></button> from the presence of the <span class="lord">Lord</span> God among the trees of the garden. <sup class="v">9</sup>But the <span class="lord">Lord</span> God called to the man and said to him, <button class="ann ann--highlight" data-note="b">“Where are you?”<sup class="n">b</sup></button></p>
+        <div class="inote" data-inote="a"><span class="mnote__num">a · hid themselves</span><p class="mnote__txt">The first instinct after the first sin isn’t argument or excuse — it’s hiding. Before anyone teaches us shame, we already know how to duck behind the trees. Notice what they hide from: not punishment, but presence.</p></div>
+        <div class="inote" data-inote="b"><span class="mnote__num">b · “Where are you?”</span><p class="mnote__txt">“Where are you?” is the first question in the Bible, and God already knows the answer. So He isn’t gathering information. He’s giving the man a chance to come out of the trees and say it himself. You could read the whole of Scripture as God asking that one question, in a hundred forms, and waiting for you to answer.</p></div>
+        <p class="prose">Most of us read this story as being about a fruit. But the fruit is offstage by verse 8. What the text lingers on is the hiding — and the voice that comes looking. That’s the shape of the whole book, compressed into two verses: people who hide, and a God who asks questions He knows the answers to, because the answering is the point.</p>
+        <p class="prose">This week, sit with the question before you reach for an answer. Not <em>where should you be</em>, or <em>where do you tell people you are</em> — but <button class="ann ann--underline" data-note="c">where you actually are<sup class="n">c</sup></button>. That’s where the reading starts.</p>
+        <div class="inote" data-inote="c"><span class="mnote__num">c · where you actually are</span><p class="mnote__txt">Honesty about location is the oldest spiritual discipline. Adam’s answer — “I heard your voice, and I was afraid” — is not impressive. But it’s true, and it’s the first true thing anyone says after the fall.</p></div>
+        <div class="foot">
+          <p>This is a margin note. You get one like it every day within the series you choose — and an article every other week. The first week of every series is open to read before you ever subscribe. <a href="https://readthemargin.net/read.html">See a full reading &rarr;</a></p>
+          <p>The Margin · <a href="https://readthemargin.net">readthemargin.net</a> · <a href="mailto:hello@readthemargin.net">hello@readthemargin.net</a> · <a href="#">Unsubscribe</a></p>
+        </div>
+      </div>
+      <aside class="rail" id="rail" aria-label="Margin notes"></aside>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var MODE_KEY='tm-email-view';
+  var body=document.body, spread=document.getElementById('spread'),
+      text=document.getElementById('text'), rail=document.getElementById('rail');
+  var anchors=[].slice.call(document.querySelectorAll('.ann'));
+  var wires={}, notes={};
+
+  // build margin-rail copies of each inline note
+  anchors.forEach(function(a){
+    var id=a.dataset.note, src=document.querySelector('[data-inote="'+id+'"]');
+    if(!src) return;
+    var n=document.createElement('div');
+    n.className='mnote'; n.dataset.note=id; n.setAttribute('role','note');
+    n.innerHTML=src.innerHTML;
+    rail.appendChild(n); notes[id]=n;
+    var w=document.createElement('div');
+    w.className='wire'; w.dataset.note=id;
+    spread.appendChild(w); wires[id]=w;
+  });
+
+  function marginMode(){return !body.classList.contains('mode-read') && window.innerWidth>900;}
+
+  // position rail notes beside their anchors, pushing down to avoid overlap
+  function layout(){
+    if(!marginMode()) return;
+    var railTop=rail.getBoundingClientRect().top, minY=0;
+    anchors.forEach(function(a){
+      var id=a.dataset.note, n=notes[id], w=wires[id]; if(!n) return;
+      var r=a.getBoundingClientRect();
+      var y=Math.max(r.top-railTop, minY);
+      n.style.top=y+'px';
+      minY=y+n.offsetHeight+28;
+      // wire: from anchor's right edge to the rail, at anchor mid-height
+      var sRect=spread.getBoundingClientRect();
+      var x1=r.right-sRect.left+8, x2=rail.getBoundingClientRect().left-sRect.left;
+      w.style.top=(r.top-sRect.top+r.height*0.55)+'px';
+      w.style.left=x1+'px'; w.style.width=Math.max(0,x2-x1)+'px';
+    });
+    rail.style.minHeight=minY+'px';
+  }
+
+  function setActive(id){
+    anchors.forEach(function(a){a.classList.toggle('active',a.dataset.note===id);});
+    Object.keys(notes).forEach(function(k){
+      notes[k].classList.toggle('active',k===id);
+      wires[k].classList.toggle('on',k===id);
+    });
+  }
+
+  function toggleInline(id){
+    var el=document.querySelector('[data-inote="'+id+'"]');
+    if(el) el.classList.toggle('open');
+  }
+
+  anchors.forEach(function(a){
+    a.addEventListener('click',function(){
+      var id=a.dataset.note;
+      if(body.classList.contains('mode-read')) return;         // reading view: notes always visible
+      if(marginMode()){ setActive(a.classList.contains('active')?null:id); }
+      else { toggleInline(id); a.classList.toggle('active'); }
+    });
+  });
+  rail.addEventListener('click',function(e){
+    var n=e.target.closest('.mnote'); if(!n) return;
+    setActive(n.classList.contains('active')?null:n.dataset.note);
+  });
+
+  // view toggle
+  var btns=[].slice.call(document.querySelectorAll('.toggle button'));
+  function setMode(m){
+    body.classList.toggle('mode-read',m==='read');
+    btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.mode===m));});
+    try{localStorage.setItem(MODE_KEY,m);}catch(e){}
+    setActive(null);
+    requestAnimationFrame(layout);
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){setMode(b.dataset.mode);});});
+  var saved=null; try{saved=localStorage.getItem(MODE_KEY);}catch(e){}
+  if(saved==='read') setMode('read');
+
+  window.addEventListener('resize',layout);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(layout);
+  window.addEventListener('load',layout);
+  layout();
+})();
+</script>
+</body>
+</html>

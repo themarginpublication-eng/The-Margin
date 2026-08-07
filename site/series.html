@@ -4,7 +4,13 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Where to Start · The Margin</title>
-<meta name="description" content="Pick a thread and follow it: books, questions, people, and passages read slowly. Where your reading begins, plus the growing archive." />
+<link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/icons/favicon-32-light.png" media="(prefers-color-scheme: light)" sizes="32x32">
+<link rel="icon" href="/icons/favicon-32-dark.png" media="(prefers-color-scheme: dark)" sizes="32x32">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#F3EEE3">
+<meta name="description" content="Pick a thread and follow it: books, questions, people, and passages read slowly. Where your reading begins." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -22,8 +28,11 @@
     <div class="nav__links">
       <a href="read.html">How It Works</a>
       <a class="is-active" href="series.html">Where to Start</a>
+      <a href="articles.html">Articles</a>
       <a href="about.html">About</a>
       <a href="subscribe.html">Subscribe</a>
+      <a href="https://app.readthemargin.net/login">Login</a>
+      <a class="btn btn--ghost" href="give.html">Give</a>
       <a class="btn" href="subscribe.html">Start reading &rarr;</a>
     </div>
     <button class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -42,117 +51,30 @@
 <section class="sec sec--tight" data-screen-label="Series — Lanes">
   <div class="wrap">
     <div class="cols cols--4 reveal">
-      <div class="card"><span class="card__idx">A whole book</span><h3>The overlooked book</h3><p>A book most people skip. Short, strange, surprisingly modern. Read whole, the long way.</p></div>
-      <div class="card"><span class="card__idx">A single idea</span><h3>The thread</h3><p>One idea traced from Genesis to Revelation. A question, a prayer, a word that won't stay put.</p></div>
-      <div class="card"><span class="card__idx">A single person</span><h3>The figure we skip</h3><p>A person Scripture refuses to leave out, read without the flannelgraph.</p></div>
-      <div class="card"><span class="card__idx">A single passage</span><h3>One text, dwelt in</h3><p>A famous passage, slowed until it stops being a clich&eacute; and starts being a text.</p></div>
+      <div class="card"><span class="tbadge tbadge--book" style="margin-bottom:14px;">A whole book</span><h3>One book, start to finish</h3><p>A whole book of the Bible, read a little at a time until you've walked through all of it. Familiar or not &mdash; the point is reading it slowly, together.</p></div>
+      <div class="card"><span class="tbadge tbadge--idea" style="margin-bottom:14px;">A single idea</span><h3>The thread</h3><p>One idea traced from Genesis to Revelation. A question, a prayer, a word that won't stay put.</p></div>
+      <div class="card"><span class="tbadge tbadge--person" style="margin-bottom:14px;">A single person</span><h3>One person, up close</h3><p>One person in the Bible &mdash; Paul, David, Hagar &mdash; followed through their story and their words, day by day.</p></div>
+      <div class="card"><span class="tbadge tbadge--passage" style="margin-bottom:14px;">A single passage</span><h3>One text, up close</h3><p>One passage, taken a few lines at a time, until you really see what it says &mdash; not just what you've always heard.</p></div>
     </div>
   </div>
 </section>
 
-<!-- CURRENT + UPCOMING SERIES -->
+<!-- CURRENT + UPCOMING SERIES (live from the database — never hand-maintained, so it can't drift out of sync) -->
 <section class="sec" data-screen-label="Series — Catalogue">
   <div class="wrap">
     <div class="eyebrow"><span class="eyebrow__bar"></span><span class="eyebrow__num">01</span><span class="eyebrow__txt">The series</span></div>
     <h2 class="h2 reveal">Now &amp; <em>next.</em></h2>
-
-    <div class="series reveal" style="margin-top:44px;">
-      <article class="scard scard--feature">
-        <span class="scard__flag">Start here</span>
-        <div class="scard__inner">
-          <div style="display:flex; flex-direction:column; gap:12px;">
-            <span class="scard__lane">A single idea &middot; traced across Scripture</span>
-            <h3>The Questions God Asks</h3>
-            <p class="scard__sub">God as questioner, Genesis to Revelation</p>
-            <p>&ldquo;Where are you?&rdquo; &middot; &ldquo;Where is your brother?&rdquo; &middot; &ldquo;Whom shall I send?&rdquo; God asks far more than He explains, and He often already knows the answer. We follow the questions across the whole story — and learn to sit inside the ones still addressed to us. A twin thread follows: <em>the questions Jesus asks.</em></p>
-          </div>
-          <div class="scard__foot" style="border-top:none; align-items:flex-start; flex-direction:column; gap:8px; padding-top:0;">
-            <span>Thread series &middot; <strong>6&ndash;10 notes</strong></span>
-            <span>Opens <strong>autumn 2025</strong></span>
-            <a class="btn" href="subscribe.html" style="margin-top:8px;">Read from the start &rarr;</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="scard">
-        <span class="scard__lane">A single passage &middot; dwelt in</span>
-        <h3>John, slowly</h3>
-        <p class="scard__sub">The opening hymn, read daily</p>
-        <p>The running series beneath everything: the Gospel of John, a passage at a time, the long way, for as long as it takes. The slow heartbeat of The Margin, and the home base for every reader.</p>
-        <div class="scard__foot"><span>Ongoing</span><span><strong>The long read</strong></span></div>
-      </article>
-
-      <article class="scard">
-        <span class="scard__lane">A whole book &middot; the overlooked kind</span>
-        <h3>Ecclesiastes</h3>
-        <p class="scard__sub">The Bible's most honest book</p>
-        <p>&ldquo;Everything is vapor.&rdquo; A contained, literary read for anyone allergic to easy answers. The book that makes a skeptic say &ldquo;I didn't know <em>that</em> was in there.&rdquo;</p>
-        <div class="scard__foot"><span>Coming</span><span><strong>6&ndash;8 notes</strong></span></div>
-      </article>
-
-      <article class="scard">
-        <span class="scard__lane">A whole book &middot; the overlooked kind</span>
-        <h3>Esther</h3>
-        <p class="scard__sub">The book where God is never named</p>
-        <p>An entire narrative built around a striking absence. God is never mentioned once, yet His hand is everywhere. Ten chapters you can't put down.</p>
-        <div class="scard__foot"><span>Coming</span><span><strong>6&ndash;10 notes</strong></span></div>
-      </article>
-
-      <article class="scard">
-        <span class="scard__lane">A single person &middot; the one we skip</span>
-        <h3>The Unnamed &amp; Unexpected</h3>
-        <p class="scard__sub">Tamar, Hagar, the women of Matthew 1</p>
-        <p>The people Scripture refuses to leave out: wronged, foreign, and woven straight into the line of Jesus. Hagar is the first person in the Bible to name God. Read fresh.</p>
-        <div class="scard__foot"><span>Planned</span><span><strong>Figure series</strong></span></div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ARCHIVE -->
-<section class="sec sec--vellum" id="archive" data-screen-label="Series — Archive">
-  <div class="wrap">
-    <div class="eyebrow"><span class="eyebrow__bar"></span><span class="eyebrow__num">02</span><span class="eyebrow__txt">The archive</span></div>
-    <h2 class="h2 reveal">Every margin note.</h2>
-    <p class="lede reveal">An archive that grows with you. Each note is a slow reading you can return to any time. The first readings land this autumn; here's the shape of what's coming, in order.</p>
-
-    <div class="reveal" style="margin-top:44px; border-top:2px solid var(--rust);">
-      <a class="qa__item" style="display:block; border-bottom:1px solid var(--margin); padding:26px 0;" href="subscribe.html">
-        <div style="display:flex; justify-content:space-between; gap:24px; align-items:baseline; flex-wrap:wrap;">
-          <div>
-            <span class="label label--rust" style="display:block; margin-bottom:8px;">Note 01 &middot; The Questions God Asks</span>
-            <h3 style="font-family:var(--font-display); font-weight:900; font-size:25px; letter-spacing:-0.02em;">&ldquo;Where are you?&rdquo;</h3>
-            <p style="font-size:16px; color:var(--ink-soft); margin-top:8px; max-width:60ch;">God's opening words to a hiding man, and He already knows the answer. On why the Bible begins with a question, not a verdict.</p>
-          </div>
-          <span class="label" style="white-space:nowrap;">Autumn &middot; soon</span>
-        </div>
-      </a>
-      <a class="qa__item" style="display:block; border-bottom:1px solid var(--margin); padding:26px 0;" href="subscribe.html">
-        <div style="display:flex; justify-content:space-between; gap:24px; align-items:baseline; flex-wrap:wrap;">
-          <div>
-            <span class="label label--rust" style="display:block; margin-bottom:8px;">Note 02 &middot; John, slowly</span>
-            <h3 style="font-family:var(--font-display); font-weight:900; font-size:25px; letter-spacing:-0.02em;">&ldquo;In the beginning was the Word&rdquo;</h3>
-            <p style="font-size:16px; color:var(--ink-soft); margin-top:8px; max-width:60ch;">John opens his Gospel by rewriting the first line of the Bible. We read the prologue as the deliberate echo it is.</p>
-          </div>
-          <span class="label" style="white-space:nowrap;">Autumn &middot; soon</span>
-        </div>
-      </a>
-      <a class="qa__item" style="display:block; border-bottom:1px solid var(--margin); padding:26px 0;" href="subscribe.html">
-        <div style="display:flex; justify-content:space-between; gap:24px; align-items:baseline; flex-wrap:wrap;">
-          <div>
-            <span class="label label--rust" style="display:block; margin-bottom:8px;">Note 03 &middot; A way in</span>
-            <h3 style="font-family:var(--font-display); font-weight:900; font-size:25px; letter-spacing:-0.02em;">How to read the Bible without giving up</h3>
-            <p style="font-size:16px; color:var(--ink-soft); margin-top:8px; max-width:60ch;">The short, practical guide for the reader who keeps stalling in Leviticus. Genre, order, and the one habit that changes everything.</p>
-          </div>
-          <span class="label" style="white-space:nowrap;">Autumn &middot; soon</span>
-        </div>
-      </a>
-      <div class="qa__item" style="padding:26px 0; text-align:center;">
-        <p style="font-style:italic; color:var(--ash); font-size:17px;">&#10038; The archive grows every other week. Subscribe to get each note as it lands.</p>
-      </div>
+    <div class="filterbar reveal" role="group" aria-label="Filter series by kind" id="seriesFilters" style="display:none;">
+      <button class="fchip" type="button" data-filter="all" aria-pressed="true">All series</button>
+      <button class="fchip" type="button" data-filter="book" aria-pressed="false">On a book</button>
+      <button class="fchip" type="button" data-filter="person" aria-pressed="false">On a person</button>
+      <button class="fchip" type="button" data-filter="passage" aria-pressed="false">On a passage</button>
+      <button class="fchip" type="button" data-filter="idea" aria-pressed="false">On an idea</button>
     </div>
 
-    <div class="reveal" style="margin-top:36px;"><a class="btn btn--lg" href="subscribe.html">Get every note in your inbox &rarr;</a></div>
+    <div class="series reveal" id="seriesList" style="margin-top:44px;">
+      <p style="font-family:var(--font-sans); font-size:13px; color:var(--ash);">Loading&hellip;</p>
+    </div>
   </div>
 </section>
 
@@ -163,15 +85,70 @@
         <a class="wm" href="index.html"><span class="wm__bar"></span><span><span class="wm__type">the margin</span><span class="wm__tag">Biblical literacy · in the margins</span></span></a>
         <p class="foot__blurb">A reading companion that helps you open the Bible and read it for yourself, slowly and without a gatekeeper.</p>
       </div>
-      <div class="foot__col"><h4>Read</h4><ul><li><a href="read.html">How It Works</a></li><li><a href="series.html">Where to Start</a></li><li><a href="series.html#archive">The Archive</a></li><li><a href="about.html">About</a></li></ul></div>
-      <div class="foot__col"><h4>Follow</h4><ul><li><a href="subscribe.html">Substack</a></li><li><a href="subscribe.html">Instagram</a></li><li><a href="subscribe.html">Threads</a></li><li><a href="subscribe.html">X / Twitter</a></li></ul></div>
+      <div class="foot__col"><h4>Read</h4><ul><li><a href="read.html">How It Works</a></li><li><a href="series.html">Where to Start</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div class="foot__col"><h4>Follow</h4><ul><li><a href="subscribe.html">Newsletter</a></li><li><a href="subscribe.html">Instagram</a></li><li><a href="subscribe.html">Threads</a></li><li><a href="subscribe.html">X / Twitter</a></li></ul></div>
       <div class="foot__col"><h4>Begin</h4><ul><li><a href="subscribe.html">Subscribe free</a></li><li><a href="read.html">See how it works</a></li><li><a href="series.html">Pick a series</a></li></ul></div>
     </div>
-    <div class="foot__bar"><span class="label">&copy; 2026 The Margin &middot; readthemargin.net &middot; <a href="mailto:hello@readthemargin.net">hello@readthemargin.net</a></span><span class="label">&#10038; Say it slow. Say it true.</span></div>
+    <div class="foot__bar"><span class="label">&copy; 2026 The Margin &middot; readthemargin.net &middot; <a href="mailto:hello@readthemargin.net">hello@readthemargin.net</a></span><span class="label">&#10038; Say it slow. Say it true.</span><span class="label"><a href="https://app.readthemargin.net/login">Staff Login</a></span></div>
   </div>
 </footer>
 
 <script src="site.js"></script>
+<script>
+(function(){
+  var KIND_LABEL={book:'A whole book',person:'A single person',passage:'A single passage',idea:'A single idea'};
+  var KIND_LANE={book:'Start to finish',person:'Up close',passage:'A few lines a day',idea:'Traced across Scripture'};
+  var list=document.getElementById('seriesList');
+  var filters=document.getElementById('seriesFilters');
+
+  function esc(s){return (s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+
+  function cardHTML(s,i){
+    var kind=s.kind||'idea';
+    var badge='<span class="tbadge tbadge--'+kind+'">'+esc(KIND_LABEL[kind]||'A reading')+'</span>';
+    var sub=s.sub||s.passage||'';
+    if(i===0){
+      return '<article class="scard scard--feature" data-type="'+kind+'">'+
+        '<span class="scard__flag">Start here</span>'+
+        '<div class="scard__inner"><div style="display:flex;flex-direction:column;gap:12px;">'+badge+
+        '<span class="scard__lane">'+esc(KIND_LANE[kind]||'')+'</span>'+
+        '<h3>'+esc(s.name)+'</h3>'+
+        (sub?'<p class="scard__sub">'+esc(sub)+'</p>':'')+
+        '</div><div class="scard__foot" style="border-top:none;align-items:flex-start;flex-direction:column;gap:8px;padding-top:0;">'+
+        '<span><strong>'+s.totalDays+' mornings</strong></span>'+
+        '<a class="btn" href="subscribe.html" style="margin-top:8px;">Read from the start &rarr;</a>'+
+        '</div></div></article>';
+    }
+    return '<article class="scard" data-type="'+kind+'">'+badge.replace('class="tbadge tbadge--'+kind+'"','class="tbadge tbadge--'+kind+'" style="margin-bottom:12px;"')+
+      '<span class="scard__lane">'+esc(KIND_LANE[kind]||'')+'</span>'+
+      '<h3>'+esc(s.name)+'</h3>'+
+      (sub?'<p class="scard__sub">'+esc(sub)+'</p>':'')+
+      '<div class="scard__foot"><span>Open now</span><span><strong>'+s.totalDays+' mornings</strong></span></div>'+
+      '</article>';
+  }
+
+  fetch('/api/series').then(function(r){return r.ok?r.json():{series:[]};}).then(function(data){
+    var series=data.series||[];
+    if(series.length===0){
+      list.innerHTML='<p style="font-family:var(--font-serif);font-style:italic;color:var(--ash);font-size:17px;">Nothing is open yet &mdash; check back soon, or <a href="subscribe.html">subscribe</a> to know the moment a series launches.</p>';
+      return;
+    }
+    list.innerHTML=series.map(cardHTML).join('');
+    if(series.length>2){
+      filters.style.display='';
+      var chips=[].slice.call(filters.querySelectorAll('.fchip'));
+      var cards=[].slice.call(list.querySelectorAll('.scard[data-type]'));
+      chips.forEach(function(c){c.addEventListener('click',function(){
+        chips.forEach(function(x){x.setAttribute('aria-pressed',String(x===c));});
+        var f=c.dataset.filter;
+        cards.forEach(function(card){card.classList.toggle('is-hidden',f!=='all'&&card.dataset.type!==f);});
+      });});
+    }
+  }).catch(function(){
+    list.innerHTML='<p style="font-family:var(--font-serif);font-style:italic;color:var(--ash);font-size:17px;">Couldn&rsquo;t load the series list &mdash; please try again.</p>';
+  });
+})();
+</script>
 <!--cms:body-end-->
 </body>
 </html>

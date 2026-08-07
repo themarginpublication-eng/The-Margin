@@ -4,6 +4,12 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Subscribe · The Margin</title>
+<link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/icons/favicon-32-light.png" media="(prefers-color-scheme: light)" sizes="32x32">
+<link rel="icon" href="/icons/favicon-32-dark.png" media="(prefers-color-scheme: dark)" sizes="32x32">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#F3EEE3">
 <meta name="description" content="Get every margin note in your inbox, free. Slow, close readings of Scripture, sent directly. No noise, no algorithm." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,8 +28,11 @@
     <div class="nav__links">
       <a href="read.html">How It Works</a>
       <a href="series.html">Where to Start</a>
+      <a href="articles.html">Articles</a>
       <a href="about.html">About</a>
       <a class="is-active" href="subscribe.html">Subscribe</a>
+      <a href="https://app.readthemargin.net/login">Login</a>
+      <a class="btn btn--ghost" href="give.html">Give</a>
       <a class="btn" href="#join">Start reading &rarr;</a>
     </div>
     <button class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -35,7 +44,7 @@
   <div class="wrap wrap--narrow subscribe">
     <div class="eyebrow" style="justify-content:center;"><span class="eyebrow__bar"></span><span class="eyebrow__txt">Begin</span></div>
     <h2 class="h2 reveal" style="font-size:clamp(40px,6vw,72px);">Open the book this week.</h2>
-    <p class="subscribe__deck reveal">Add your email and the reading comes to you. One passage, read slowly, every other week, with shorter notes in between &mdash; ten minutes to read, or listen to every note read aloud. Free, forever. No noise, no selling, no algorithm deciding whether you see it. Just you and the text, with someone a few steps ahead.</p>
+    <p class="subscribe__deck reveal">Add your email, pick a series, and the reading comes to you. A short margin note every day, and a long article every other week &mdash; ten minutes to read, or listen to every note read aloud. Free, forever. No noise, no selling, no algorithm deciding whether you see it. Just you and the text, with someone a few steps ahead.</p>
     <form class="subform reveal" data-subscribe>
       <input type="email" placeholder="you@email.com" aria-label="Email address" required />
       <button class="btn btn--lg" type="submit">Subscribe free</button>
@@ -48,16 +57,17 @@
 <section class="sec" data-screen-label="Subscribe — What you get">
   <div class="wrap">
     <div class="eyebrow"><span class="eyebrow__bar"></span><span class="eyebrow__num">01</span><span class="eyebrow__txt">What lands in your inbox</span></div>
-    <h2 class="h2 reveal">What you'll <em>get.</em></h2>    <div class="rhythm reveal" style="margin-top:44px;">
+    <h2 class="h2 reveal">What you'll <em>get.</em></h2>
+    <div class="rhythm reveal" style="margin-top:44px;">
       <div class="rhythm__cell">
-        <div class="rhythm__cad">Every other week</div>
+        <div class="rhythm__cad">Every day</div>
         <h3>The margin note</h3>
-        <p>The long-form teaching essay. One passage, read slowly and closely. Ten minutes to read; longer to carry. The core of everything.</p>
+        <p>One short note a day inside the series you choose. A single passage, a single observation &mdash; small enough to read anywhere, steady enough to build a habit.</p>
       </div>
       <div class="rhythm__cell">
-        <div class="rhythm__cad">Between essays</div>
-        <h3>Short notes</h3>
-        <p>A single verse, a single observation, the occasional question that won't leave you alone. Small enough to read anywhere.</p>
+        <div class="rhythm__cad">Every other week</div>
+        <h3>The article</h3>
+        <p>The long-form teaching article. One passage, read slowly and closely. Ten minutes to read; longer to carry. The core of everything.</p>
       </div>
       <div class="rhythm__cell">
         <div class="rhythm__cad">Each new series</div>
@@ -77,8 +87,8 @@
     <div class="cols cols--4 reveal" style="margin-top:40px;">
       <a class="card" href="#join" style="display:block;">
         <span class="card__idx">&rarr;</span>
-        <h3>Substack</h3>
-        <p>The home base. Every essay, the full archive, the welcome sequence. Start here.</p>
+        <h3>The newsletter</h3>
+        <p>The home base. Every article, the full archive, the welcome sequence. Start here.</p>
       </a>
       <a class="card" href="#join" style="display:block;">
         <span class="card__idx">&rarr;</span>
@@ -111,7 +121,7 @@
       </div>
       <div class="qa__item">
         <h3>How often will you email me?</h3>
-        <p>A long-form note roughly every other week, occasionally weekly once the rhythm is deep. Short notes live mostly on social, not your inbox. We are allergic to clutter, and we won't fill your inbox to stay &ldquo;top of mind.&rdquo;</p>
+        <p>A short margin note every day within the series you're reading, and a long-form article every other week. Each daily note takes a minute or two; nothing is padded to stay &ldquo;top of mind.&rdquo;</p>
       </div>
       <div class="qa__item">
         <h3>Do I need to be religious to read along?</h3>
@@ -153,11 +163,11 @@
         <a class="wm" href="index.html"><span class="wm__bar"></span><span><span class="wm__type">the margin</span><span class="wm__tag">Biblical literacy · in the margins</span></span></a>
         <p class="foot__blurb">A reading companion that helps you open the Bible and read it for yourself, slowly and without a gatekeeper.</p>
       </div>
-      <div class="foot__col"><h4>Read</h4><ul><li><a href="read.html">How It Works</a></li><li><a href="series.html">Where to Start</a></li><li><a href="series.html#archive">The Archive</a></li><li><a href="about.html">About</a></li></ul></div>
-      <div class="foot__col"><h4>Follow</h4><ul><li><a href="#join">Substack</a></li><li><a href="#join">Instagram</a></li><li><a href="#join">Threads</a></li><li><a href="#join">X / Twitter</a></li></ul></div>
+      <div class="foot__col"><h4>Read</h4><ul><li><a href="read.html">How It Works</a></li><li><a href="series.html">Where to Start</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div class="foot__col"><h4>Follow</h4><ul><li><a href="#join">Newsletter</a></li><li><a href="#join">Instagram</a></li><li><a href="#join">Threads</a></li><li><a href="#join">X / Twitter</a></li></ul></div>
       <div class="foot__col"><h4>Begin</h4><ul><li><a href="#join">Subscribe free</a></li><li><a href="read.html">Start here</a></li><li><a href="series.html">Pick a series</a></li></ul></div>
     </div>
-    <div class="foot__bar"><span class="label">&copy; 2026 The Margin &middot; readthemargin.net &middot; <a href="mailto:hello@readthemargin.net">hello@readthemargin.net</a></span><span class="label">&#10038; Say it slow. Say it true.</span></div>
+    <div class="foot__bar"><span class="label">&copy; 2026 The Margin &middot; readthemargin.net &middot; <a href="mailto:hello@readthemargin.net">hello@readthemargin.net</a></span><span class="label">&#10038; Say it slow. Say it true.</span><span class="label"><a href="https://app.readthemargin.net/login">Staff Login</a></span></div>
   </div>
 </footer>
 
