@@ -1,0 +1,17 @@
+name = "the-margin-studio"
+main = ".open-next/worker.js"
+compatibility_date = "2025-09-23"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "the-margin-db"
+database_id = "ff187aeb-78f6-4a79-b875-9bfd913863e6"
+
+[vars]
+ADMIN_EMAILS = "themarginpublication@gmail.com"
