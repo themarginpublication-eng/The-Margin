@@ -8,6 +8,9 @@ export interface UserRow {
   password_hash: string | null;
   email_verified: number;
   created_at: string;
+  phone: string | null;
+  notion_page_id: string | null;
+  stripe_customer_id: string | null;
 }
 
 export interface SeriesDay {
@@ -27,6 +30,13 @@ export interface SeriesRow {
   passage: string | null;
   total_days: number;
   days_json: string;
+  created_at: string;
+  access: 'gated' | 'open';
+  free_days: number;
+  kind: 'book' | 'person' | 'passage' | 'idea';
+  status: 'live' | 'scheduled' | 'draft' | 'retired';
+  sort_order: number;
+  description: string | null;
 }
 
 export interface ProgressRow {
@@ -36,6 +46,69 @@ export interface ProgressRow {
   current_day: number;
   completed_days: string;
   last_read_at: string | null;
+  started_at: string | null;
+  last_emailed_day: number;
+  last_emailed_at: string | null;
+  email_opt_out: number;
+}
+
+export interface EssayRow {
+  id: string;
+  slug: string;
+  title: string;
+  passage_ref: string | null;
+  series_id: string | null;
+  topic: string | null;
+  summary: string | null;
+  search_keywords: string | null;
+  substack_url: string | null;
+  status: 'draft' | 'published';
+  body: string | null;
+  passage_text: string | null;
+  annotations_json: string;
+  scheduled_at: string | null;
+  archived_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface BroadcastRow {
+  id: string;
+  subject: string;
+  body_html: string;
+  recipient_filter: string;
+  recipient_label: string;
+  sent_count: number;
+  failed_count: number;
+  scheduled_at: string | null;
+  sent_at: string | null;
+  custom_emails: string | null;
+  created_at: string;
+}
+
+export interface DonationRow {
+  id: string;
+  email: string;
+  name: string | null;
+  amount_cents: number;
+  currency: string;
+  frequency: 'one_time' | 'monthly';
+  status: string;
+  source: string;
+  memo: string | null;
+  stripe_customer_id: string | null;
+  stripe_checkout_session_id: string | null;
+  stripe_subscription_id: string | null;
+  stripe_invoice_id: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface EmailTemplateRow {
+  key: string;
+  subject: string | null;
+  intro_html: string | null;
+  updated_at: string;
 }
 
 const uuid = () => crypto.randomUUID();
@@ -175,7 +248,19 @@ export async function listSeries(): Promise<SeriesRow[]> {
 
 export async function updateSeries(
   id: string,
-  fields: { title?: string; subtitle?: string | null; passage?: string | null; days_json?: string; total_days?: number }
+  fields: {
+    title?: string;
+    subtitle?: string | null;
+    passage?: string | null;
+    days_json?: string;
+    total_days?: number;
+    access?: 'gated' | 'open';
+    free_days?: number;
+    kind?: SeriesRow['kind'];
+    status?: SeriesRow['status'];
+    sort_order?: number;
+    description?: string | null;
+  }
 ): Promise<SeriesRow | null> {
   const db = getDb();
   const current = await getSeriesById(id);
@@ -184,10 +269,215 @@ export async function updateSeries(
   const defined = Object.fromEntries(Object.entries(fields).filter(([, v]) => v !== undefined));
   const next = { ...current, ...defined };
   await db
-    .prepare('UPDATE series SET title = ?, subtitle = ?, passage = ?, days_json = ?, total_days = ? WHERE id = ?')
-    .bind(next.title, next.subtitle, next.passage, next.days_json, next.total_days, id)
+    .prepare(
+      `UPDATE series SET title = ?, subtitle = ?, passage = ?, days_json = ?, total_days = ?,
+       access = ?, free_days = ?, kind = ?, status = ?, sort_order = ?, description = ? WHERE id = ?`
+    )
+    .bind(
+      next.title,
+      next.subtitle,
+      next.passage,
+      next.days_json,
+      next.total_days,
+      next.access,
+      next.free_days,
+      next.kind,
+      next.status,
+      next.sort_order,
+      next.description,
+      id
+    )
     .run();
   return getSeriesById(id);
+}
+
+// --- Essays ---------------------------------------------------------------
+
+export async function listEssays(): Promise<EssayRow[]> {
+  const db = getDb();
+  const { results } = await db.prepare('SELECT * FROM essays ORDER BY created_at DESC').all<EssayRow>();
+  return results ?? [];
+}
+
+export async function getEssayById(id: string): Promise<EssayRow | null> {
+  const db = getDb();
+  const row = await db.prepare('SELECT * FROM essays WHERE id = ?').bind(id).first<EssayRow>();
+  return row ?? null;
+}
+
+export async function createEssay(title: string, slug: string): Promise<EssayRow> {
+  const db = getDb();
+  const id = uuid();
+  await db.prepare('INSERT INTO essays (id, slug, title) VALUES (?, ?, ?)').bind(id, slug, title).run();
+  return (await getEssayById(id))!;
+}
+
+export async function updateEssay(
+  id: string,
+  fields: Partial<
+    Pick<
+      EssayRow,
+      | 'title'
+      | 'slug'
+      | 'passage_ref'
+      | 'series_id'
+      | 'topic'
+      | 'summary'
+      | 'search_keywords'
+      | 'substack_url'
+      | 'status'
+      | 'body'
+      | 'passage_text'
+      | 'annotations_json'
+      | 'scheduled_at'
+      | 'archived_at'
+    >
+  >
+): Promise<EssayRow | null> {
+  const db = getDb();
+  const current = await getEssayById(id);
+  if (!current) return null;
+  const next = { ...current, ...Object.fromEntries(Object.entries(fields).filter(([, v]) => v !== undefined)) };
+  await db
+    .prepare(
+      `UPDATE essays SET title=?, slug=?, passage_ref=?, series_id=?, topic=?, summary=?, search_keywords=?,
+       substack_url=?, status=?, body=?, passage_text=?, annotations_json=?, scheduled_at=?, archived_at=?,
+       updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE id = ?`
+    )
+    .bind(
+      next.title,
+      next.slug,
+      next.passage_ref,
+      next.series_id,
+      next.topic,
+      next.summary,
+      next.search_keywords,
+      next.substack_url,
+      next.status,
+      next.body,
+      next.passage_text,
+      next.annotations_json,
+      next.scheduled_at,
+      next.archived_at,
+      id
+    )
+    .run();
+  return getEssayById(id);
+}
+
+export async function deleteEssay(id: string): Promise<void> {
+  const db = getDb();
+  await db.prepare('DELETE FROM essays WHERE id = ?').bind(id).run();
+}
+
+// --- Broadcasts -------------------------------------------------------------
+
+export async function listBroadcasts(): Promise<BroadcastRow[]> {
+  const db = getDb();
+  const { results } = await db.prepare('SELECT * FROM broadcasts ORDER BY created_at DESC').all<BroadcastRow>();
+  return results ?? [];
+}
+
+// --- Donations --------------------------------------------------------------
+
+export async function listDonations(limit = 200): Promise<DonationRow[]> {
+  const db = getDb();
+  const { results } = await db
+    .prepare('SELECT * FROM donations ORDER BY created_at DESC LIMIT ?')
+    .bind(limit)
+    .all<DonationRow>();
+  return results ?? [];
+}
+
+export async function findDonationByCheckoutSession(sessionId: string): Promise<DonationRow | null> {
+  const db = getDb();
+  const row = await db
+    .prepare('SELECT * FROM donations WHERE stripe_checkout_session_id = ?')
+    .bind(sessionId)
+    .first<DonationRow>();
+  return row ?? null;
+}
+
+export async function findDonationByInvoice(invoiceId: string): Promise<DonationRow | null> {
+  const db = getDb();
+  const row = await db.prepare('SELECT * FROM donations WHERE stripe_invoice_id = ?').bind(invoiceId).first<DonationRow>();
+  return row ?? null;
+}
+
+export async function createDonation(fields: {
+  email: string;
+  name: string | null;
+  amount_cents: number;
+  currency: string;
+  frequency: 'one_time' | 'monthly';
+  status: string;
+  source: string;
+  stripe_customer_id: string | null;
+  stripe_checkout_session_id: string | null;
+  stripe_subscription_id: string | null;
+  stripe_invoice_id: string | null;
+}): Promise<DonationRow> {
+  const db = getDb();
+  const id = uuid();
+  await db
+    .prepare(
+      `INSERT INTO donations
+       (id, email, name, amount_cents, currency, frequency, status, source,
+        stripe_customer_id, stripe_checkout_session_id, stripe_subscription_id, stripe_invoice_id)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    )
+    .bind(
+      id,
+      fields.email.toLowerCase(),
+      fields.name,
+      fields.amount_cents,
+      fields.currency,
+      fields.frequency,
+      fields.status,
+      fields.source,
+      fields.stripe_customer_id,
+      fields.stripe_checkout_session_id,
+      fields.stripe_subscription_id,
+      fields.stripe_invoice_id
+    )
+    .run();
+  return (await db.prepare('SELECT * FROM donations WHERE id = ?').bind(id).first<DonationRow>())!;
+}
+
+export async function updateDonationStatus(id: string, status: string): Promise<void> {
+  const db = getDb();
+  await db
+    .prepare("UPDATE donations SET status = ?, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE id = ?")
+    .bind(status, id)
+    .run();
+}
+
+export async function setUserStripeCustomerId(userEmail: string, stripeCustomerId: string): Promise<void> {
+  const db = getDb();
+  await db
+    .prepare('UPDATE users SET stripe_customer_id = ? WHERE email = ?')
+    .bind(stripeCustomerId, userEmail.toLowerCase())
+    .run();
+}
+
+// --- Email templates ----------------------------------------------------
+
+export async function listEmailTemplates(): Promise<EmailTemplateRow[]> {
+  const db = getDb();
+  const { results } = await db.prepare('SELECT * FROM email_templates ORDER BY key ASC').all<EmailTemplateRow>();
+  return results ?? [];
+}
+
+export async function upsertEmailTemplate(key: string, subject: string, introHtml: string): Promise<void> {
+  const db = getDb();
+  await db
+    .prepare(
+      `INSERT INTO email_templates (key, subject, intro_html) VALUES (?, ?, ?)
+       ON CONFLICT(key) DO UPDATE SET subject = excluded.subject, intro_html = excluded.intro_html,
+       updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')`
+    )
+    .bind(key, subject, introHtml)
+    .run();
 }
 
 export interface SiteContentRow {

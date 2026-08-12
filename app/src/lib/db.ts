@@ -7,6 +7,12 @@ export interface Env {
   GOOGLE_CLIENT_SECRET?: string;
   GOOGLE_REDIRECT_URI?: string;
   ADMIN_EMAILS?: string;
+  STRIPE_SECRET_KEY?: string;
+  STRIPE_WEBHOOK_SECRET?: string;
+  MAILER_URL?: string;
+  MAILER_INTERNAL_KEY?: string;
+  NOTION_TOKEN?: string;
+  NOTION_READERS_DATABASE_ID?: string;
 }
 
 export function getEnv(): Env {

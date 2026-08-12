@@ -18,8 +18,18 @@ migrations_dir = "../migrations"
 # not a credential — so it lives here rather than as a wrangler secret.
 ADMIN_EMAILS = "themarginpublication@gmail.com"
 
-# Set these as Worker secrets (`wrangler secret put <NAME>`) before deploying:
+# Non-secret config for the-margin-mailer / Notion reader sync integrations.
+MAILER_URL = "https://the-margin-mailer.themarginpublication.workers.dev"
+NOTION_READERS_DATABASE_ID = "a21eaea39d0443999ce20193894f7446"
+
+# Set these as Worker secrets (`wrangler secret put <NAME>`) before deploying —
+# already set on the live worker, listed here so a fresh deploy target knows
+# what it needs:
 #   SESSION_SECRET        — random 32+ byte string, signs the session cookie (JWT)
 #   GOOGLE_CLIENT_ID       — from Google Cloud Console OAuth credentials
 #   GOOGLE_CLIENT_SECRET
 #   GOOGLE_REDIRECT_URI    — e.g. https://app.readthemargin.net/api/auth/google/callback
+#   STRIPE_SECRET_KEY      — Stripe secret key, used by /api/give/checkout
+#   STRIPE_WEBHOOK_SECRET  — Stripe webhook signing secret for /api/webhooks/stripe
+#   MAILER_INTERNAL_KEY    — shared secret sent as x-trigger-key to the-margin-mailer
+#   NOTION_TOKEN           — Notion integration token for reader sync (not yet wired up)
