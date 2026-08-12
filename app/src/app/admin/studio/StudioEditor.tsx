@@ -250,7 +250,7 @@ export default function StudioEditor({ id }: { id: string }) {
       </aside>
 
       <main className="studio-main">
-        {panel === 'home' && <Home s={s} update={update} setPanel={setPanel} />}
+        {panel === 'home' && <Home s={s} update={update} setPanel={setPanel} id={id} />}
         {panel === 'free' && <FreePanel s={s} update={update} />}
         {panel === 'unit' && <UnitPanel s={s} update={update} />}
         {panel === 'obs' && <ObsPanel s={s} update={update} />}
@@ -267,13 +267,29 @@ export default function StudioEditor({ id }: { id: string }) {
 
 type Update = (fn: (s: StudioState) => StudioState) => void;
 
-function Home({ s, update, setPanel }: { s: StudioState; update: Update; setPanel: (p: Panel) => void }) {
+function Home({ s, update, setPanel, id }: { s: StudioState; update: Update; setPanel: (p: Panel) => void; id: string }) {
   const free = s.mode === 'free';
   const list = free ? [] : onMoves(s);
   const counts: Record<QTKey, number> = { mean: 0, true: 0, diff: 0 };
   s.obs.forEach((o) => {
     if (o.qt) counts[o.qt]++;
   });
+  const [publishing, setPublishing] = useState(false);
+  const [publishMsg, setPublishMsg] = useState('');
+
+  async function publish() {
+    setPublishing(true);
+    setPublishMsg('');
+    try {
+      const res = await fetch(`/api/admin/studio/${id}/publish`, { method: 'POST' });
+      const json = (await res.json()) as { series?: { slug: string; title: string }; error?: string };
+      setPublishMsg(res.ok && json.series ? `Published as a draft series: “${json.series.title}”.` : json.error || 'Failed to publish.');
+    } catch {
+      setPublishMsg('Failed to publish.');
+    } finally {
+      setPublishing(false);
+    }
+  }
 
   return (
     <div className="studio-grid studio-grid--home">
@@ -355,6 +371,15 @@ function Home({ s, update, setPanel }: { s: StudioState; update: Update; setPane
               Do it myself
             </button>
           </div>
+        </div>
+
+        <div className="studio-card">
+          <h3>Publish</h3>
+          <p className="studio-hint">Writes this draft into the shared series table as a draft (same list the admin&rsquo;s Reading Series page uses) — it won&rsquo;t go live on the site until someone flips its status there.</p>
+          <button className="btn" disabled={publishing} onClick={publish} style={{ marginTop: 10 }}>
+            {publishing ? 'Publishing…' : 'Publish to series'}
+          </button>
+          {publishMsg && <p className="studio-hint" style={{ marginTop: 8 }}>{publishMsg}</p>}
         </div>
 
         <button

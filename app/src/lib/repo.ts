@@ -277,6 +277,50 @@ export async function deleteStudioDraft(id: string): Promise<void> {
   await db.prepare('DELETE FROM studio_drafts WHERE id = ?').bind(id).run();
 }
 
+function slugify(title: string): string {
+  return (
+    title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'series'
+  );
+}
+
+/**
+ * Publishes a Studio draft into the shared `series` table as a draft row
+ * (status='draft'), matching the kind/access/free_days convention already
+ * used there so it shows up in the existing admin's Reading Series list.
+ */
+export async function publishStudioDraftAsSeries(
+  title: string,
+  subtitle: string | null,
+  passage: string | null,
+  kind: string,
+  days: SeriesDay[]
+): Promise<SeriesRow> {
+  const db = getDb();
+
+  const base = slugify(title);
+  let slug = base;
+  let n = 1;
+  while (await db.prepare('SELECT 1 FROM series WHERE slug = ?').bind(slug).first()) {
+    slug = `${base}-${++n}`;
+  }
+
+  const id = uuid();
+  const days_json = JSON.stringify(days);
+  await db
+    .prepare(
+      `INSERT INTO series (id, slug, title, subtitle, passage, total_days, days_json, kind, status)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'draft')`
+    )
+    .bind(id, slug, title, subtitle, passage, days.length, days_json, kind)
+    .run();
+
+  return (await getSeriesById(id))!;
+}
+
 export async function completeDay(userId: string, seriesId: string, day: number, totalDays: number): Promise<ProgressRow> {
   const db = getDb();
   const progress = await getOrCreateProgress(userId, seriesId);
