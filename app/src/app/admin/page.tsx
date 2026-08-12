@@ -26,6 +26,18 @@ export default async function AdminHome() {
       </div>
 
       <div className="admin-group">
+        <h2>Studio</h2>
+        <ul className="admin-list">
+          <li>
+            <a href="/admin/studio">
+              <span className="admin-list__title">Draft a new series</span>
+              <span className="admin-list__meta">seed → six-move method → publishable days →</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div className="admin-group">
         <h2>Reading series</h2>
         <ul className="admin-list">
           {series.map((s) => (

@@ -33,9 +33,10 @@ Next.js (App Router, TypeScript), deployed to Cloudflare Workers via
 [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare). Data model, auth flows, and API
 surface follow `design/Backend Blueprint.html` section by section:
 
-- **Tables** (`migrations/0001_init.sql` + `migrations/0002_cms.sql`, already applied to the live
-  `the-margin-db`): `users`, `auth_identities`, `series`, `progress`, `waitlist`, plus
-  `site_content` for the admin panel below.
+- **Tables** (`migrations/0001_init.sql` + `migrations/0002_cms.sql` + `migrations/0003_studio.sql`):
+  `users`, `auth_identities`, `series`, `progress`, `waitlist`, `site_content` for the admin panel
+  below, and `studio_drafts` for the Studio (see below). Run any not yet applied to the live
+  `the-margin-db` with `wrangler d1 execute the-margin-db --remote --file migrations/000N_*.sql`.
 - **Auth**: email+password (bcrypt-hashed) and Google OAuth (authorization-code flow), both
   landing in the same `users` row via `auth_identities`. Sessions are a signed JWT in an
   httpOnly cookie (`jose`).
@@ -62,6 +63,17 @@ change:
   pasting in arbitrary script/markup (analytics, embeds, etc.) without a redeploy.
 - **`/admin/series/:id`** — series title/subtitle/passage, plus the full `days_json` as raw JSON
   for editing or adding mornings.
+- **`/admin/studio`** — the Studio: an authoring backend that takes a seed (a passage, person,
+  book, book-you-read, idea, or word) through a six-move method (cut the unit → observe → the
+  idea → the last day → deal the days → shape the day) into a finished, sectioned series. Guided
+  mode walks the moves in order with live readiness checks; free mode drops the method entirely
+  for a bare title/notes/days draft — switching modes never loses the other's data. Every move can
+  be renamed, reordered or turned off (`app/src/app/admin/studio/StudioEditor.tsx`); the method's
+  reference data (question types, day-count plans, per-seed-type guidance, the worked "Empty and
+  Full" example on Ruth) lives in `app/src/lib/studio-data.ts`. State autosaves to the
+  `studio_drafts` table per admin user via `/api/admin/studio*`. The Studio produces a finished
+  draft; it does not publish — mapping a finished day onto the social template library is a later
+  integration.
 
 This is served by `site/functions/_middleware.js`, which rewrites the static HTML per-request
 using the `site_content` D1 table (binding `DB`, already wired in `site/wrangler.toml`) — no
