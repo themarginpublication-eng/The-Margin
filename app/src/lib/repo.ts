@@ -225,6 +225,58 @@ export async function deleteSiteContent(key: string): Promise<void> {
   await db.prepare('DELETE FROM site_content WHERE key = ?').bind(key).run();
 }
 
+export interface StudioDraftRow {
+  id: string;
+  user_id: string;
+  title: string;
+  data_json: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function listStudioDrafts(userId: string): Promise<StudioDraftRow[]> {
+  const db = getDb();
+  const { results } = await db
+    .prepare('SELECT * FROM studio_drafts WHERE user_id = ? ORDER BY updated_at DESC')
+    .bind(userId)
+    .all<StudioDraftRow>();
+  return results ?? [];
+}
+
+export async function getStudioDraft(id: string): Promise<StudioDraftRow | null> {
+  const db = getDb();
+  const row = await db.prepare('SELECT * FROM studio_drafts WHERE id = ?').bind(id).first<StudioDraftRow>();
+  return row ?? null;
+}
+
+export async function createStudioDraft(userId: string, title: string, dataJson: string): Promise<StudioDraftRow> {
+  const db = getDb();
+  const id = uuid();
+  await db
+    .prepare('INSERT INTO studio_drafts (id, user_id, title, data_json) VALUES (?, ?, ?, ?)')
+    .bind(id, userId, title, dataJson)
+    .run();
+  return (await getStudioDraft(id))!;
+}
+
+export async function updateStudioDraft(id: string, title: string, dataJson: string): Promise<StudioDraftRow | null> {
+  const db = getDb();
+  const existing = await getStudioDraft(id);
+  if (!existing) return null;
+  await db
+    .prepare(
+      "UPDATE studio_drafts SET title = ?, data_json = ?, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE id = ?"
+    )
+    .bind(title, dataJson, id)
+    .run();
+  return getStudioDraft(id);
+}
+
+export async function deleteStudioDraft(id: string): Promise<void> {
+  const db = getDb();
+  await db.prepare('DELETE FROM studio_drafts WHERE id = ?').bind(id).run();
+}
+
 export async function completeDay(userId: string, seriesId: string, day: number, totalDays: number): Promise<ProgressRow> {
   const db = getDb();
   const progress = await getOrCreateProgress(userId, seriesId);
