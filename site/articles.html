@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Margin · Articles</title>
+<link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/icons/favicon-32-light.png" media="(prefers-color-scheme: light)" sizes="32x32">
+<link rel="icon" href="/icons/favicon-32-dark.png" media="(prefers-color-scheme: dark)" sizes="32x32">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#F3EEE3">
+<meta name="description" content="The article library — every long-form article from The Margin, searchable by title, topic, and passage." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<!--cms:head-extra-->
+</head>
+<body>
+<nav class="nav">
+  <div class="nav__inner">
+    <a class="wm" href="index.html" aria-label="The Margin — home">
+      <span class="wm__bar"></span>
+      <span><span class="wm__type">the margin</span><span class="wm__tag">Biblical literacy · in the margins</span></span>
+    </a>
+    <div class="nav__links">
+      <a href="read.html">How It Works</a>
+      <a href="series.html">Where to Start</a>
+      <a class="is-active" href="articles.html">Articles</a>
+      <a href="about.html">About</a>
+      <a href="subscribe.html">Subscribe</a>
+      <a href="https://app.readthemargin.net/login">Login</a>
+      <a class="btn btn--ghost" href="give.html">Give</a>
+      <a class="btn" href="subscribe.html">Start reading &rarr;</a>
+    </div>
+    <button class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<header class="phead" data-screen-label="Articles — Header">
+  <div class="wrap">
+    <div class="eyebrow"><span class="eyebrow__bar"></span><span class="eyebrow__txt">The library</span></div>
+    <h1>The <em>articles.</em></h1>
+    <p class="lede">Every long-form article lives here. Most connect to a series, but each one stands on its own &mdash; you can read any of them cold, no background needed. Search by title, topic, or the part of the Bible it reads.</p>
+  </div>
+</header>
+<section class="sec sec--tight" data-screen-label="Articles — Library">
+  <div class="wrap">
+    <div class="esearch reveal">
+      <input type="search" id="esearch" placeholder="Search by title, topic, or passage &mdash; try &ldquo;doubt&rdquo; or &ldquo;Genesis&rdquo;" aria-label="Search articles" />
+    </div>
+    <div class="filterbar reveal" role="group" aria-label="Filter articles by topic" style="margin-top:18px;">
+      <button class="fchip" type="button" data-filter="all" aria-pressed="true">All topics</button>
+      <button class="fchip" type="button" data-filter="beginnings" aria-pressed="false">Beginnings</button>
+      <button class="fchip" type="button" data-filter="doubt" aria-pressed="false">Doubt &amp; honesty</button>
+      <button class="fchip" type="button" data-filter="prayer" aria-pressed="false">Prayer</button>
+      <button class="fchip" type="button" data-filter="people" aria-pressed="false">People of the Bible</button>
+    </div>
+    <div id="elist" style="margin-top:24px;">
+      <a class="erow reveal" href="article-ezra.html" data-topic="doubt" data-search="ezra 3 temple foundation weeping joy rebuilding home grief gratitude two things at once">
+        <h3>The sound of two things at once</h3>
+        <span class="erow__ref">Ezra 3 &middot; 10&ndash;13</span>
+        <p class="erow__sub">The old men weep, the young men shout, and no one can tell the two sounds apart.</p>
+        <span class="erow__meta"><span>Series: Ezra, rebuilt</span><span>Article No. 3</span></span>
+      </a>
+      <a class="erow reveal" href="reading-view.html" data-topic="beginnings" data-search="where are you genesis 3 hiding being found shame presence first question">
+        <h3>Where are you?</h3>
+        <span class="erow__ref">Genesis 3 &middot; 8&ndash;9</span>
+        <p class="erow__sub">The first question in the Bible &mdash; and God already knows the answer.</p>
+        <span class="erow__meta"><span>Series: Hiding &amp; Being Found</span><span>Article No. 1</span></span>
+      </a>
+    </div>
+    <p class="eempty" id="eempty">Nothing matches that yet. The library grows with every series &mdash; subscribe and the next article comes to you.</p>
+    <p class="reveal" style="font-style:italic; color:var(--ash); font-size:17px; margin-top:32px;">&#10038; A couple of articles so far &mdash; the library grows every month, often more. <a href="subscribe.html">Subscribe</a> to get each one as it lands.</p>
+  </div>
+</section>
+<section class="sec sec--vellum" data-screen-label="Articles — CTA">
+  <div class="wrap wrap--narrow" style="text-align:center;">
+    <h2 class="h2 reveal">Don't just browse. <em>Read along.</em></h2>
+    <p class="subscribe__deck reveal">Articles are the every-other-week landmark. The daily margin notes are the walk between them. Pick a series and both come to you.</p>
+    <div class="reveal" style="margin-top:32px;"><a class="btn btn--lg" href="subscribe.html">Start reading, free &rarr;</a></div>
+  </div>
+</section>
+<footer class="foot" data-screen-label="Global — Footer">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a class="wm" href="index.html"><span class="wm__bar"></span><span><span class="wm__type">the margin</span><span class="wm__tag">Biblical literacy · in the margins</span></span></a>
+        <p class="foot__blurb">A reading companion that helps you open the Bible and read it for yourself, slowly and without a gatekeeper.</p>
+      </div>
+      <div class="foot__col"><h4>Read</h4><ul><li><a href="read.html">How It Works</a></li><li><a href="series.html">Where to Start</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div class="foot__col"><h4>Follow</h4><ul><li><a href="https://readthemargin.substack.com/?utm_campaign=profile_chips" target="_blank" rel="noopener">Newsletter</a></li><li><a href="https://www.instagram.com/read.the.margin/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.facebook.com/readthemargin" target="_blank" rel="noopener">Facebook</a></li><li><a href="https://www.threads.com/@read.the.margin" target="_blank" rel="noopener">Threads</a></li><li><a href="https://x.com/readthemargins" target="_blank" rel="noopener">X / Twitter</a></li></ul></div>
+      <div class="foot__col"><h4>Begin</h4><ul><li><a href="subscribe.html">Subscribe free</a></li><li><a href="read.html">See how it works</a></li><li><a href="series.html">Pick a series</a></li></ul></div>
+    </div>
+    <div class="foot__bar"><span class="label">&copy; 2026 The Margin &middot; readthemargin.net &middot; <a href="mailto:hello@readthemargin.net">hello@readthemargin.net</a></span><span class="label">Read slowly.</span><span class="label"><a href="https://app.readthemargin.net/login">Staff Login</a></span></div>
+  </div>
+</footer>
+<script src="site.js"></script>
+<!--cms:body-end-->
+<script>
+(function(){
+  var input=document.getElementById('esearch');
+  var chips=[].slice.call(document.querySelectorAll('.fchip'));
+  var rows=[].slice.call(document.querySelectorAll('.erow'));
+  var empty=document.getElementById('eempty');
+  var topic='all';
+  function apply(){
+    var q=input.value.trim().toLowerCase(), shown=0;
+    rows.forEach(function(r){
+      var hay=(r.textContent+' '+(r.dataset.search||'')).toLowerCase();
+      var ok=(topic==='all'||r.dataset.topic===topic)&&(!q||hay.indexOf(q)>-1);
+      r.classList.toggle('is-hidden',!ok); if(ok) shown++;
+    });
+    empty.classList.toggle('show',shown===0);
+  }
+  input.addEventListener('input',apply);
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    chips.forEach(function(x){x.setAttribute('aria-pressed',String(x===c));});
+    topic=c.dataset.filter; apply();
+  });});
+})();
+</script>
+</body>
+</html>

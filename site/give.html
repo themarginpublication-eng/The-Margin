@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Give · The Margin</title>
+<link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/icons/favicon-32-light.png" media="(prefers-color-scheme: light)" sizes="32x32">
+<link rel="icon" href="/icons/favicon-32-dark.png" media="(prefers-color-scheme: dark)" sizes="32x32">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#F3EEE3">
+<meta name="description" content="Help The Margin reach more readers. Give once or monthly — nothing here is ever behind a paywall." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+.giveform{max-width:520px;margin:40px auto 0;text-align:left;}
+.givetabs{display:flex;gap:0;border:1px solid var(--margin);margin-bottom:20px;}
+.givetabs button{flex:1;padding:12px;font-family:var(--font-sans);font-weight:600;font-size:13px;letter-spacing:.04em;background:none;border:none;cursor:pointer;color:var(--dark-small,#cabfae);}
+.givetabs button.is-on{background:var(--rust);color:#fff;}
+.giveamounts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.giveamounts button{padding:14px 8px;font-family:var(--font-sans);font-weight:600;font-size:15px;border:1px solid var(--margin);background:#fff;cursor:pointer;color:var(--ink);}
+.giveamounts button.is-on{border-color:var(--rust);background:var(--rust);color:#fff;}
+.givefield{margin-bottom:14px;}
+.givefield label{display:block;font-family:var(--font-sans);font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dark-small,#cabfae);margin-bottom:6px;}
+.givefield input{width:100%;padding:12px 14px;border:1px solid var(--margin);background:#fff;font-family:var(--font-serif);font-size:16px;box-sizing:border-box;}
+.giveerr{color:var(--rust);font-family:var(--font-sans);font-size:13px;margin-top:10px;min-height:1.4em;}
+</style>
+<!--cms:head-extra-->
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a class="wm" href="index.html" aria-label="The Margin — home">
+      <span class="wm__bar"></span>
+      <span><span class="wm__type">the margin</span><span class="wm__tag">Biblical literacy · in the margins</span></span>
+    </a>
+    <div class="nav__links">
+      <a href="read.html">How It Works</a>
+      <a href="series.html">Where to Start</a>
+      <a href="articles.html">Articles</a>
+      <a href="about.html">About</a>
+      <a href="subscribe.html">Subscribe</a>
+      <a href="https://app.readthemargin.net/login">Login</a>
+      <a class="btn btn--ghost is-active" href="give.html">Give</a>
+      <a class="btn" href="subscribe.html">Start reading &rarr;</a>
+    </div>
+    <button class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<header class="sec sec--ink" data-screen-label="Give — Hero">
+  <div class="wrap wrap--narrow subscribe">
+    <div class="eyebrow" style="justify-content:center;"><span class="eyebrow__bar"></span><span class="eyebrow__txt">Give</span></div>
+    <h2 class="h2 reveal" style="font-size:clamp(36px,5.5vw,60px);">Help it reach further.</h2>
+    <p class="subscribe__deck reveal">Every margin note, every article, every series is free — and it stays that way, no matter what you give or don't. If this reading has been good for you and you'd like to help it reach more people, a gift below goes straight to keeping it free for everyone else.</p>
+
+    <form class="giveform reveal" id="giveForm">
+      <div class="givetabs">
+        <button type="button" data-freq="one_time" class="is-on">One-time</button>
+        <button type="button" data-freq="monthly">Monthly</button>
+      </div>
+      <div class="giveamounts">
+        <button type="button" data-amt="1000">$10</button>
+        <button type="button" data-amt="2500" class="is-on">$25</button>
+        <button type="button" data-amt="5000">$50</button>
+      </div>
+      <div class="givefield">
+        <label for="giveCustom">Or enter your own amount (USD)</label>
+        <input type="number" id="giveCustom" min="1" step="1" placeholder="Custom amount" />
+      </div>
+      <div class="givefield">
+        <label for="giveEmail">Email</label>
+        <input type="email" id="giveEmail" required placeholder="you@email.com" />
+      </div>
+      <div class="givefield">
+        <label for="giveName">Name (optional)</label>
+        <input type="text" id="giveName" placeholder="Your name" />
+      </div>
+      <button class="btn btn--lg" type="submit" id="giveSubmit" style="width:100%;">Continue to give &rarr;</button>
+      <p class="giveerr" id="giveErr"></p>
+    </form>
+    <p class="subnote">Handled securely by Stripe &middot; cancel a monthly gift anytime &middot; giving is never required to read.</p>
+  </div>
+</header>
+
+<footer class="foot" data-screen-label="Global — Footer">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a class="wm" href="index.html"><span class="wm__bar"></span><span><span class="wm__type">the margin</span><span class="wm__tag">Biblical literacy · in the margins</span></span></a>
+        <p class="foot__blurb">A reading companion that helps you open the Bible and read it for yourself, slowly and without a gatekeeper.</p>
+      </div>
+      <div class="foot__col"><h4>Read</h4><ul><li><a href="read.html">How It Works</a></li><li><a href="series.html">Where to Start</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div class="foot__col"><h4>Follow</h4><ul><li><a href="https://readthemargin.substack.com/?utm_campaign=profile_chips" target="_blank" rel="noopener">Newsletter</a></li><li><a href="https://www.instagram.com/read.the.margin/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.facebook.com/readthemargin" target="_blank" rel="noopener">Facebook</a></li><li><a href="https://www.threads.com/@read.the.margin" target="_blank" rel="noopener">Threads</a></li><li><a href="https://x.com/readthemargins" target="_blank" rel="noopener">X / Twitter</a></li></ul></div>
+      <div class="foot__col"><h4>Begin</h4><ul><li><a href="subscribe.html">Subscribe free</a></li><li><a href="give.html">Give</a></li></ul></div>
+    </div>
+    <div class="foot__bar"><span class="label">&copy; 2026 The Margin &middot; readthemargin.net &middot; <a href="mailto:hello@readthemargin.net">hello@readthemargin.net</a></span><span class="label">&#10038; Say it slow. Say it true.</span><span class="label"><a href="https://app.readthemargin.net/login">Staff Login</a></span></div>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+<script>
+(function () {
+  var APP_URL = 'https://app.readthemargin.net';
+  var freq = 'one_time';
+  var amountCents = 2500;
+
+  var freqBtns = document.querySelectorAll('.givetabs button');
+  var amtBtns = document.querySelectorAll('.giveamounts button');
+  var customInput = document.getElementById('giveCustom');
+  var errEl = document.getElementById('giveErr');
+  var submitBtn = document.getElementById('giveSubmit');
+
+  freqBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      freq = btn.getAttribute('data-freq');
+      freqBtns.forEach(function (b) { b.classList.toggle('is-on', b === btn); });
+    });
+  });
+  amtBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      amountCents = parseInt(btn.getAttribute('data-amt'), 10);
+      amtBtns.forEach(function (b) { b.classList.toggle('is-on', b === btn); });
+      customInput.value = '';
+    });
+  });
+  customInput.addEventListener('input', function () {
+    if (customInput.value) {
+      amtBtns.forEach(function (b) { b.classList.remove('is-on'); });
+    }
+  });
+
+  document.getElementById('giveForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    errEl.textContent = '';
+    var custom = parseFloat(customInput.value);
+    var cents = custom > 0 ? Math.round(custom * 100) : amountCents;
+    var email = document.getElementById('giveEmail').value.trim();
+    var name = document.getElementById('giveName').value.trim();
+
+    if (!cents || cents < 100) { errEl.textContent = 'Enter an amount of at least $1.'; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'Enter a valid email.'; return; }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Redirecting…';
+
+    fetch(APP_URL + '/api/give/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amountCents: cents, frequency: freq, email: email, name: name }),
+    })
+      .then(function (res) { return res.json().then(function (json) { return { ok: res.ok, json: json }; }); })
+      .then(function (r) {
+        if (r.ok && r.json.url) { window.location.href = r.json.url; return; }
+        errEl.textContent = (r.json && r.json.error) || 'Something went wrong — please try again.';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Continue to give →';
+      })
+      .catch(function () {
+        errEl.textContent = 'Something went wrong — please try again.';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Continue to give →';
+      });
+  });
+})();
+</script>
+<!--cms:body-end-->
+</body>
+</html>

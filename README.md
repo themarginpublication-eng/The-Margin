@@ -1,7 +1,8 @@
 # The Margin — Website + Reader App
 
 A Bible-reading companion: short guided readings with historical/cultural context beside the
-text, delivered on a biweekly→weekly rhythm.
+text. Daily margin notes within each series, plus a long-form article at least once a month
+(often more).
 
 This repo has two deployable pieces:
 
