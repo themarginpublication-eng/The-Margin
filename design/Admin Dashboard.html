@@ -1,0 +1,887 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Margin · Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--parchment:#F3EEE3;--vellum:#FAF6EC;--margin:#C9BFAE;--margin-soft:#DBD3C4;--rust:#A8593C;--rust-deep:#8C4730;--gilt:#B68A47;--ash:#6B5F54;--ink:#1A1814;--green:#5B6B4A;--blue:#4A5B6B;--font-display:'Fraunces',Georgia,serif;--font-serif:'Newsreader',Georgia,serif;--font-sans:'Inter',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--parchment);color:var(--ink);font-family:var(--font-sans);font-size:14px;line-height:1.5}
+a{color:var(--rust)}a:hover{color:var(--rust-deep)}
+.app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+/* sidebar */
+.side{background:var(--ink);color:var(--parchment);padding:24px 0;display:flex;flex-direction:column;gap:4px}
+.side__mark{display:flex;align-items:center;gap:10px;padding:0 22px 20px;border-bottom:1px solid rgba(250,246,236,.12);margin-bottom:14px}
+.side__bar{width:4px;height:24px;background:var(--rust)}
+.side__type{font-family:var(--font-display);font-weight:600;font-size:17px}
+.side__tag{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,246,236,.5)}
+.snav{display:flex;flex-direction:column}
+.snav button{appearance:none;background:none;border:none;text-align:left;cursor:pointer;font-family:var(--font-sans);font-weight:500;font-size:13.5px;color:rgba(250,246,236,.72);padding:11px 22px;border-left:3px solid transparent;min-height:44px}
+.snav button:hover{color:var(--parchment)}
+.snav button.on{color:var(--parchment);border-left-color:var(--rust);background:rgba(250,246,236,.06)}
+.snav .sep{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(250,246,236,.38);padding:18px 22px 6px}
+.side__foot{margin-top:auto;padding:18px 22px 0;font-size:11.5px;color:rgba(250,246,236,.45)}
+.side__foot a{color:rgba(250,246,236,.7)}
+/* main */
+.main{padding:32px 40px 64px;max-width:1060px}
+.crumb{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ash);margin:0 0 6px}
+h1{font-family:var(--font-display);font-weight:600;font-size:30px;margin:0 0 6px}
+.sub{color:var(--ash);margin:0 0 28px;font-size:14.5px}
+.panel{display:none}.panel.on{display:block}
+/* cards */
+.grid{display:grid;gap:16px}
+.grid--stats{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.grid--2{grid-template-columns:1fr 1fr}
+.card{background:var(--vellum);border:1px solid var(--margin-soft);padding:20px 22px}
+.card--top{border-top:4px solid var(--rust)}
+.stat__n{font-family:var(--font-display);font-weight:600;font-size:34px;line-height:1}
+.stat__l{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);margin-top:8px}
+.stat__d{font-size:12px;color:var(--green);margin-top:4px}
+.card h3{font-family:var(--font-display);font-weight:600;font-size:17px;margin:0 0 4px}
+.card .hint{font-size:12.5px;color:var(--ash);margin:0 0 14px}
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--margin);border-radius:999px;color:var(--ash);background:var(--vellum)}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ash)}
+.badge--book{color:var(--rust-deep);border-color:rgba(168,89,60,.45)}.badge--book::before{background:var(--rust)}
+.badge--person{color:var(--green);border-color:rgba(91,107,74,.45)}.badge--person::before{background:var(--green)}
+.badge--passage{color:var(--gilt);border-color:rgba(182,138,71,.5)}.badge--passage::before{background:var(--gilt)}
+.badge--idea{color:var(--blue);border-color:rgba(74,91,107,.45)}.badge--idea::before{background:var(--blue)}
+.badge--live{color:var(--green);border-color:rgba(91,107,74,.5)}.badge--live::before{background:var(--green)}
+.badge--draft{color:var(--ash)}.badge--sched{color:var(--gilt);border-color:rgba(182,138,71,.5)}.badge--sched::before{background:var(--gilt)}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--ink);color:var(--parchment);border:none;cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:12.5px;padding:11px 20px;min-height:44px;transition:background .15s}
+.btn:hover{background:var(--rust-deep)}
+.btn--ghost{background:transparent;color:var(--ink);border:1px solid var(--margin)}
+.btn--ghost:hover{background:var(--vellum);color:var(--ink)}
+.btn--sm{min-height:36px;padding:7px 14px;font-size:12px}
+/* rows/tables */
+.row{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--margin-soft)}
+.row:last-child{border-bottom:none}
+.row__main{flex:1;min-width:0}
+.row__t{font-family:var(--font-serif);font-weight:600;font-size:16px}
+.row__s{font-size:12.5px;color:var(--ash);margin-top:2px}
+.row .badge{flex:0 0 auto}
+.drag{cursor:grab;color:var(--margin);font-size:16px;flex:0 0 auto;user-select:none}
+/* form bits (mock) */
+.field{margin-bottom:16px}
+.field label{display:block;font-weight:600;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);margin-bottom:6px}
+.field input,.field textarea,.field select{width:100%;padding:11px 14px;font-family:var(--font-serif);font-size:15px;color:var(--ink);background:#fff;border:1px solid var(--margin)}
+.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid var(--rust);outline-offset:-1px}
+.field textarea{min-height:96px;resize:vertical}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 20px}
+.toolbar input[type="search"]{flex:1 1 220px;padding:10px 14px;font-family:var(--font-serif);font-size:14.5px;border:1px solid var(--margin);background:var(--vellum);min-height:44px}
+.spacer{flex:1}
+.note{font-family:var(--font-serif);font-style:italic;font-size:13.5px;color:var(--ash)}
+.kbd{font-size:11px;border:1px solid var(--margin);border-radius:4px;padding:1px 6px;background:var(--vellum)}
+.qa{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+/* studio */
+.grid--sb{grid-template-columns:1.35fr 1fr}
+.spanel{display:none}.spanel.on{display:block}
+.stabs{margin:0 0 26px;padding-bottom:16px;border-bottom:1px solid var(--margin-soft)}
+.stabs__row{display:flex;flex-wrap:wrap;align-items:center;gap:2px;margin-bottom:12px}
+.stab{appearance:none;background:none;border:none;cursor:pointer;font-family:var(--font-sans);font-weight:500;font-size:12.5px;color:var(--ash);padding:8px 12px;border-bottom:3px solid transparent;display:inline-flex;align-items:center;gap:7px;min-height:36px}
+.stab:hover{color:var(--ink)}
+.stab.on{color:var(--ink);font-weight:600;border-bottom-color:var(--rust)}
+.stab::before{content:"";width:6px;height:6px;border-radius:50%;border:1px solid var(--margin);flex:0 0 auto}
+.stab.ok::before{background:var(--green);border-color:var(--green)}
+.stab-sep{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ash);opacity:.7;padding:0 4px}
+.stprog{display:flex;align-items:center;gap:12px}
+.stprog__t,.stprog__n{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);white-space:nowrap}
+.stprog__track{flex:1;height:3px;background:var(--margin-soft)}
+.stprog__bar{height:3px;background:var(--rust);width:0;transition:width .25s}
+.lab{font-weight:600;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust);margin-bottom:5px}
+.lab.warn{color:var(--gilt)}
+.card p{margin:0;font-family:var(--font-serif);font-size:14.5px;line-height:1.5;color:var(--ink)}
+.muted{color:var(--margin)}
+.field .fh{font-size:12px;color:var(--ash);margin-top:5px;font-family:var(--font-sans)}
+.mv{display:flex;align-items:center;gap:16px;width:100%;text-align:left;background:var(--vellum);border:1px solid var(--margin-soft);border-left:3px solid var(--margin);padding:15px 18px;cursor:pointer;font-family:var(--font-sans);min-height:44px}
+.mv:hover{border-left-color:var(--rust);background:#fff}
+.mv--done{border-left-color:var(--green)}
+.mv__n{font-family:var(--font-display);font-weight:600;font-size:22px;color:var(--margin);flex:0 0 auto}
+.mv--done .mv__n{color:var(--green)}
+.mv__b{flex:1;min-width:0}
+.mv__t{display:block;font-family:var(--font-serif);font-weight:600;font-size:16px;color:var(--ink)}
+.mv__s{display:block;font-size:12.5px;color:var(--ash);margin-top:2px}
+.mv__k{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);flex:0 0 auto}
+.movelist{display:flex;flex-direction:column;gap:8px}
+.qc{background:var(--vellum);border:1px solid var(--margin-soft);border-top:3px solid var(--margin);padding:14px 16px}
+.qc--mean{border-top-color:var(--rust)}.qc--truth{border-top-color:var(--gilt)}.qc--diff{border-top-color:var(--green)}
+.qc__n{font-family:var(--font-display);font-weight:600;font-size:26px;line-height:1}
+.qc__l{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);margin-top:6px}
+.chip{appearance:none;background:var(--vellum);border:1px solid var(--margin);color:var(--ash);font-family:var(--font-sans);font-weight:500;font-size:12px;padding:8px 14px;cursor:pointer;min-height:38px}
+.chip.on{background:var(--ink);border-color:var(--ink);color:var(--parchment)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.ob{display:flex;gap:14px;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--margin-soft);border-left:3px solid transparent;padding-left:12px;margin-left:-12px}
+.ob--mean{border-left-color:var(--rust)}.ob--truth{border-left-color:var(--gilt)}.ob--diff{border-left-color:var(--green)}
+.ob__body{flex:1;min-width:0}
+.ob__t{font-family:var(--font-serif);font-size:15px;line-height:1.45}
+.ob__r{font-size:11.5px;color:var(--ash);margin-top:4px;letter-spacing:.02em}
+.ob__acts{display:flex;gap:6px;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end}
+.qbtn{appearance:none;background:transparent;border:1px solid var(--margin);color:var(--ash);font-family:var(--font-sans);font-weight:600;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:7px 10px;cursor:pointer;min-height:34px}
+.qbtn--mean.on{background:var(--rust);border-color:var(--rust);color:#fff}
+.qbtn--truth.on{background:var(--gilt);border-color:var(--gilt);color:#fff}
+.qbtn--diff.on{background:var(--green);border-color:var(--green);color:#fff}
+.xbtn{appearance:none;background:transparent;border:1px solid var(--margin);color:var(--ash);font-size:16px;line-height:1;width:34px;height:34px;cursor:pointer}
+.xbtn:hover{border-color:var(--rust);color:var(--rust)}
+.gauge{height:4px;background:var(--margin-soft);margin-bottom:8px}
+.gauge__bar{height:4px;background:var(--rust)}
+.gauge__l{font-size:12px;color:var(--ash)}
+.assemble{background:var(--parchment);border:1px solid var(--margin);border-left:3px solid var(--rust);padding:16px 18px;font-family:var(--font-serif);font-size:17px;line-height:1.4;color:var(--ink)}
+.dslot{background:var(--vellum);border:1px solid var(--margin-soft);border-top:3px solid var(--margin);padding:12px 13px}
+.dslot--mean{border-top-color:var(--rust)}.dslot--truth{border-top-color:var(--gilt)}.dslot--diff{border-top-color:var(--green)}
+.dslot__n{font-family:var(--font-display);font-weight:600;font-size:14px}
+.dslot__q{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);margin-top:4px}
+.slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;margin-top:12px}
+.dcard{background:var(--vellum);border:1px solid var(--margin-soft);border-top:3px solid var(--margin);padding:14px 15px}
+.dcard--mean{border-top-color:var(--rust)}.dcard--truth{border-top-color:var(--gilt)}.dcard--diff{border-top-color:var(--green)}
+.dcard__hd{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:9px}
+.dcard__n{font-family:var(--font-display);font-weight:600;font-size:16px}
+.dcard select{width:100%;padding:9px 11px;font-family:var(--font-serif);font-size:13.5px;border:1px solid var(--margin);background:#fff;min-height:40px}
+.dcard__ref{font-size:11.5px;color:var(--ash);margin-top:7px}
+.dcard__warn{font-size:11.5px;color:var(--rust-deep);margin-top:7px}
+.qtag{font-weight:600;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash)}
+.qtag--mean{color:var(--rust)}.qtag--truth{color:var(--gilt)}.qtag--diff{color:var(--green)}
+.pool{background:var(--vellum);border:1px solid var(--margin-soft);padding:13px 14px}
+.pool__h{display:block;margin-bottom:9px}
+.pool__i{font-family:var(--font-serif);font-size:13px;line-height:1.4;color:var(--ink);padding:7px 0;border-top:1px solid var(--margin-soft)}
+.pool__e{font-size:12px;color:var(--margin);font-style:italic}
+.pv{background:var(--parchment);border:1px solid var(--margin);padding:22px 24px}
+.pv__k{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust);margin-bottom:14px}
+.pv__hook{font-family:var(--font-display);font-weight:600;font-size:21px;line-height:1.2;letter-spacing:-.02em;margin-bottom:12px}
+.pv__book{font-family:var(--font-serif);font-size:15px;line-height:1.5;border-left:2px solid var(--margin);padding-left:13px;margin-bottom:12px;color:var(--ink)}
+.pv__look{font-family:var(--font-serif);font-size:14.5px;line-height:1.5;color:var(--ash);margin-bottom:14px}
+.pv__took{font-family:var(--font-serif);font-size:14.5px;line-height:1.5;border-top:1px solid var(--margin);padding-top:11px}
+.pv__took b{font-family:var(--font-sans);font-weight:600;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust);margin-right:7px}
+.chk{display:flex;gap:13px;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--margin-soft)}
+.chk__bx{width:18px;height:18px;border:1.5px solid var(--margin);flex:0 0 auto;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent}
+.chk--ok .chk__bx{border-color:var(--green);color:var(--green)}
+.chk b{font-family:var(--font-serif);font-size:15px;font-weight:600}
+.chk p{margin:2px 0 0;font-size:12.5px;color:var(--ash);font-family:var(--font-sans)}
+.sbar{height:4px;background:var(--margin-soft);margin:10px 0 4px}
+.sbar__b{height:4px;background:var(--green)}
+.stack{display:flex;flex-direction:column;gap:16px}
+.inline{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.inline .field{flex:1 1 200px;margin-bottom:0}
+.mrow{display:grid;grid-template-columns:34px 1fr auto auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--margin-soft)}
+.mrow__n{font-family:var(--font-display);font-weight:600;font-size:17px;color:var(--margin)}
+.mrow.on .mrow__n{color:var(--rust)}
+.mrow input[type="text"]{width:100%;padding:9px 11px;font-family:var(--font-serif);font-size:14.5px;border:1px solid var(--margin);background:#fff}
+.mrow.off input[type="text"]{color:var(--ash);background:var(--parchment)}
+.ord{display:flex;gap:4px}
+.ord button{appearance:none;background:transparent;border:1px solid var(--margin);color:var(--ash);width:32px;height:32px;cursor:pointer;font-size:12px;line-height:1}
+.ord button:hover{border-color:var(--rust);color:var(--rust)}
+.tgl{appearance:none;background:var(--margin-soft);border:none;width:46px;height:26px;border-radius:13px;position:relative;cursor:pointer;flex:0 0 auto}
+.tgl::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s}
+.tgl.on{background:var(--green)}
+.tgl.on::after{left:23px}
+.fday{display:grid;grid-template-columns:44px 1fr 36px;gap:12px;align-items:start;padding:14px 0;border-bottom:1px solid var(--margin-soft)}
+.fday__n{font-family:var(--font-display);font-weight:600;font-size:18px;color:var(--margin);padding-top:8px}
+.fday input{width:100%;padding:9px 11px;font-family:var(--font-serif);font-size:15px;border:1px solid var(--margin);background:#fff;margin-bottom:8px}
+.fday textarea{width:100%;padding:9px 11px;font-family:var(--font-serif);font-size:14.5px;border:1px solid var(--margin);background:#fff;min-height:70px;resize:vertical}
+@media (max-width:860px){.app{grid-template-columns:1fr}.side{flex-direction:row;flex-wrap:wrap;align-items:center;padding:10px 8px}.side__mark{border:none;padding:6px 14px;margin:0}.snav{flex-direction:row;flex-wrap:wrap}.snav .sep,.side__foot{display:none}.snav button{border-left:none;border-bottom:3px solid transparent}.snav button.on{border-bottom-color:var(--rust)}.main{padding:24px 20px 48px}.grid--2{grid-template-columns:1fr}.grid--sb{grid-template-columns:1fr}.stabs__row{gap:0}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="side__mark"><span class="side__bar"></span><span><span class="side__type">the margin</span><span class="side__tag">Admin</span></span></div>
+    <nav class="snav">
+      <button class="on" data-p="home">Dashboard</button>
+      <span class="sep">Content</span>
+      <button data-p="series">Series</button>
+      <button data-p="notes">Daily notes</button>
+      <button data-p="essays">Essays</button>
+      <span class="sep">Studio</span>
+      <button data-p="studio">Content Studio</button>
+      <span class="sep">Audience</span>
+      <button data-p="subs">Subscribers</button>
+      <button data-p="emails">Emails</button>
+      <span class="sep">Site</span>
+      <button data-p="copy">Site copy</button>
+      <span class="sep">Plan</span>
+      <button data-p="dev">Development</button>
+    </nav>
+    <div class="side__foot">Signed in as hello@<br><a href="https://readthemargin.net">View site &rarr;</a></div>
+  </aside>
+  <main class="main">
+
+    <section class="panel on" data-panel="home" data-screen-label="Admin — Dashboard">
+      <p class="crumb">Overview</p>
+      <h1>Good morning.</h1>
+      <p class="sub">Everything on the site is editable from here — series, daily notes, essays, emails, and the site's own words.</p>
+      <div class="grid grid--stats">
+        <div class="card card--top"><div class="stat__n">128</div><div class="stat__l">Subscribers</div><div class="stat__d">+9 this week</div></div>
+        <div class="card"><div class="stat__n">14</div><div class="stat__l">Notes queued</div><div class="stat__d">next sends 6:00 am</div></div>
+        <div class="card"><div class="stat__n">1</div><div class="stat__l">Essays published</div><div class="stat__d">next due Jul 28</div></div>
+        <div class="card"><div class="stat__n">2</div><div class="stat__l">Series live</div><div class="stat__d">3 planned</div></div>
+      </div>
+      <div class="grid grid--2" style="margin-top:16px;">
+        <div class="card">
+          <h3>Today's sends</h3>
+          <p class="hint">What lands in inboxes next, by series.</p>
+          <div class="row"><span class="badge badge--idea">Idea</span><div class="row__main"><div class="row__t">Day 4 · The trees, again</div><div class="row__s">Hiding &amp; Being Found · 96 readers · 6:00 am</div></div><button class="btn btn--ghost btn--sm">Edit</button></div>
+          <div class="row"><span class="badge badge--passage">Passage</span><div class="row__main"><div class="row__t">Day 12 · Light nobody switched on</div><div class="row__s">John, slowly · 32 readers · 6:00 am</div></div><button class="btn btn--ghost btn--sm">Edit</button></div>
+        </div>
+        <div class="card">
+          <h3>Needs your attention</h3>
+          <p class="hint">Gaps and drafts, so nothing sends empty.</p>
+          <div class="row"><div class="row__main"><div class="row__t">Hiding &amp; Being Found — Day 9 is empty</div><div class="row__s">Sends in 5 days</div></div><button class="btn btn--sm">Write it</button></div>
+          <div class="row"><div class="row__main"><div class="row__t">Essay No. 2 — draft</div><div class="row__s">Due Jul 28 · last edited yesterday</div></div><button class="btn btn--ghost btn--sm">Open</button></div>
+        </div>
+      </div>
+      <div class="qa"><button class="btn" data-go="notes">+ New daily note</button><button class="btn btn--ghost" data-go="essays">+ New essay</button><button class="btn btn--ghost" data-go="series">+ New series</button><button class="btn btn--ghost" data-go="studio">Open the Studio &rarr;</button></div>
+    </section>
+
+    <section class="panel" data-panel="series" data-screen-label="Admin — Series">
+      <p class="crumb">Content</p>
+      <h1>Series</h1>
+      <p class="sub">Add, reorder, or retire a series. Changes flow to the site's series page, the subscribe picker, and the welcome email automatically.</p>
+      <div class="card">
+        <div class="toolbar"><input type="search" placeholder="Search series…" aria-label="Search series"><span class="spacer"></span><button class="btn">+ New series</button></div>
+        <div class="row"><span class="drag">⋮⋮</span><span class="badge badge--idea">Idea</span><div class="row__main"><div class="row__t">Hiding &amp; Being Found</div><div class="row__s">14 of 21 notes written · starts at Genesis 3</div></div><span class="badge badge--live">Live</span><button class="btn btn--ghost btn--sm">Edit</button></div>
+        <div class="row"><span class="drag">⋮⋮</span><span class="badge badge--passage">Passage</span><div class="row__main"><div class="row__t">John, slowly</div><div class="row__s">Ongoing · a few lines a day</div></div><span class="badge badge--live">Live</span><button class="btn btn--ghost btn--sm">Edit</button></div>
+        <div class="row"><span class="drag">⋮⋮</span><span class="badge badge--book">Book</span><div class="row__main"><div class="row__t">Ecclesiastes</div><div class="row__s">0 of 24 notes · opens autumn 2026</div></div><span class="badge badge--sched">Scheduled</span><button class="btn btn--ghost btn--sm">Edit</button></div>
+        <div class="row"><span class="drag">⋮⋮</span><span class="badge badge--book">Book</span><div class="row__main"><div class="row__t">Esther</div><div class="row__s">Planned</div></div><span class="badge badge--draft">Draft</span><button class="btn btn--ghost btn--sm">Edit</button></div>
+        <div class="row"><span class="drag">⋮⋮</span><span class="badge badge--person">Person</span><div class="row__main"><div class="row__t">The Unnamed &amp; Unexpected</div><div class="row__s">Planned</div></div><span class="badge badge--draft">Draft</span><button class="btn btn--ghost btn--sm">Edit</button></div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>Edit series</h3>
+        <p class="hint">What a series holds — everything the reader sees.</p>
+        <div class="grid grid--2">
+          <div class="field"><label>Name</label><input value="Hiding &amp; Being Found"></div>
+          <div class="field"><label>Kind</label><select><option>A single idea</option><option>A whole book</option><option>A single person</option><option>A single passage</option></select></div>
+          <div class="field"><label>One-line subtitle</label><input value="Genesis 3 → Luke 15"></div>
+          <div class="field"><label>Status</label><select><option>Live</option><option>Scheduled</option><option>Draft</option><option>Retired</option></select></div>
+        </div>
+        <div class="field"><label>Description (shows on site + welcome email)</label><textarea>Adam hides. Jacob runs. Peter warms his hands by the wrong fire. And in every story, the question that comes looking. This is the doorway series — start here.</textarea></div>
+        <div class="qa"><button class="btn">Save changes</button><button class="btn btn--ghost">Preview on site</button></div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="notes" data-screen-label="Admin — Daily notes">
+      <p class="crumb">Content</p>
+      <h1>Daily notes</h1>
+      <p class="sub">The day-by-day queue for each series. Drag to reorder days; empty days are flagged before they're due.</p>
+      <div class="card">
+        <div class="toolbar">
+          <select aria-label="Series" style="padding:10px 14px;border:1px solid var(--margin);background:var(--vellum);font-family:var(--font-sans);min-height:44px;"><option>Hiding &amp; Being Found</option><option>John, slowly</option></select>
+          <input type="search" placeholder="Search notes…" aria-label="Search notes"><span class="spacer"></span><button class="btn">+ New note</button>
+        </div>
+        <div class="row"><span class="drag">⋮⋮</span><div class="row__main"><div class="row__t">Day 1 · Where are you?</div><div class="row__s">Genesis 3:8–9 · sent to 96 readers</div></div><span class="badge badge--live">Sent</span><button class="btn btn--ghost btn--sm">Edit</button></div>
+        <div class="row"><span class="drag">⋮⋮</span><div class="row__main"><div class="row__t">Day 4 · The trees, again</div><div class="row__s">Genesis 3:22–24 · sends tomorrow 6:00 am</div></div><span class="badge badge--sched">Queued</span><button class="btn btn--ghost btn--sm">Edit</button></div>
+        <div class="row"><span class="drag">⋮⋮</span><div class="row__main"><div class="row__t">Day 9 · (empty)</div><div class="row__s">Sends in 5 days — needs writing</div></div><span class="badge badge--draft">Empty</span><button class="btn btn--sm">Write it</button></div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>Edit note — Day 4</h3>
+        <p class="hint">Passage, annotations, and the margin note itself. What you write here becomes the email and the web reading view.</p>
+        <div class="grid grid--2">
+          <div class="field"><label>Title</label><input value="The trees, again"></div>
+          <div class="field"><label>Passage reference</label><input value="Genesis 3:22–24"></div>
+        </div>
+        <div class="field"><label>Passage text</label><textarea>…therefore the LORD God sent him out from the garden of Eden…</textarea></div>
+        <div class="field"><label>Margin annotations (anchor phrase → note)</label><textarea>"sent him out" → Being sent out of the garden isn't only punishment. Read the next verse: the way back is guarded, not erased.</textarea></div>
+        <div class="qa"><button class="btn">Save &amp; queue</button><button class="btn btn--ghost">Preview reading view</button><button class="btn btn--ghost">Send test to me</button></div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="essays" data-screen-label="Admin — Essays">
+      <p class="crumb">Content</p>
+      <h1>Essays</h1>
+      <p class="sub">The every-other-week landmarks. Publishing adds an essay to the library page, its series, and the email queue at once.</p>
+      <div class="card">
+        <div class="toolbar"><input type="search" placeholder="Search essays…" aria-label="Search essays"><span class="spacer"></span><button class="btn">+ New essay</button></div>
+        <div class="row"><div class="row__main"><div class="row__t">Where are you?</div><div class="row__s">Genesis 3:8–9 · Hiding &amp; Being Found · topic: Beginnings</div></div><span class="badge badge--live">Published</span><button class="btn btn--ghost btn--sm">Edit</button></div>
+        <div class="row"><div class="row__main"><div class="row__t">Essay No. 2 (untitled)</div><div class="row__s">Due Jul 28</div></div><span class="badge badge--draft">Draft</span><button class="btn btn--ghost btn--sm">Open</button></div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>Essay details</h3>
+        <p class="hint">Title, topic, and summary feed the library's search. Keep the summary one honest sentence.</p>
+        <div class="grid grid--2">
+          <div class="field"><label>Title</label><input value="Where are you?"></div>
+          <div class="field"><label>Passage reference</label><input value="Genesis 3:8–9"></div>
+          <div class="field"><label>Series</label><select><option>Hiding &amp; Being Found</option><option>John, slowly</option><option>— none (standalone) —</option></select></div>
+          <div class="field"><label>Topic</label><select><option>Beginnings</option><option>Doubt &amp; honesty</option><option>Prayer</option><option>People of the Bible</option></select></div>
+        </div>
+        <div class="field"><label>One-line summary</label><input value="The first question in the Bible — and God already knows the answer."></div>
+        <div class="field"><label>Search keywords</label><input value="hiding, shame, presence, first question, Genesis 3"></div>
+        <div class="field"><label>Substack link <span style="font-weight:400;color:var(--ash);">— paste this essay's Substack post URL</span></label><input type="url" placeholder="https://readthemargin.substack.com/p/…" value=""><p class="hint" style="margin-top:6px;">After you cross-post this essay to Substack, paste its unique post URL here. It turns on the &ldquo;Also on Substack&rdquo; link on this one essay. Leave blank if it isn't on Substack yet.</p></div>
+        <div class="qa"><button class="btn">Publish</button><button class="btn btn--ghost">Save draft</button><button class="btn btn--ghost">Preview</button></div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="studio" data-screen-label="Admin — Content Studio">
+      <p class="crumb">Content</p>
+      <h1>Content Studio</h1>
+      <p class="sub">Take a seed — a passage, a person, a book, an idea, a word — through a six-move method into a finished, publishable series. The method is a default: turn moves off, rename them, or leave it behind in Free mode. Nothing here publishes; a finished series hands off to Series and Daily notes.</p>
+
+      <div class="stabs" id="stTabs">
+        <div class="stabs__row">
+          <button class="stab on" data-sp="home">Workspace</button>
+          <span class="stab-sep" id="stSep">The method</span>
+          <span id="stMoves"></span>
+          <span class="stab-sep">Setup</span>
+          <button class="stab" data-sp="checks" id="stNavChecks">Readiness</button>
+          <button class="stab" data-sp="method">Method settings</button>
+        </div>
+        <div class="stprog"><span class="stprog__t">Series progress</span><span class="stprog__n" id="stProgress">0 / 6</span><div class="stprog__track"><div class="stprog__bar" id="stBar"></div></div></div>
+      </div>
+
+      <section class="spanel on" id="p-home">
+        <p class="crumb">Workspace</p>
+        <h1 id="homeTitle">Untitled series</h1>
+        <p class="sub" id="homeSeed">—</p>
+        <div class="grid grid--sb">
+          <div class="movelist" id="homeMoves"></div>
+          <div class="stack">
+            <div class="card card--top"><div class="lab">Exegetical idea</div><p id="homeIdea">—</p><div class="lab" style="margin-top:14px">Reader can, by the last day</div><p id="homeCap">—</p></div>
+            <div class="card"><h3>Observation pool</h3><p class="hint">Sorted by Robinson's three developmental questions.</p><div class="grid" style="grid-template-columns:1fr 1fr" id="homeCounts"></div></div>
+            <div class="card" id="homeMode"></div>
+            <button class="btn btn--ghost" id="resetBtn">Reset to the worked example</button>
+            <p class="note" style="margin-top:2px">Method: <a href="design_handoff_studio/Study%20System.html">Study System</a> · Frames: <a href="The%20Margin%20-%20Social%20Template%20Library.html">Template library</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="spanel" id="p-free">
+        <p class="crumb">Free mode</p>
+        <h1>Your own way.</h1>
+        <p class="sub">No moves, no gates, no question types. A title, a place to think, and as many days as you want. Nothing here is validated and nothing is required — switch back to the guided method any time from Method settings, and this draft stays where it is.</p>
+        <div class="grid grid--sb">
+          <div class="card">
+            <div class="field"><label for="fTitle">Series title</label><input id="fTitle" type="text" placeholder="Untitled"></div>
+            <div class="field"><label for="fNotes">Working notes</label><textarea id="fNotes" style="min-height:180px" placeholder="Whatever you need here."></textarea></div>
+            <h3 style="font-family:var(--font-display);font-weight:600;font-size:18px;margin:22px 0 4px">Days</h3>
+            <p class="hint">Add as many as the material wants.</p>
+            <div id="fDays"></div>
+            <button class="btn btn--ghost" id="fAdd" style="margin-top:12px">Add a day</button>
+          </div>
+          <div class="card card--top"><h3>Why this exists</h3><p class="hint">A method you cannot leave is a cage.</p><p>Some series arrive whole and the six moves would only slow you down. Free mode keeps the workspace, the frames and the export, and drops everything else. Your guided series is untouched underneath.</p></div>
+        </div>
+      </section>
+
+      <section class="spanel" id="p-method">
+        <p class="crumb">Setup</p>
+        <h1>Method settings.</h1>
+        <p class="sub">The six moves are a default, not a rule. Turn off what you don't use, rename anything to your own language, reorder them, or leave the method behind entirely.</p>
+        <div class="grid grid--sb">
+          <div class="card">
+            <div class="lab">Mode</div>
+            <div class="chips" id="mMode" style="margin-bottom:20px"><button class="chip" data-mode="guided">Guided — the six moves</button><button class="chip" data-mode="free">Free — do it myself</button></div>
+            <div id="mMoves"></div>
+            <div class="chips" style="margin-top:18px"><button class="chip" id="mAllOn">Turn all on</button><button class="chip" id="mRestore">Restore default names and order</button></div>
+          </div>
+          <div class="stack">
+            <div class="card card--top"><h3>What turning a move off does</h3><p class="hint">Nothing is deleted.</p><p>The move disappears from the tab bar, stops counting toward progress, and its readiness checks stop firing. Anything you already wrote in it stays in the workspace and comes back if you turn it on again.</p></div>
+            <div class="card"><h3>Dependencies</h3><p class="hint">Two moves feed others.</p><p>Move 02 supplies the observations move 05 deals out, and move 04 sets the day count moves 05 and 06 use. Turn either off and the downstream move falls back to free entry rather than breaking.</p></div>
+            <div class="card"><h3>Readiness</h3><p class="hint">Optional too.</p><div class="chips" id="mChecks"><button class="chip" data-checks="on">Show readiness checks</button><button class="chip" data-checks="off">Hide them</button></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="spanel" id="p-unit">
+        <p class="crumb">Move 01</p>
+        <h1>Cut the unit before you study it.</h1>
+        <p class="sub">Fix the boundaries first. Six markers signal a break; where translations disagree, you have found a seam worth a post. For a person, an idea or a word, the cut comes from the seed's own logic instead.</p>
+        <div class="grid grid--sb">
+          <div class="card">
+            <div class="inline" style="margin-bottom:16px">
+              <div class="field"><label for="uTitle">Series title</label><input id="uTitle" type="text"></div>
+              <div class="field"><label for="uType">Seed type</label><select id="uType"><option value="passage">Passage</option><option value="person">Person</option><option value="book">Book of the Bible</option><option value="read">A book you read</option><option value="idea">Idea or theme</option><option value="word">A word</option></select></div>
+            </div>
+            <div class="field"><label for="uSeed">The seed</label><input id="uSeed" type="text" placeholder="Ruth"></div>
+            <div class="inline" style="margin-bottom:16px">
+              <div class="field"><label for="uStart">Starts at</label><input id="uStart" type="text" placeholder="Ruth 1:1"></div>
+              <div class="field"><label for="uEnd">Ends at</label><input id="uEnd" type="text" placeholder="Ruth 4:22"></div>
+            </div>
+            <div class="field"><label>Which markers justify the cut</label><div class="chips" id="uMarkers"><button class="chip" data-m="speaker">Change of speaker</button><button class="chip" data-m="place">Change of place</button><button class="chip" data-m="time">Change of time</button><button class="chip" data-m="audience">Change of audience</button><button class="chip" data-m="genre">Change of genre</button><button class="chip" data-m="inclusio">Inclusio</button></div></div>
+            <div class="field"><label for="uSeam">Where others cut it differently</label><textarea id="uSeam" placeholder="Compare three translations' paragraph breaks. Disagreement marks a real seam — and usually a post."></textarea><div class="fh">There is no unified standard for pericope division, so this field is evidence, not pedantry.</div></div>
+          </div>
+          <div class="card card--top" id="uLogic"></div>
+        </div>
+      </section>
+
+      <section class="spanel" id="p-obs">
+        <p class="crumb">Move 02</p>
+        <h1>Observe until you have too much.</h1>
+        <p class="sub">Only what is there — repetitions, odd words, who speaks and who does not, what is absent, what the narrator knows that no character could. Tag each one with the question it answers; that tag is what deals it onto a day later.</p>
+        <div class="grid grid--sb">
+          <div class="card">
+            <div class="field"><label for="obText">What is there</label><textarea id="obText" placeholder="Naomi renames herself Mara, and no one in the book ever uses the new name."></textarea></div>
+            <div class="inline">
+              <div class="field"><label for="obRef">Reference</label><input id="obRef" type="text" placeholder="Ruth 1:20"></div>
+              <button class="btn" id="obAdd">Capture</button>
+            </div>
+            <div style="margin-top:22px" id="obGauge"></div>
+            <div style="margin-top:14px" id="obList"></div>
+          </div>
+          <div class="card card--top">
+            <h3>Tagging rules</h3>
+            <p class="hint">Every observation answers exactly one question. Untagged observations cannot be dealt onto a day.</p>
+            <div class="lab">Meaning</div><p>Shows the reader something they walked past, then makes it legible — a word, a structure, a piece of background law.</p>
+            <div class="lab" style="margin-top:14px">Truth</div><p>Tests the claim. Where else does Scripture do this? What is the strongest objection?</p>
+            <div class="lab" style="margin-top:14px">Difference</div><p>Names what changes — first in the text, then for the reader. Concrete, never "trust God more."</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="spanel" id="p-idea">
+        <p class="crumb">Move 03</p>
+        <h1>State the idea as one sentence.</h1>
+        <p class="sub">Subject plus complement: what are you talking about, and what are you saying about it? If the sentence will not come, you have not studied enough — that is a diagnostic, not a writing problem. Then write it again for your reader.</p>
+        <div class="grid grid--sb">
+          <div class="card">
+            <div class="field"><label for="iSubject">Subject — what am I talking about</label><input id="iSubject" type="text" placeholder="How the writer of Ruth frames the story"></div>
+            <div class="field"><label for="iComplement">Complement — what am I saying about it</label><textarea id="iComplement" placeholder="by having a character state the plot in one word at the start and the town answer it at the end"></textarea></div>
+            <div class="lab">Exegetical idea — what the text says</div>
+            <div class="assemble" id="iExeg"></div>
+            <div class="field" style="margin-top:18px"><label for="iHom">Homiletical idea — the same thing, for your reader</label><textarea id="iHom" placeholder="Read the last five verses of a narrative book first. They tell you what it was for."></textarea><div class="fh" id="iCount"></div></div>
+          </div>
+          <div class="card card--top">
+            <h3>These are not the same sentence</h3>
+            <p class="hint">And they are not supposed to be.</p>
+            <p>The exegetical idea is accountable to the text. The homiletical idea is accountable to the person reading it on a phone at 7am. Robinson's whole point is that the road between them is real work, and that the second one is your series title.</p>
+            <div class="lab" style="margin-top:16px">The cap</div><p>Sixteen words. A message should be a bullet, not buckshot.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="spanel" id="p-end">
+        <p class="crumb">Move 04</p>
+        <h1>Write the last day first.</h1>
+        <p class="sub">What can the reader do on their own afterwards that they could not do before? Name a capability, not a feeling. The day count is then whatever it takes to get there — and the question-type plan falls out automatically.</p>
+        <div class="grid grid--sb">
+          <div class="card">
+            <div class="field"><label for="eCap">By the last day, the reader can…</label><textarea id="eCap" placeholder="Read a narrative book's ending before its beginning, and name the frame."></textarea><div class="fh">A verb they perform on a text you never covered. "Appreciate Ruth" is not a capability.</div></div>
+            <div class="field"><label for="eDays">Series length</label><select id="eDays"><option value="3">3 days</option><option value="5">5 days</option><option value="7">7 days</option><option value="10">10 days</option><option value="14">14 days</option></select></div>
+            <div class="lab">Derived plan</div>
+            <div class="slots" id="ePlan"></div>
+            <p class="note" style="margin-top:10px" id="ePlanNote"></p>
+          </div>
+          <div class="card card--top">
+            <h3>Why the order is fixed</h3>
+            <p class="hint">Backward design, applied to a reader rather than a student.</p>
+            <p>Meaning days carry the research and go first. Truth days test the claim and sit in the middle. Difference days name what changes and close. Longer series do not add new kinds of day — they hold one kind open longer.</p>
+            <div class="lab" style="margin-top:16px">Ten and fourteen</div><p>Ten runs the whole sequence twice over two halves of one seed. Fourteen runs it twice over two seeds that share one skill.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="spanel" id="p-days">
+        <p class="crumb">Move 05</p>
+        <h1>Deal the days by question type.</h1>
+        <p class="sub">Each day takes exactly one observation, and only observations tagged with that day's question can fill it. This is the answer to "what goes on day three" — day three is whichever truth-tagged observation is strongest.</p>
+        <div class="grid grid--2" id="dBoard" style="margin-bottom:22px"></div>
+        <h3 style="font-family:var(--font-display);font-weight:600;font-size:18px;margin:0 0 4px">What is left over</h3>
+        <p class="sub" style="margin-bottom:14px">Spare observations are not waste. They are the next series, or the objection day when this one runs to seven.</p>
+        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))" id="dPool"></div>
+      </section>
+
+      <section class="spanel" id="p-compose">
+        <p class="crumb">Move 06</p>
+        <h1>Shape each day in four moves.</h1>
+        <p class="sub">Hook, Book, Look, Took — the four-move lesson shape, which is also a four-slide carousel. The observation the day carries is fixed; these four fields turn it into something publishable.</p>
+        <div class="grid grid--sb">
+          <div class="card">
+            <div class="inline" style="margin-bottom:18px">
+              <div class="field"><label for="cDay">Day</label><select id="cDay"></select></div>
+              <div class="field"><label for="cFrame">Frame</label><select id="cFrame"></select></div>
+            </div>
+            <div style="background:var(--parchment);border:1px solid var(--margin);border-left:3px solid var(--rust);padding:14px 16px;margin-bottom:18px" id="cObs"></div>
+            <div class="field"><label for="c_hook">Hook — the detail that should not be there</label><textarea id="c_hook" data-f="hook"></textarea></div>
+            <div class="field"><label for="c_book">Book — the text, quoted</label><textarea id="c_book" data-f="book"></textarea></div>
+            <div class="field"><label for="c_look">Look — what follows from it</label><textarea id="c_look" data-f="look"></textarea></div>
+            <div class="field"><label for="c_took">Took — what the reader does today</label><textarea id="c_took" data-f="took"></textarea><div class="fh">One instruction. Never "share this."</div></div>
+          </div>
+          <div class="stack">
+            <div class="card card--top"><h3>Preview</h3><p class="hint" id="cState"></p><div id="cPreview"></div></div>
+            <div class="card"><h3>Why four</h3><p class="hint">Larry Richards, Creative Bible Teaching.</p><p>The four moves take a reader from head knowledge, through the implications, to something practised. A day missing Took is information. A day missing Hook is a lecture.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="spanel" id="p-checks">
+        <p class="crumb">Before publishing</p>
+        <h1>Readiness.</h1>
+        <p class="sub">Computed from the workspace, not self-reported. Two of these come straight out of the literature's known failure modes.</p>
+        <div class="grid grid--sb">
+          <div class="card"><div id="chList"></div></div>
+          <div class="card card--top"><h3>Score</h3><p class="hint" id="chScore">—</p><div class="sbar"><div class="sbar__b" id="chBar"></div></div><p class="note" style="margin-top:16px">A failing check is not a blocker. It is a note about which move you left early.</p></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="panel" data-panel="subs" data-screen-label="Admin — Subscribers">
+      <p class="crumb">Audience</p>
+      <h1>Subscribers</h1>
+      <p class="sub">Who's reading, which series they picked, and where they came from.</p>
+      <div class="grid grid--stats">
+        <div class="card card--top"><div class="stat__n">128</div><div class="stat__l">Total</div><div class="stat__d">+9 this week</div></div>
+        <div class="card"><div class="stat__n">96</div><div class="stat__l">Hiding &amp; Being Found</div></div>
+        <div class="card"><div class="stat__n">32</div><div class="stat__l">John, slowly</div></div>
+        <div class="card"><div class="stat__n">11</div><div class="stat__l">Undecided</div><div class="stat__d">got the options email</div></div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <div class="toolbar"><input type="search" placeholder="Search by email…" aria-label="Search subscribers"><span class="spacer"></span><button class="btn btn--ghost">Export CSV</button></div>
+        <div class="row"><div class="row__main"><div class="row__t">reader@example.com</div><div class="row__s">Joined Jul 12 · launch popup</div></div><span class="badge badge--idea">Hiding &amp; B.F.</span><button class="btn btn--ghost btn--sm">Manage</button></div>
+        <div class="row"><div class="row__main"><div class="row__t">another@example.com</div><div class="row__s">Joined Jul 14 · subscribe page</div></div><span class="badge">Undecided</span><button class="btn btn--ghost btn--sm">Manage</button></div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="emails" data-screen-label="Admin — Emails">
+      <p class="crumb">Audience</p>
+      <h1>Emails</h1>
+      <p class="sub">The automatic emails readers receive. Edit the words here; the design stays on-brand by itself.</p>
+      <div class="card">
+        <div class="row"><div class="row__main"><div class="row__t">Welcome — picked a series</div><div class="row__s">Sends Day 1 immediately after signup</div></div><span class="badge badge--live">On</span><button class="btn btn--ghost btn--sm">Edit</button></div>
+        <div class="row"><div class="row__main"><div class="row__t">Welcome — deciding later</div><div class="row__s">Thank-you, what we believe, all series options</div></div><span class="badge badge--live">On</span><button class="btn btn--ghost btn--sm">Edit</button></div>
+        <div class="row"><div class="row__main"><div class="row__t">Daily note</div><div class="row__s">Template wrapping each day's note · 6:00 am reader time</div></div><span class="badge badge--live">On</span><button class="btn btn--ghost btn--sm">Edit</button></div>
+        <div class="row"><div class="row__main"><div class="row__t">Essay</div><div class="row__s">Template for the every-other-week essay</div></div><span class="badge badge--live">On</span><button class="btn btn--ghost btn--sm">Edit</button></div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>Edit — Welcome (deciding later)</h3>
+        <p class="hint">Plain words in, branded email out. Series list fills in automatically from the Series page.</p>
+        <div class="field"><label>Subject line</label><input value="Welcome to The Margin — pick your first series"></div>
+        <div class="field"><label>Opening (thank you)</label><textarea>Thank you for subscribing. No rush — here's everything you can start with, whenever you're ready.</textarea></div>
+        <div class="field"><label>What we believe</label><textarea>The Margin exists because we believe the Bible can be read — actually read, by you — without a gatekeeper. Slowly, honestly, a few lines at a time.</textarea></div>
+        <div class="field"><label>What it can do for you</label><textarea>A few minutes a day builds a habit no willpower could. In a month you'll notice things in the text you used to read past.</textarea></div>
+        <div class="qa"><button class="btn">Save</button><button class="btn btn--ghost">Send test to me</button></div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="copy" data-screen-label="Admin — Site copy">
+      <p class="crumb">Site</p>
+      <h1>Site copy</h1>
+      <p class="sub">The site's own words — headlines, the about page, the FAQ — editable without touching code.</p>
+      <div class="card">
+        <div class="row"><div class="row__main"><div class="row__t">Homepage</div><div class="row__s">Hero headline, deck, the three promise cards, sample note</div></div><button class="btn btn--ghost btn--sm">Edit</button></div>
+        <div class="row"><div class="row__main"><div class="row__t">About — Who's walking with you</div><div class="row__s">Your bio paragraph and margin note</div></div><button class="btn btn--ghost btn--sm">Edit</button></div>
+        <div class="row"><div class="row__main"><div class="row__t">Subscribe — What you'll get + FAQ</div><div class="row__s">Cadence copy, FAQ answers</div></div><button class="btn btn--ghost btn--sm">Edit</button></div>
+        <div class="row"><div class="row__main"><div class="row__t">Launch popup</div><div class="row__s">"Still in development" message</div></div><button class="btn btn--ghost btn--sm">Edit</button></div>
+        <div class="row"><div class="row__main"><div class="row__t">Essay topics</div><div class="row__s">The filter chips on the essays page</div></div><button class="btn btn--ghost btn--sm">Edit</button></div>
+      </div>
+      <p class="note" style="margin-top:16px;">Every edit shows a preview before it goes live. <span class="kbd">Save</span> publishes to readthemargin.net within a minute.</p>
+    </section>
+
+    <section class="panel" data-panel="dev" data-screen-label="Admin — Development">
+      <p class="crumb">Plan</p>
+      <h1>Development</h1>
+      <p class="sub">The launch plan, mirrored from Notion (the margin &middot; hq &rarr; Launch Plan). Notion's Command Center stays the source of truth &mdash; this is the at-a-glance copy. Synced Jul 22, 2026 &mdash; Phase 5 rewritten as 9 numbered build-order steps matching BACKEND-REQUIREMENTS.md. Essays are hosted on the website; Substack is a repost channel, not the home.</p>
+      <div class="grid grid--stats">
+        <div class="card card--top"><div class="stat__n">Aug 24</div><div class="stat__l">Soft launch</div><div class="stat__d">founding circle, 20&ndash;30 personal invites</div></div>
+        <div class="card"><div class="stat__n">Sep 14</div><div class="stat__l">Public launch</div><div class="stat__d">all 5 channels</div></div>
+        <div class="card"><div class="stat__n">Jul 18</div><div class="stat__l">Series lock</div><div class="stat__d">candidates still open &mdash; name its 6&ndash;8 skills first</div></div>
+        <div class="card"><div class="stat__n">Oct 11&ndash;25</div><div class="stat__l">Protected</div><div class="stat__d">wedding &mdash; nothing due, coast on the bank</div></div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>Phase 1 · Content</h3>
+        <p class="hint">The 30 mornings in four movements: Read it cold &rarr; The world behind it &rarr; What scholars see &rarr; Make it yours. (Series not locked yet &mdash; the movements apply to whichever passage you choose.)</p>
+        <div class="row"><div class="row__main"><div class="row__t">Lock the launch series + passage</div><div class="row__s">Jul 18 · P1 · test: can you name the 6&ndash;8 skills it teaches?</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Build the content pipeline</div><div class="row__s">Jul 20 · P1 · HQ databases: study &rarr; ideas &rarr; drafting &rarr; calendar &rarr; archive</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Movement 1 &mdash; Read it cold (mornings 1&ndash;7)</div><div class="row__s">Jul 27 · P1 · observe: see before explaining</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Movement 2 &mdash; The world behind it (8&ndash;14)</div><div class="row__s">Aug 3 · P1 · one piece of context per morning</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Movement 3 &mdash; What scholars see (15&ndash;21)</div><div class="row__s">Aug 10 · P1 · exit skill: open a cross-reference alone</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Define cadence after series 1</div><div class="row__s">Aug 13 · P2 · promise the floor, deliver the ceiling</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Welcome email + first week's sequence</div><div class="row__s">Aug 14 · P1 · one ask per email</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Movement 4 &mdash; Make it yours (22&ndash;30)</div><div class="row__s">Aug 17 · P1 · completes the bank; October coasts</div></div><span class="badge badge--draft">Not started</span></div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>Phase 2 · Website</h3>
+        <div class="row"><div class="row__main"><div class="row__t">Domain + DNS + hosting</div><div class="row__s">Jul 21 · P1 · readthemargin.net live with HTTPS, hello@ forwarding</div></div><span class="badge badge--live">Done</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Final copy pass on all pages</div><div class="row__s">Jul 24 · P2 · read aloud: slow not boring, one ask per page</div></div><span class="badge badge--sched">In progress</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Development pass &mdash; prototype &rarr; production</div><div class="row__s">Jul 28 · P1 · favicon, OG images, 404, no placeholders</div></div><span class="badge badge--sched">In progress</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Wire the real subscribe form</div><div class="row__s">Jul 30 · P1 · one list, no split-brain; test the full loop</div></div><span class="badge badge--sched">In progress</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Mobile QA on real devices</div><div class="row__s">Jul 31 · P2 · the reader is on a phone at 6:45am</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Module page (series syllabus view)</div><div class="row__s">Aug 5 · P1 · skills ladder + 30 mornings grouped by movement</div></div><span class="badge badge--draft">Not started</span></div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>Phase 3 · Giving</h3>
+        <div class="row"><div class="row__main"><div class="row__t">Choose + open a giving platform</div><div class="row__s">Jul 23 · P1 · Stripe / Donorbox / Givebutter &mdash; decide in one sitting</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Bank / tax / entity details</div><div class="row__s">Jul 31 · P1 · start simplest; don't let paperwork block launch</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">One-time + recurring giving</div><div class="row__s">Aug 7 · P2 · $5/$15/$25, invitation not urgency</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Giving links across the site</div><div class="row__s">Aug 14 · P2 · present everywhere, loud nowhere</div></div><span class="badge badge--draft">Not started</span></div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>Phase 4 · Launch &amp; grow</h3>
+        <div class="row"><div class="row__main"><div class="row__t">Alpha test &mdash; end-to-end walkthrough</div><div class="row__s">Aug 12 · P1 · signup &rarr; welcome &rarr; morning 1 &rarr; $1 donation &rarr; unsubscribe</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Basic analytics</div><div class="row__s">Aug 21 · P2 · three questions only; no dashboards</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Soft launch to founding circle</div><div class="row__s">Aug 24 · P1 · personal texts, no broadcast; reply to everything</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Incorporate soft-launch feedback</div><div class="row__s">Sep 4 · P1 · fix now / fix in rhythm / note for later</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Public launch announcement</div><div class="row__s">Sep 14 · P1 · all 5 channels &rarr; Start Here; launch week pre-scheduled</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Plan series #2 + pre-schedule October</div><div class="row__s">Sep 28 · P3 · the bank carries the wedding fortnight</div></div><span class="badge badge--draft">Not started</span></div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>Phase 5 · Backend &amp; app (post-validation)</h3>
+        <p class="hint">Only if the data says accounts are worth it. Threshold: 150+ subscribers and a rhythm that feels easy. Everything below is spec'd in <strong>merge_for_claude_code &rarr; BACKEND-REQUIREMENTS.md</strong>. The gates come first (Nov 2, Jan 4); steps &#9312;&ndash;&#9320; are the build order &mdash; <strong>one at a time, each depends on the one before</strong>.</p>
+        <div class="row"><div class="row__main"><div class="row__t">Backend checkpoint &mdash; review the data, decide go / no-go</div><div class="row__s">Nov 2 · P1 · gates everything below · 150+ subs &amp; an easy rhythm = GO</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">Backend go-decision + hand the spec to the developer</div><div class="row__s">Jan 4 · P1 · confirm Cloudflare Workers + D1; hand off merge_for_claude_code</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">&#9312; Data model + migrations &mdash; stand up all the tables</div><div class="row__s">Jan 11 · P1 · series, days, essays, subscribers, enrollments, templates, copy, events</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">&#9313; Subscribe API + series picker + enrollment</div><div class="row__s">Jan 18 · P1 · a real signup lands in the DB with the right enrollment</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">&#9314; Delivery engine &mdash; the daily drip + welcome/Day-1</div><div class="row__s">Jan 25 · P1 · the heart of it · Day 1 now, Day 2 tomorrow at 6am, automatically</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">&#9315; Series access gate on the read route</div><div class="row__s">Feb 1 · P1 · open vs gated; free days, then the subscribe gate</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">&#9316; Admin CRUD &mdash; make this dashboard edit the DB</div><div class="row__s">Feb 8 · P2 · series, daily notes, essays, subscribers, emails, copy</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">&#9317; Reader auth + app parity (one login, both skins)</div><div class="row__s">Feb 15 · P2 · magic-link on email; site &amp; app share progress</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">&#9318; Essay publish + substack_url + library</div><div class="row__s">Feb 22 · P2 · library search/chips; the &ldquo;Also on Substack&rdquo; link</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">&#9319; Subscriber import from Substack (CSV &rarr; Make.com)</div><div class="row__s">Mar 1 · P2 · one-way, dedupe by email; CSV first, automation later</div></div><span class="badge badge--draft">Not started</span></div>
+        <div class="row"><div class="row__main"><div class="row__t">&#9320; Analytics + deliverability + backups &rarr; redeploy</div><div class="row__s">Mar 8 · P2 · real stats, SPF/DKIM/DMARC, D1 backups, then ship</div></div><span class="badge badge--draft">Not started</span></div>
+      </div>
+      <p class="note" style="margin-top:16px;">Protected: Oct 11&ndash;25 (wedding) and every Wednesday (youth ministry &mdash; pre-scheduled posts only). 90-day targets: 100 founding subscribers &middot; 8+ published notes &middot; 3 consistent channels. <em>Don't launch loud. Launch sustainable.</em></p>
+    </section>
+
+  </main>
+</div>
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.snav button'));
+  var panels=[].slice.call(document.querySelectorAll('.panel'));
+  function go(p){
+    btns.forEach(function(b){b.classList.toggle('on',b.dataset.p===p);});
+    panels.forEach(function(x){x.classList.toggle('on',x.dataset.panel===p);});
+    try{localStorage.setItem('tm-admin-tab',p);}catch(e){}
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){go(b.dataset.p);});});
+  document.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){go(b.dataset.go);});});
+  var saved=null;try{saved=localStorage.getItem('tm-admin-tab');}catch(e){}
+  if(saved&&document.querySelector('[data-panel="'+saved+'"]')) go(saved);
+})();
+</script>
+<script>
+(function(){
+const QT={mean:{k:'mean',label:'What does this mean?',short:'Meaning',cls:'mean'},true:{k:'true',label:'Is it true?',short:'Truth',cls:'truth'},diff:{k:'diff',label:'What difference does it make?',short:'Difference',cls:'diff'}};
+const PLANS={3:['mean','true','diff'],5:['mean','mean','true','diff','diff'],7:['mean','mean','mean','true','true','diff','diff'],10:['mean','mean','true','diff','diff','mean','mean','true','diff','diff'],14:['mean','mean','mean','true','true','diff','diff','mean','mean','mean','true','true','diff','diff']};
+const SEEDS={passage:{label:'Passage',cut:'Its movements — a change of speaker, place, time, audience or genre, or a repeated phrase closing what it opened.',day:'One movement, read closely.',trap:'Cutting at chapter numbers, which are medieval, not authorial.'},person:{label:'Person',cut:'Their turns — decisions that cannot be undone. Gather every reference first, including ones that do not use their name.',day:'One decision and its cost.',trap:'Writing a biography. Selection is the work.'},book:{label:'Book of the Bible',cut:'Its own structure. Find the shape before imposing one.',day:'One structural part.',trap:'Letting a survey hand you the frame before you have read the book yourself.'},read:{label:'A book you read',cut:'Its claims, stripped of the author’s examples.',day:'One claim, tested against a text the author never cites.',trap:'Reviewing the book instead of using it.'},idea:{label:'Idea or theme',cut:'Its occurrences — four to six, ordered by canon, not by strength.',day:'One occurrence, in its own context.',trap:'Deductive drift: starting from the topic and hunting verses that prove it.'},word:{label:'A word',cut:'Its range: first use, hardest use, surprising use, last use.',day:'One use, and what it rules out.',trap:'Word-study fallacies — the root fallacy and the expanded semantic field.'}};
+const FRAMES=['Pull-quote','Two-column rule card','Echo bracket','Before / after proportion','Timeline','Proportion blocks','Skill card','Matrix','Anatomy','Route schematic'];
+const DEFAULT_MOVES=[{k:'unit',t:'Cut the unit',on:true},{k:'obs',t:'Observe',on:true},{k:'idea',t:'The idea',on:true},{k:'end',t:'The last day',on:true},{k:'days',t:'Deal the days',on:true},{k:'compose',t:'Shape the day',on:true}];
+
+const SEED_STATE={title:'Empty and Full',seedType:'book',seed:'Ruth',
+mode:'guided',moves:JSON.parse(JSON.stringify(DEFAULT_MOVES)),showChecks:true,
+free:{title:'',notes:'',days:[{t:'',b:''}]},
+unit:{start:'Ruth 1:1',end:'Ruth 4:22',markers:['genre','time','inclusio'],seam:'ESV and NIV break at 2:1; the Hebrew paragraph marker falls after 1:22. The seam is the arrival in Bethlehem.'},subject:'How the writer of Ruth frames the story',complement:'by having a character state the plot in one word at the start and the town answer it at the end',homiletical:'Read the last five verses of a narrative book first. They tell you what it was for.',capability:'Read a narrative book’s ending before its beginning, and name the frame.',dayCount:5,
+obs:[{id:1,text:'Chapter 1 empties the family in five verses, then lets Naomi summarise the plot out loud.',ref:'Ruth 1:1–5, 1:21',qt:'mean'},{id:2,text:'Boaz’s field is not charity. Gleaning is a law being kept by someone who did not have to.',ref:'Lev 19:9–10; Deut 24:19',qt:'mean'},{id:3,text:'Boaz blesses Ruth for taking refuge under YHWH’s wings; Ruth then asks Boaz to spread his wing over her. Same word.',ref:'Ruth 2:12 / 3:9',qt:'true'},{id:4,text:'The nearer redeemer says no, and the legal machinery at the gate produces the outcome.',ref:'Ruth 4:1–6',qt:'diff'},{id:5,text:'The town answers 1:21 directly — more to you than seven sons.',ref:'Ruth 4:15',qt:'diff'},{id:6,text:'The book ends in a genealogy that arrives at David.',ref:'Ruth 4:18–22',qt:null},{id:7,text:'Naomi renames herself Mara, and no one in the book ever uses the new name.',ref:'Ruth 1:20',qt:null}],
+days:[{obs:1,hook:'A family is emptied in five verses. Then someone says the word out loud.',book:'"I went away full, and the LORD has brought me back empty." (Ruth 1:21)',look:'The narrator lets a character summarise his own plot. That is a frame being set, not a complaint being recorded.',took:'Read 1:1–5 and count how many deaths get a sentence each.',frame:'Pull-quote'},{obs:2,hook:'',book:'',look:'',took:'',frame:'Two-column rule card'},{obs:3,hook:'',book:'',look:'',took:'',frame:'Echo bracket'},{obs:4,hook:'',book:'',look:'',took:'',frame:'Timeline'},{obs:5,hook:'',book:'',look:'',took:'',frame:'Before / after proportion'}]};
+
+const KEY='margin.studio.v2';
+let S=load();
+function load(){try{const r=localStorage.getItem(KEY);if(r){const p=JSON.parse(r);const d=JSON.parse(JSON.stringify(SEED_STATE));return Object.assign(d,p,{moves:p.moves||d.moves,free:p.free||d.free});}}catch(e){}return JSON.parse(JSON.stringify(SEED_STATE));}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function $(s,r){return (r||document).querySelector(s);}
+function $$(s,r){return Array.from((r||document).querySelectorAll(s));}
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function pad(n){return String(n).padStart(2,'0');}
+function onMoves(){return S.moves.filter(m=>m.on);}
+function hasMove(k){return S.mode==='guided'&&S.moves.some(m=>m.k===k&&m.on);}
+
+function exeg(){const s=(S.subject||'').trim(),c=(S.complement||'').trim();return s&&c?s+' '+c+'.':'';}
+function plan(){return PLANS[S.dayCount]||Array.from({length:S.dayCount},(_,i)=>i<Math.ceil(S.dayCount*.4)?'mean':i<Math.ceil(S.dayCount*.6)?'true':'diff');}
+function syncDays(){const n=hasMove('end')?plan().length:Math.max(S.days.length,1);const d=S.days||[];while(d.length<n)d.push({obs:null,hook:'',book:'',look:'',took:'',frame:FRAMES[d.length%FRAMES.length]});S.days=d.slice(0,n);}
+function obsById(id){return S.obs.find(o=>o.id===id);}
+function usedIds(){return S.days.map(d=>d.obs).filter(Boolean);}
+
+function moveInfo(k){
+  const dealt=S.days.filter(d=>d.obs).length;
+  const composed=S.days.filter(d=>d.hook&&d.book&&d.look&&d.took).length;
+  switch(k){
+    case 'unit':return{done:!!(S.unit.start&&S.unit.end),note:S.unit.start&&S.unit.end?S.unit.start+' – '+S.unit.end:'No boundaries set'};
+    case 'obs':return{done:S.obs.length>=6,note:S.obs.length+' observations · target 3× a single post'};
+    case 'idea':return{done:!!(exeg()&&S.homiletical),note:exeg()&&S.homiletical?'Exegetical and homiletical set':'Subject + complement incomplete'};
+    case 'end':return{done:!!(S.capability&&S.dayCount),note:S.capability?S.dayCount+' days · capability named':'No capability named'};
+    case 'days':return{done:S.days.length>0&&dealt===S.days.length,note:dealt+' of '+S.days.length+' days carry one observation'};
+    case 'compose':return{done:S.days.length>0&&composed===S.days.length,note:composed+' of '+S.days.length+' days fully shaped'};
+  }
+  return{done:false,note:''};
+}
+
+function renderRail(){
+  const free=S.mode==='free';
+  $('#stSep').textContent=free?'Free mode':'The method';
+  const list=free?[{k:'free',t:'Draft',on:true}]:onMoves();
+  $('#stMoves').innerHTML=list.map((m,i)=>{const info=free?{done:false}:moveInfo(m.k);
+    return `<button class="stab${info.done?' ok':''}" data-sp="${m.k}">${free?'':pad(i+1)+' · '}${esc(m.t)}</button>`;}).join('');
+  $('#stNavChecks').style.display=(S.showChecks&&!free)?'':'none';
+  const done=free?0:onMoves().filter(m=>moveInfo(m.k).done).length,total=free?0:onMoves().length;
+  $('#stProgress').textContent=free?'Free':done+' / '+total;
+  $('#stBar').style.width=(total?done/total*100:0)+'%';
+  const cur=$('.spanel.on');
+  if(cur){const k=cur.id.slice(2);const ok=['home','checks','method'].includes(k)||list.some(m=>m.k===k);if(!ok)go(free?'free':'home');}
+  $$('#stTabs [data-sp]').forEach(b=>b.classList.toggle('on',cur&&cur.id==='p-'+b.dataset.sp));
+}
+
+function renderHome(){
+  const free=S.mode==='free';
+  $('#homeTitle').textContent=(free?S.free.title:S.title)||'Untitled series';
+  $('#homeSeed').textContent=free?'Free mode · no method applied':SEEDS[S.seedType].label+' · '+S.seed;
+  if(free){
+    $('#homeMoves').innerHTML=`<button class="mv" data-sgo="free"><span class="mv__n">—</span><span class="mv__b"><span class="mv__t">Open the draft</span><span class="mv__s">${S.free.days.length} day${S.free.days.length===1?'':'s'} · no gates, no checks</span></span><span class="mv__k">Open</span></button>`;
+  }else{
+    const list=onMoves();
+    $('#homeMoves').innerHTML=list.map((m,i)=>{const info=moveInfo(m.k);
+      return `<button class="mv${info.done?' mv--done':''}" data-sgo="${m.k}"><span class="mv__n">${pad(i+1)}</span><span class="mv__b"><span class="mv__t">${esc(m.t)}</span><span class="mv__s">${esc(info.note)}</span></span><span class="mv__k">${info.done?'Done':'Open'}</span></button>`;}).join('')
+      +(list.length<S.moves.length?`<button class="mv" data-sgo="method"><span class="mv__n">+</span><span class="mv__b"><span class="mv__t">${S.moves.length-list.length} move${S.moves.length-list.length===1?'':'s'} turned off</span><span class="mv__s">Nothing was deleted — turn them back on any time</span></span><span class="mv__k">Method</span></button>`:'');
+  }
+  $('#homeIdea').textContent=free?'—':(exeg()||'—');
+  $('#homeCap').textContent=free?'—':(S.capability||'—');
+  const counts={mean:0,true:0,diff:0};S.obs.forEach(o=>{if(o.qt)counts[o.qt]++;});
+  $('#homeCounts').innerHTML=Object.keys(QT).map(k=>`<div class="qc qc--${QT[k].cls}"><div class="qc__n">${counts[k]}</div><div class="qc__l">${QT[k].short}</div></div>`).join('')+`<div class="qc"><div class="qc__n">${S.obs.filter(o=>!o.qt).length}</div><div class="qc__l">Untagged</div></div>`;
+  $('#homeMode').innerHTML=`<h3>Mode</h3><p class="hint">${free?'Free — you are working without the method.':'Guided — '+onMoves().length+' of '+S.moves.length+' moves active.'}</p><div class="chips"><button class="chip${!free?' on':''}" data-mode="guided">Guided</button><button class="chip${free?' on':''}" data-mode="free">Do it myself</button></div>`;
+}
+
+function renderMethod(){
+  $$('#mMode .chip').forEach(c=>c.classList.toggle('on',c.dataset.mode===S.mode));
+  $$('#mChecks .chip').forEach(c=>c.classList.toggle('on',(c.dataset.checks==='on')===!!S.showChecks));
+  let n=0;
+  $('#mMoves').innerHTML=S.moves.map((m,i)=>{if(m.on)n++;
+    return `<div class="mrow ${m.on?'on':'off'}"><div class="mrow__n">${m.on?pad(n):'—'}</div><div><input type="text" data-mv="${i}" value="${esc(m.t)}"></div><div class="ord"><button data-up="${i}"${i===0?' disabled':''} aria-label="Move up">↑</button><button data-down="${i}"${i===S.moves.length-1?' disabled':''} aria-label="Move down">↓</button></div><button class="tgl${m.on?' on':''}" data-toggle="${i}" aria-label="Toggle ${esc(m.t)}"></button></div>`;}).join('');
+}
+
+function renderFree(){
+  $('#fTitle').value=S.free.title||'';$('#fNotes').value=S.free.notes||'';
+  $('#fDays').innerHTML=S.free.days.map((d,i)=>`<div class="fday"><div class="fday__n">${pad(i+1)}</div><div><input type="text" data-ft="${i}" value="${esc(d.t)}" placeholder="What this day is"><textarea data-fb="${i}" placeholder="The day itself">${esc(d.b)}</textarea></div><button class="xbtn" data-fdel="${i}" aria-label="Delete day">×</button></div>`).join('');
+}
+
+function renderUnit(){
+  $('#uStart').value=S.unit.start||'';$('#uEnd').value=S.unit.end||'';$('#uSeam').value=S.unit.seam||'';
+  $('#uSeed').value=S.seed||'';$('#uType').value=S.seedType;$('#uTitle').value=S.title||'';
+  const sd=SEEDS[S.seedType];
+  $('#uLogic').innerHTML=`<div class="lab">Cut by</div><p>${esc(sd.cut)}</p><div class="lab" style="margin-top:12px">One day is</div><p>${esc(sd.day)}</p><div class="lab warn" style="margin-top:12px">The trap</div><p>${esc(sd.trap)}</p>`;
+  $$('#uMarkers .chip').forEach(c=>c.classList.toggle('on',(S.unit.markers||[]).includes(c.dataset.m)));
+}
+
+function renderObs(){
+  const used=usedIds();
+  $('#obList').innerHTML=S.obs.map(o=>`<div class="ob${o.qt?' ob--'+QT[o.qt].cls:''}" data-id="${o.id}"><div class="ob__body"><div class="ob__t">${esc(o.text)}</div><div class="ob__r">${esc(o.ref)||'no reference'}${used.includes(o.id)?' · <b>on a day</b>':''}</div></div><div class="ob__acts">${Object.keys(QT).map(k=>`<button class="qbtn qbtn--${QT[k].cls}${o.qt===k?' on':''}" data-tag="${k}" data-id="${o.id}" title="${QT[k].label}">${QT[k].short}</button>`).join('')}<button class="xbtn" data-del="${o.id}" aria-label="Delete">×</button></div></div>`).join('')||'<p class="note">Nothing captured yet. Observation comes before interpretation — write what is there, not what it means.</p>';
+  const n=S.obs.length;
+  $('#obGauge').innerHTML=`<div class="gauge"><div class="gauge__bar" style="width:${Math.min(100,n/12*100)}%"></div></div><div class="gauge__l">${n} captured · ${n<6?'thin':n<12?'workable':'surplus'} — aim past 12 so the cut is a choice, not a scrape</div>`;
+}
+
+function renderIdea(){
+  $('#iSubject').value=S.subject||'';$('#iComplement').value=S.complement||'';$('#iHom').value=S.homiletical||'';
+  const e=exeg();
+  $('#iExeg').innerHTML=e?esc(e):'<span class="muted">Subject + complement will assemble here.</span>';
+  const w=(S.homiletical||'').trim().split(/\s+/).filter(Boolean).length;
+  $('#iCount').textContent=w?w+' words'+(w>16?' · over the cap':' · within the cap'):'';
+  $('#iCount').className='fh'+(w>16?' warn':'');
+}
+
+function renderEnd(){
+  $('#eCap').value=S.capability||'';$('#eDays').value=String(S.dayCount);
+  const p=plan();
+  $('#ePlan').innerHTML=p.map((k,i)=>`<div class="dslot dslot--${QT[k].cls}"><div class="dslot__n">Day ${i+1}</div><div class="dslot__q">${QT[k].short}</div></div>`).join('');
+  $('#ePlanNote').textContent=`${p.filter(x=>x==='mean').length} meaning · ${p.filter(x=>x==='true').length} truth · ${p.filter(x=>x==='diff').length} difference`;
+}
+
+function renderDays(){
+  syncDays();const typed=hasMove('end'),p=typed?plan():[],used=usedIds();
+  $('#dBoard').innerHTML=S.days.map((d,i)=>{const k=typed?p[i]:null;const o=d.obs?obsById(d.obs):null;
+    const pool=k?S.obs.filter(x=>x.qt===k||x.id===d.obs):S.obs;
+    const opts=pool.map(x=>`<option value="${x.id}"${x.id===d.obs?' selected':''}${used.includes(x.id)&&x.id!==d.obs?' disabled':''}>${esc(x.text.slice(0,70))}${x.text.length>70?'…':''}</option>`).join('');
+    return `<div class="dcard${k?' dcard--'+QT[k].cls:''}"><div class="dcard__hd"><span class="dcard__n">Day ${i+1}</span><span class="qtag${k?' qtag--'+QT[k].cls:''}">${k?QT[k].label:'Any observation'}</span></div><select data-day="${i}" class="dsel"><option value="">— choose an observation —</option>${opts}</select>${o?`<div class="dcard__ref">${esc(o.ref)}</div>`:`<div class="dcard__warn">Nothing assigned${k&&!S.obs.some(x=>x.qt===k)?' — none tagged '+QT[k].short.toLowerCase()+' yet':''}</div>`}</div>`;}).join('');
+  $('#dPool').innerHTML=Object.keys(QT).map(k=>{const items=S.obs.filter(o=>o.qt===k&&!used.includes(o.id));
+    return `<div class="pool"><div class="pool__h qtag qtag--${QT[k].cls}">${QT[k].short} · ${items.length} spare</div>${items.map(o=>`<div class="pool__i">${esc(o.text)}</div>`).join('')||'<div class="pool__e">none spare</div>'}</div>`;}).join('');
+}
+
+function renderCompose(){
+  syncDays();const typed=hasMove('end'),p=typed?plan():[];
+  const sel=$('#cDay');
+  sel.innerHTML=S.days.map((d,i)=>`<option value="${i}">Day ${i+1}${typed?' · '+QT[p[i]].short:''}</option>`).join('');
+  const i=Math.min(Math.max(parseInt(sel.dataset.cur||'0',10),0),S.days.length-1);
+  sel.value=String(i);
+  const d=S.days[i],o=d.obs?obsById(d.obs):null;
+  $('#cObs').innerHTML=o?`<div class="lab">The observation this day carries</div><p>${esc(o.text)}</p><div class="ob__r">${esc(o.ref)}</div>`:'<p class="note">No observation assigned to this day yet.</p>';
+  ['hook','book','look','took'].forEach(f=>{$('#c_'+f).value=d[f]||'';});
+  $('#cFrame').innerHTML=FRAMES.map(f=>`<option${f===d.frame?' selected':''}>${f}</option>`).join('');
+  $('#cState').textContent=['hook','book','look','took'].filter(f=>d[f]).length+' of 4 moves written';
+  $('#cPreview').innerHTML=`<div class="pv"><div class="pv__k">${esc(d.frame)||'—'} · Day ${i+1}</div><div class="pv__hook">${esc(d.hook)||'<span class="muted">Hook — the detail that should not be there</span>'}</div><div class="pv__book">${esc(d.book)||'<span class="muted">Book — the text, quoted</span>'}</div><div class="pv__look">${esc(d.look)||'<span class="muted">Look — what follows from it</span>'}</div><div class="pv__took"><b>Today</b> ${esc(d.took)||'<span class="muted">Took — one instruction</span>'}</div></div>`;
+}
+
+function renderChecks(){
+  const used=usedIds();
+  const all=[
+    ['days','Every day carries one observation',S.days.every(d=>d.obs)&&S.days.length>0,'Move 05 assigns exactly one per day.'],
+    ['obs','Every observation has a reference',S.obs.length>0&&S.obs.every(o=>o.ref),'A day without a verbatim citation is a day about you.'],
+    ['days','No observation used twice',new Set(used).size===used.length,'Repeats read as one long post nobody finishes.'],
+    ['idea','The homiletical idea is under 16 words',!!S.homiletical&&(S.homiletical||'').trim().split(/\s+/).filter(Boolean).length<=16,'A bullet, not buckshot.'],
+    ['end','The last day points outside the seed',/read|name|find|count|try|another|elsewhere/i.test(S.capability||''),'If the hand-over stays inside the passage you taught a passage, not a skill.'],
+    ['compose','Frames vary across the series',new Set(S.days.map(d=>d.frame)).size>=Math.min(3,S.days.length),'Five pull-quotes in a row is one long post.'],
+    ['compose','Day one needs no further research',S.days.length>0&&['hook','book','look','took'].every(f=>S.days[0][f]),'If day one still needs work the series is queued, not cut.']
+  ].filter(c=>hasMove(c[0]));
+  $('#chList').innerHTML=all.length?all.map(([,t,ok,note])=>`<div class="chk${ok?' chk--ok':''}"><span class="chk__bx">${ok?'✓':''}</span><div><b>${t}</b><p>${note}</p></div></div>`).join(''):'<p class="note">Every move that carries a check is turned off. Nothing to verify.</p>';
+  const n=all.filter(x=>x[2]).length;
+  $('#chScore').textContent=all.length?n+' of '+all.length+' clear':'—';
+  $('#chBar').style.width=(all.length?n/all.length*100:0)+'%';
+}
+
+function renderAll(){renderMethod();renderFree();renderUnit();renderObs();renderIdea();renderEnd();renderDays();renderCompose();renderChecks();renderHome();renderRail();}
+function go(p){$$('.spanel').forEach(x=>x.classList.toggle('on',x.id==='p-'+p));$$('#stTabs [data-sp]').forEach(b=>b.classList.toggle('on',b.dataset.sp===p));window.scrollTo(0,0);}
+
+document.addEventListener('click',e=>{
+  const t=e.target;
+  const mode=t.closest('[data-mode]');
+  if(mode){S.mode=mode.dataset.mode;save();renderAll();go(S.mode==='free'?'free':'home');return;}
+  const tg=t.closest('[data-toggle]');
+  if(tg){const m=S.moves[+tg.dataset.toggle];m.on=!m.on;save();renderMethod();renderHome();renderRail();renderChecks();return;}
+  const up=t.closest('[data-up]'),dn=t.closest('[data-down]');
+  if(up||dn){const i=+(up?up.dataset.up:dn.dataset.down),j=up?i-1:i+1;if(j<0||j>=S.moves.length)return;const a=S.moves;[a[i],a[j]]=[a[j],a[i]];save();renderMethod();renderHome();renderRail();return;}
+  if(t.id==='mAllOn'){S.moves.forEach(m=>m.on=true);save();renderMethod();renderHome();renderRail();renderChecks();return;}
+  if(t.id==='mRestore'){S.moves=JSON.parse(JSON.stringify(DEFAULT_MOVES));save();renderMethod();renderHome();renderRail();renderChecks();return;}
+  const ck=t.closest('[data-checks]');
+  if(ck){S.showChecks=ck.dataset.checks==='on';save();renderMethod();renderRail();return;}
+  const nav=t.closest('[data-sp],[data-sgo]');
+  if(nav){go(nav.dataset.sp||nav.dataset.sgo);return;}
+  const chip=t.closest('#uMarkers .chip');
+  if(chip){const m=chip.dataset.m,a=S.unit.markers||(S.unit.markers=[]);const i=a.indexOf(m);i<0?a.push(m):a.splice(i,1);save();renderUnit();return;}
+  const tag=t.closest('[data-tag]');
+  if(tag){const o=obsById(+tag.dataset.id);o.qt=o.qt===tag.dataset.tag?null:tag.dataset.tag;save();renderObs();renderDays();renderHome();renderRail();renderChecks();return;}
+  const del=t.closest('[data-del]');
+  if(del){const id=+del.dataset.del;S.obs=S.obs.filter(o=>o.id!==id);S.days.forEach(d=>{if(d.obs===id)d.obs=null;});save();renderObs();renderDays();renderHome();renderRail();renderChecks();return;}
+  const fdel=t.closest('[data-fdel]');
+  if(fdel){S.free.days.splice(+fdel.dataset.fdel,1);if(!S.free.days.length)S.free.days.push({t:'',b:''});save();renderFree();renderHome();return;}
+  if(t.id==='fAdd'){S.free.days.push({t:'',b:''});save();renderFree();renderHome();return;}
+  if(t.id==='obAdd'){
+    const tx=$('#obText').value.trim(),r=$('#obRef').value.trim();
+    if(!tx)return;
+    S.obs.push({id:Date.now(),text:tx,ref:r,qt:null});$('#obText').value='';$('#obRef').value='';
+    save();renderObs();renderHome();renderRail();renderChecks();$('#obText').focus();return;
+  }
+  if(t.id==='resetBtn'){if(confirm('Reset the workspace to the worked Ruth example? Your method settings are kept.')){const keep={mode:S.mode,moves:S.moves,showChecks:S.showChecks,free:S.free};S=Object.assign(JSON.parse(JSON.stringify(SEED_STATE)),keep);save();renderAll();}return;}
+});
+
+document.addEventListener('input',e=>{
+  const t=e.target,id=t.id;
+  if(t.dataset.mv!==undefined){S.moves[+t.dataset.mv].t=t.value;save();renderHome();renderRail();return;}
+  if(t.dataset.ft!==undefined){S.free.days[+t.dataset.ft].t=t.value;save();return;}
+  if(t.dataset.fb!==undefined){S.free.days[+t.dataset.fb].b=t.value;save();return;}
+  if(id==='fTitle'){S.free.title=t.value;save();renderHome();}
+  else if(id==='fNotes'){S.free.notes=t.value;save();}
+  else if(id==='uStart'){S.unit.start=t.value;save();renderRail();renderHome();}
+  else if(id==='uEnd'){S.unit.end=t.value;save();renderRail();renderHome();}
+  else if(id==='uSeam'){S.unit.seam=t.value;save();}
+  else if(id==='uSeed'){S.seed=t.value;save();renderHome();}
+  else if(id==='uTitle'){S.title=t.value;save();renderHome();}
+  else if(id==='iSubject'){S.subject=t.value;save();renderIdea();renderRail();renderHome();}
+  else if(id==='iComplement'){S.complement=t.value;save();renderIdea();renderRail();renderHome();}
+  else if(id==='iHom'){S.homiletical=t.value;save();renderIdea();renderRail();renderChecks();}
+  else if(id==='eCap'){S.capability=t.value;save();renderRail();renderHome();renderChecks();}
+  else if(t.dataset.f){const i=+$('#cDay').value;S.days[i][t.dataset.f]=t.value;save();renderRail();renderChecks();$('#cState').textContent=['hook','book','look','took'].filter(f=>S.days[i][f]).length+' of 4 moves written';renderPreviewOnly(i);}
+});
+
+function renderPreviewOnly(i){const d=S.days[i];
+  $('#cPreview').innerHTML=`<div class="pv"><div class="pv__k">${esc(d.frame)||'—'} · Day ${i+1}</div><div class="pv__hook">${esc(d.hook)||'<span class="muted">Hook — the detail that should not be there</span>'}</div><div class="pv__book">${esc(d.book)||'<span class="muted">Book — the text, quoted</span>'}</div><div class="pv__look">${esc(d.look)||'<span class="muted">Look — what follows from it</span>'}</div><div class="pv__took"><b>Today</b> ${esc(d.took)||'<span class="muted">Took — one instruction</span>'}</div></div>`;}
+
+document.addEventListener('change',e=>{
+  const t=e.target,id=t.id;
+  if(id==='uType'){S.seedType=t.value;save();renderUnit();renderHome();}
+  else if(id==='eDays'){S.dayCount=+t.value;syncDays();save();renderEnd();renderDays();renderCompose();renderRail();renderChecks();}
+  else if(id==='cDay'){t.dataset.cur=t.value;renderCompose();}
+  else if(id==='cFrame'){const i=+$('#cDay').value;S.days[i].frame=t.value;save();renderPreviewOnly(i);renderChecks();}
+  else if(t.classList.contains('dsel')){const i=+t.dataset.day;S.days[i].obs=t.value?+t.value:null;save();renderDays();renderCompose();renderRail();renderChecks();}
+});
+
+renderAll();
+if(S.mode==='free')go('free');
+})();
+</script>
+</body>
+</html>
