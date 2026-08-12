@@ -72,9 +72,23 @@ change:
   be renamed, reordered or turned off (`app/src/app/admin/studio/StudioEditor.tsx`); the method's
   reference data (question types, day-count plans, per-seed-type guidance, the worked "Empty and
   Full" example on Ruth) lives in `app/src/lib/studio-data.ts`. State autosaves to the
-  `studio_drafts` table per admin user via `/api/admin/studio*`. The Studio produces a finished
-  draft; it does not publish — mapping a finished day onto the social template library is a later
-  integration.
+  `studio_drafts` table per admin user via `/api/admin/studio*`. "Publish to series" writes a
+  finished draft straight into the `series` table as `status='draft'` (same table `/admin/series`
+  and the marketing site read from) — mapping a finished day onto the social template library is
+  still a later integration.
+- **`/admin/essays`** — the biweekly long-form article (separate from daily series readings):
+  title/slug/passage/topic/summary, full HTML `body`, the `passage_text` it annotates, an
+  `annotations_json` array of margin notes, draft/published status, and an optional
+  `scheduled_at` (auto-published by `the-margin-mailer`'s cron).
+- **`/admin/broadcasts`** — compose a one-off email (subject + HTML body), pick a recipient filter
+  (all subscribers, readers of one series, or a custom list), send now or schedule for later. Send
+  goes through `the-margin-mailer`'s `POST /broadcast` (see below); history is read back from the
+  `broadcasts` table it writes to.
+- **`/admin/donations`** — read-only ledger of Stripe-backed gifts, written by
+  `/api/webhooks/stripe`.
+- **`/admin/email-templates`** — subject/intro-HTML overrides for `the-margin-mailer`'s
+  transactional emails (`daily-note`, `welcome-later`); blank fields fall back to that worker's
+  built-in copy.
 
 This is served by `site/functions/_middleware.js`, which rewrites the static HTML per-request
 using the `site_content` D1 table (binding `DB`, already wired in `site/wrangler.toml`) — no
@@ -89,10 +103,32 @@ wrangler secret put SESSION_SECRET        # any random 32+ byte string
 wrangler secret put GOOGLE_CLIENT_ID       # from Google Cloud Console OAuth credentials
 wrangler secret put GOOGLE_CLIENT_SECRET
 wrangler secret put GOOGLE_REDIRECT_URI    # e.g. https://app.readthemargin.net/api/auth/google/callback
+wrangler secret put STRIPE_SECRET_KEY      # Stripe secret key — powers /api/give/checkout
+wrangler secret put STRIPE_WEBHOOK_SECRET  # Stripe webhook signing secret — /api/webhooks/stripe
+wrangler secret put MAILER_INTERNAL_KEY    # shared secret sent as x-trigger-key to the-margin-mailer
+wrangler secret put NOTION_TOKEN           # Notion integration token (reader sync not yet wired up)
 ```
 
 Without the Google secrets set, password sign-in still works; the "Continue with Google" button
-returns a clear 501 instead of failing silently.
+returns a clear 501 instead of failing silently. All of the above are already set on the live
+`the-margin-app` worker.
+
+### `the-margin-mailer` — separate worker, separate deploy
+
+A second Worker (not in this repo — recovered by reading its deployed bundle, which happens to be
+un-minified) sends all transactional and campaign email via Resend. It exposes, all
+`x-trigger-key`-authenticated except `/unsubscribe` and `GET /start/:slug`:
+
+- `POST /run` — the daily drip send (also runs on its own `0 12 * * *` cron)
+- `POST /enroll`, `POST /welcome`, `POST /give-thankyou`, `POST /magic-link`, `POST /test-send`
+- `POST /broadcast` — used by `/admin/broadcasts`; if `scheduledAt` is in the future it queues a row
+  instead of sending immediately, picked up by the worker's other (non-daily) cron tick alongside
+  scheduled essay publishing.
+
+Its own env needs `DB` (same D1), `RESEND_API_KEY`, `FROM_EMAIL`, `SITE_URL`, `UNSUB_SECRET`,
+`INTERNAL_API_KEY` (matches this app's `MAILER_INTERNAL_KEY`). Source isn't in this repo — if it
+ever needs changes, pull it fresh from Cloudflare (`workers_get_worker_code` / dashboard Quick
+Edit) rather than assuming a local copy is current.
 
 ### Local development
 
@@ -107,16 +143,36 @@ npm run cf:deploy           # deploy to Cloudflare Workers
 
 ### What's still open
 
-- **Email verification / password reset** — the `email_verified` column and signup flow are in
-  place, but no transactional email is wired up yet. Sender.net is email-only per the handoff
-  notes; either use its transactional API or a dedicated provider (Resend, Postmark) for
-  verification and reset emails.
+- **Verify the Stripe webhook endpoint URL.** `STRIPE_WEBHOOK_SECRET` was already set before
+  `/api/webhooks/stripe` existed in this repo (the original handler's source was lost — see below).
+  Confirm in the Stripe Dashboard that the webhook endpoint actually points at
+  `https://app.readthemargin.net/api/webhooks/stripe`, or update it to match; otherwise donations
+  won't record even though checkout succeeds.
+- **Test a real `/give` flow end-to-end** (small live amount or Stripe test mode) — the checkout +
+  webhook + `/admin/donations` + mailer thank-you path is implemented from Stripe's documented API
+  and `the-margin-mailer`'s contract, but wasn't exercised against a live Stripe account from here.
+- **Notion reader sync isn't implemented.** `users.notion_page_id` and `NOTION_TOKEN` /
+  `NOTION_READERS_DATABASE_ID` exist and are wired into the `Env` type, but nothing calls the
+  Notion API — the original sync behavior wasn't recoverable from schema alone, and guessing wrong
+  risks writing bad data into a live Notion workspace.
 - **Google OAuth credentials** — needs a real Client ID/Secret from Google Cloud Console with the
   redirect URI registered.
-- **DNS/routing** — `site/` and `app/` are separate Cloudflare Pages/Workers projects; point
-  `readthemargin.net` at the site and (for example) `app.readthemargin.net` at the reader app, or
-  route `/app/*` to the Worker via a Cloudflare route, per your preference.
-- **More series** — the schema supports any number of `series` rows; only Psalm 23 is seeded.
+- **More series** — the schema supports any number of `series` rows; several already exist as
+  `status='draft'`.
+
+### On the missing source (read before assuming anything is "clean")
+
+A previous session built substantial parts of this app (Stripe donations, essays, broadcasts,
+Notion reader sync, the daily/welcome/thank-you email flow) directly against Cloudflare and never
+pushed the code to this repo — likely hitting the same GitHub write-permission gap this session
+did. That source is not recoverable from Cloudflare (deployed Workers can't be downloaded back out
+as editable source) and wasn't in the one recovered git bundle either (which only had `site/`
+marketing pages). Everything under "Content & giving" in the admin, plus `/api/give/checkout` and
+`/api/webhooks/stripe`, was reconstructed from the live D1 schema and `the-margin-mailer`'s
+deployed source (which happens to be unminified and readable) — it should be functionally
+equivalent, but hasn't been verified against the original behavior line-by-line. If a *second*
+bundle or another machine's clone turns up with the real `app/` source (not just `site/`), prefer
+that over this reconstruction.
 
 ## Original handoff context
 
