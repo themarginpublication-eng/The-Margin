@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/admin';
-import { getStudioDraft, publishStudioDraftAsSeries } from '@/lib/repo';
+import { getStudioDraft, linkStudioDraftSeries, publishStudioDraftAsSeries } from '@/lib/repo';
 import type { SeriesDay } from '@/lib/repo';
 import type { StudioState } from '@/lib/studio-data';
 
@@ -54,6 +54,7 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
     });
   }
 
-  const series = await publishStudioDraftAsSeries(title, subtitle, passage, kind, days);
+  const series = await publishStudioDraftAsSeries(draft.series_id, title, subtitle, passage, kind, days);
+  if (!draft.series_id) await linkStudioDraftSeries(id, series.id);
   return NextResponse.json({ series });
 }

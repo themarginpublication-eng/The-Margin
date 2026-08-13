@@ -15,7 +15,8 @@ import {
 } from '@/lib/studio-data';
 import './studio.css';
 
-type Panel = 'home' | 'free' | 'unit' | 'obs' | 'idea' | 'end' | 'days' | 'compose' | 'checks' | 'method';
+type Tab = 'series' | MoveKey | 'free' | 'essays';
+type Overlay = 'method' | 'checks' | null;
 
 function pad(n: number) {
   return String(n).padStart(2, '0');
@@ -78,6 +79,15 @@ function syncDays(s: StudioState): StudioState {
   return { ...s, days: d.slice(0, n) };
 }
 
+const TAB_TITLES: Record<MoveKey, string> = {
+  unit: 'Cut the unit',
+  obs: 'Observe',
+  idea: 'The idea',
+  end: 'The last day',
+  days: 'Deal the days',
+  compose: 'Shape the day',
+};
+
 const CHECK_DEFS: { owner: MoveKey; title: string; note: string; pass: (s: StudioState) => boolean }[] = [
   {
     owner: 'days',
@@ -126,22 +136,43 @@ const CHECK_DEFS: { owner: MoveKey; title: string; note: string; pass: (s: Studi
   },
 ];
 
+interface DraftListItem {
+  id: string;
+  title: string;
+  updated_at: string;
+}
+
+interface SeriesRecord {
+  id: string;
+  title: string;
+  subtitle: string | null;
+  kind: 'book' | 'person' | 'passage' | 'idea';
+  status: 'live' | 'scheduled' | 'draft' | 'retired';
+  description: string | null;
+}
+
 export default function StudioEditor({ id }: { id: string }) {
   const [s, setS] = useState<StudioState | null>(null);
-  const [panel, setPanel] = useState<Panel>('home');
+  const [seriesId, setSeriesId] = useState<string | null>(null);
+  const [tab, setTab] = useState<Tab>('series');
+  const [overlay, setOverlay] = useState<Overlay>(null);
   const [status, setStatus] = useState('');
+  const [drafts, setDrafts] = useState<DraftListItem[]>([]);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [cDay, setCDay] = useState(0);
 
   useEffect(() => {
     fetch(`/api/admin/studio/${id}`)
-      .then((r) => r.json() as Promise<{ draft?: { title: string; data_json: string } }>)
+      .then((r) => r.json() as Promise<{ draft?: { title: string; data_json: string; series_id: string | null } }>)
       .then((json) => {
         if (!json.draft) return;
         const state = JSON.parse(json.draft.data_json) as StudioState;
         setS(state);
-        if (state.mode === 'free') setPanel('free');
+        setSeriesId(json.draft.series_id ?? null);
       });
+    fetch('/api/admin/studio')
+      .then((r) => r.json() as Promise<{ drafts?: DraftListItem[] }>)
+      .then((json) => setDrafts(json.drafts || []));
   }, [id]);
 
   function update(fn: (s: StudioState) => StudioState) {
@@ -171,119 +202,205 @@ export default function StudioEditor({ id }: { id: string }) {
   }
 
   const free = s?.mode === 'free';
-  const moveList = useMemo(() => (s ? (free ? [] : onMoves(s)) : []), [s, free]);
+  const moveList = useMemo(() => (s ? onMoves(s) : []), [s]);
 
   useEffect(() => {
     if (!s) return;
-    const okPanels: string[] = ['home', 'checks', 'method', ...(free ? ['free'] : moveList.map((m) => m.k))];
-    if (!okPanels.includes(panel)) setPanel(free ? 'free' : 'home');
-  }, [s, free, moveList, panel]);
+    const okTabs: Tab[] = ['series', 'essays', ...(free ? (['free'] as Tab[]) : moveList.map((m) => m.k as Tab))];
+    if (!okTabs.includes(tab)) setTab('series');
+  }, [s, free, moveList, tab]);
 
   useEffect(() => {
-    if (panel === 'days' || panel === 'compose') {
-      update((prev) => syncDays(prev));
-    }
+    if (tab === 'days' || tab === 'compose') update((prev) => syncDays(prev));
     window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [panel]);
+  }, [tab]);
+
+  async function addStandaloneEssay() {
+    const res = await fetch('/api/admin/essays', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: 'Untitled essay' }),
+    });
+    if (res.ok) {
+      setOverlay(null);
+      setTab('essays');
+    }
+  }
 
   if (!s) return <div className="center-loading">Loading…</div>;
 
-  const done = free ? 0 : onMoves(s).filter((m) => moveInfo(s, m.k)!.done).length;
-  const total = free ? 0 : onMoves(s).length;
-
   return (
-    <div className="studio-app">
-      <aside className="studio-rail">
-        <div className="studio-wm">
-          <div className="studio-wm__bar" />
-          <div>
-            <div className="studio-wm__type">the margin</div>
-            <div className="studio-wm__tag">Studio</div>
-          </div>
-        </div>
+    <div className="studio-main">
+      <div className="studio-toolbar">
+        <select
+          className="studio-draftsel"
+          value={id}
+          onChange={(e) => {
+            window.location.href = `/admin/studio/${e.target.value}`;
+          }}
+        >
+          {drafts.map((d) => (
+            <option key={d.id} value={d.id}>
+              {d.title}
+            </option>
+          ))}
+        </select>
+        <span className="studio-badge">{free ? 'Free' : SEEDS[s.seedType].label}</span>
+        <span className="studio-spacer" />
+        <button className="btn btn--ghost" onClick={() => setOverlay('method')}>
+          Method settings
+        </button>
+        <button className="btn btn--ghost" onClick={addStandaloneEssay}>
+          + Standalone essay
+        </button>
+        <button className="btn btn--ghost" onClick={() => setOverlay('checks')}>
+          Readiness
+        </button>
+      </div>
 
-        <div className="studio-progress">
-          <div className="studio-progress__row">
-            <span>Series progress</span>
-            <span>{free ? 'Free' : `${done} / ${total}`}</span>
-          </div>
-          <div className="studio-progress__track">
-            <div className="studio-progress__fill" style={{ width: `${total ? (done / total) * 100 : 0}%` }} />
-          </div>
-        </div>
-
-        <div className="studio-sep">{free ? 'Free mode' : 'The method'}</div>
-        <nav className="studio-nav">
-          {free ? (
-            <button className={panel === 'free' ? 'on' : ''} onClick={() => setPanel('free')}>
-              Draft
-            </button>
-          ) : (
-            moveList.map((m, i) => {
-              const info = moveInfo(s, m.k)!;
-              return (
-                <button key={m.k} className={`${panel === m.k ? 'on' : ''} ${info.done ? 'ok' : ''}`} onClick={() => setPanel(m.k as Panel)}>
-                  {pad(i + 1)} · {m.t}
-                </button>
-              );
-            })
-          )}
-        </nav>
-
-        <div className="studio-sep">Setup</div>
-        <nav className="studio-nav">
-          {s.showChecks && !free && (
-            <button className={panel === 'checks' ? 'on' : ''} onClick={() => setPanel('checks')}>
-              Readiness
-            </button>
-          )}
-          <button className={panel === 'method' ? 'on' : ''} onClick={() => setPanel('method')}>
-            Method settings
+      {overlay ? (
+        <div className="studio-st">
+          {overlay === 'method' && <MethodPanel s={s} update={update} />}
+          {overlay === 'checks' && <ChecksPanel s={s} />}
+          <button className="studio-ghost" style={{ marginTop: 22 }} onClick={() => setOverlay(null)}>
+            ← Back to workspace
           </button>
-        </nav>
-
-        <div className="studio-footer">
-          <a href="/admin/studio">← All drafts</a>
-          <span className="studio-save">{status}</span>
         </div>
-      </aside>
+      ) : (
+        <div className="studio-st">
+          <div className="studio-eye">Content Studio · {free ? s.free.title || 'Untitled' : s.title || 'Untitled'}</div>
+          <h1>
+            Series, days and essays, <em>in one place.</em>
+          </h1>
+          <p className="studio-lede">
+            One workspace for the whole thing — the series itself, its days, and its essays, made in the same place. Six moves carry a
+            series from a seed to a day-by-day plan; essays sit outside the method and can be written any time, attached to this series or
+            standalone. Everything saved here appears on the Series, Daily notes, and Essays pages for quick edits.
+          </p>
 
-      <main className="studio-main">
-        {panel === 'home' && <Home s={s} update={update} setPanel={setPanel} id={id} />}
-        {panel === 'free' && <FreePanel s={s} update={update} />}
-        {panel === 'unit' && <UnitPanel s={s} update={update} />}
-        {panel === 'obs' && <ObsPanel s={s} update={update} />}
-        {panel === 'idea' && <IdeaPanel s={s} update={update} />}
-        {panel === 'end' && <EndPanel s={s} update={update} />}
-        {panel === 'days' && <DaysPanel s={s} update={update} />}
-        {panel === 'compose' && <ComposePanel s={s} update={update} cDay={cDay} setCDay={setCDay} />}
-        {panel === 'checks' && <ChecksPanel s={s} />}
-        {panel === 'method' && <MethodPanel s={s} update={update} />}
-      </main>
+          <div className="studio-tabs">
+            <button className={tab === 'series' ? 'on' : ''} onClick={() => setTab('series')}>
+              <span className="n n--w">Series</span>
+              <span className="t">Name &amp; description</span>
+            </button>
+            {free ? (
+              <button className={tab === 'free' ? 'on' : ''} onClick={() => setTab('free')}>
+                <span className="n n--w">Draft</span>
+                <span className="t">No moves, no gates</span>
+              </button>
+            ) : (
+              moveList.map((m, i) => {
+                const info = moveInfo(s, m.k)!;
+                return (
+                  <button
+                    key={m.k}
+                    className={`${tab === m.k ? 'on' : ''} ${info.done ? 'done' : ''}`}
+                    onClick={() => setTab(m.k as Tab)}
+                  >
+                    <span className="n">{pad(i + 1)}</span>
+                    <span className="t">{m.t}</span>
+                  </button>
+                );
+              })
+            )}
+            <button className={tab === 'essays' ? 'on' : ''} onClick={() => setTab('essays')}>
+              <span className="n n--w">Essays</span>
+              <span className="t">Outside the method</span>
+            </button>
+          </div>
+
+          <div className="studio-tabpanel">
+            {tab === 'series' && <SeriesTab draftId={id} s={s} seriesId={seriesId} onLinked={setSeriesId} onGoUnit={() => setTab('unit')} />}
+            {tab === 'free' && <FreePanel s={s} update={update} />}
+            {tab === 'unit' && <UnitPanel s={s} update={update} />}
+            {tab === 'obs' && <ObsPanel s={s} update={update} />}
+            {tab === 'idea' && <IdeaPanel s={s} update={update} />}
+            {tab === 'end' && <EndPanel s={s} update={update} />}
+            {tab === 'days' && <DaysPanel s={s} update={update} />}
+            {tab === 'compose' && <ComposePanel s={s} update={update} cDay={cDay} setCDay={setCDay} />}
+            {tab === 'essays' && <EssaysTab seriesId={seriesId} />}
+          </div>
+        </div>
+      )}
+
+      <p className="studio-save-status">{status}</p>
     </div>
   );
 }
 
 type Update = (fn: (s: StudioState) => StudioState) => void;
 
-function Home({ s, update, setPanel, id }: { s: StudioState; update: Update; setPanel: (p: Panel) => void; id: string }) {
-  const free = s.mode === 'free';
-  const list = free ? [] : onMoves(s);
-  const counts: Record<QTKey, number> = { mean: 0, true: 0, diff: 0 };
-  s.obs.forEach((o) => {
-    if (o.qt) counts[o.qt]++;
+function SeriesTab({
+  draftId,
+  s,
+  seriesId,
+  onLinked,
+  onGoUnit,
+}: {
+  draftId: string;
+  s: StudioState;
+  seriesId: string | null;
+  onLinked: (id: string) => void;
+  onGoUnit: () => void;
+}) {
+  const [form, setForm] = useState({
+    name: s.mode === 'free' ? s.free.title : s.title,
+    kind: (s.seedType === 'book' ? 'book' : s.seedType === 'person' ? 'person' : s.seedType === 'passage' ? 'passage' : 'idea') as
+      | 'book'
+      | 'person'
+      | 'passage'
+      | 'idea',
+    subtitle: '',
+    status: 'draft' as 'live' | 'scheduled' | 'draft' | 'retired',
+    description: '',
   });
-  const [publishing, setPublishing] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState('');
   const [publishMsg, setPublishMsg] = useState('');
+  const [publishing, setPublishing] = useState(false);
+
+  useEffect(() => {
+    if (!seriesId) return;
+    fetch(`/api/admin/series/${seriesId}`)
+      .then((r) => r.json() as Promise<{ series?: SeriesRecord }>)
+      .then((json) => {
+        if (!json.series) return;
+        const r = json.series;
+        setForm({ name: r.title, kind: r.kind, subtitle: r.subtitle || '', status: r.status, description: r.description || '' });
+      });
+  }, [seriesId]);
+
+  async function save() {
+    setBusy(true);
+    setMsg('');
+    try {
+      const res = await fetch(`/api/admin/studio/${draftId}/series`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const json = (await res.json()) as { series?: { id: string }; error?: string };
+      if (res.ok && json.series) {
+        onLinked(json.series.id);
+        setMsg('Saved.');
+      } else {
+        setMsg(json.error || 'Failed to save.');
+      }
+    } catch {
+      setMsg('Failed to save.');
+    } finally {
+      setBusy(false);
+    }
+  }
 
   async function publish() {
     setPublishing(true);
     setPublishMsg('');
     try {
-      const res = await fetch(`/api/admin/studio/${id}/publish`, { method: 'POST' });
-      const json = (await res.json()) as { series?: { slug: string; title: string }; error?: string };
-      setPublishMsg(res.ok && json.series ? `Published as a draft series: “${json.series.title}”.` : json.error || 'Failed to publish.');
+      const res = await fetch(`/api/admin/studio/${draftId}/publish`, { method: 'POST' });
+      const json = (await res.json()) as { series?: { title: string }; error?: string };
+      setPublishMsg(res.ok && json.series ? `Days published to “${json.series.title}”.` : json.error || 'Failed to publish.');
     } catch {
       setPublishMsg('Failed to publish.');
     } finally {
@@ -292,108 +409,234 @@ function Home({ s, update, setPanel, id }: { s: StudioState; update: Update; set
   }
 
   return (
-    <div className="studio-grid studio-grid--home">
-      <div className="studio-col">
-        {free ? (
-          <button className="studio-mv" onClick={() => setPanel('free')}>
-            <span className="studio-mv__n">—</span>
-            <span className="studio-mv__b">
-              <span className="studio-mv__t">Open the draft</span>
-              <span className="studio-mv__s">
-                {s.free.days.length} day{s.free.days.length === 1 ? '' : 's'} · no gates, no checks
-              </span>
-            </span>
-            <span className="studio-mv__k">Open</span>
+    <div className="studio-grid">
+      <div className="studio-card">
+        <h2 className="studio-h2">
+          What the series <em>is.</em>
+        </h2>
+        <p className="studio-sub">
+          The words a reader meets before they read a single day — on the series page, in the subscribe picker, and in the welcome
+          email.
+        </p>
+        <div className="studio-do">
+          <b>Set once, used everywhere</b>
+          Changing anything here updates the site, the picker, and the welcome email together. Nothing needs re-entering on the Series
+          page.
+        </div>
+        <div className="studio-row2">
+          <div className="studio-field">
+            <label>Name</label>
+            <input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
+          </div>
+          <div className="studio-field">
+            <label>Seed</label>
+            <select value={form.kind} onChange={(e) => setForm((f) => ({ ...f, kind: e.target.value as typeof f.kind }))}>
+              <option value="book">A whole book</option>
+              <option value="passage">A single passage</option>
+              <option value="person">A single person</option>
+              <option value="idea">A single idea</option>
+            </select>
+          </div>
+        </div>
+        <div className="studio-row2">
+          <div className="studio-field">
+            <label>One-line subtitle</label>
+            <input value={form.subtitle} onChange={(e) => setForm((f) => ({ ...f, subtitle: e.target.value }))} />
+          </div>
+          <div className="studio-field">
+            <label>Status</label>
+            <select value={form.status} onChange={(e) => setForm((f) => ({ ...f, status: e.target.value as typeof f.status }))}>
+              <option value="draft">Draft</option>
+              <option value="live">Live</option>
+              <option value="scheduled">Scheduled</option>
+              <option value="retired">Retired</option>
+            </select>
+          </div>
+        </div>
+        <div className="studio-field">
+          <label>Description</label>
+          <textarea value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} />
+        </div>
+        <div className="studio-qa">
+          <button className="btn" disabled={busy} onClick={save}>
+            {busy ? 'Saving…' : 'Save series'}
           </button>
-        ) : (
-          <>
-            {list.map((m, i) => {
-              const info = moveInfo(s, m.k)!;
-              return (
-                <button key={m.k} className={`studio-mv${info.done ? ' studio-mv--done' : ''}`} onClick={() => setPanel(m.k as Panel)}>
-                  <span className="studio-mv__n">{pad(i + 1)}</span>
-                  <span className="studio-mv__b">
-                    <span className="studio-mv__t">{m.t}</span>
-                    <span className="studio-mv__s">{info.note}</span>
-                  </span>
-                  <span className="studio-mv__k">{info.done ? 'Done' : 'Open'}</span>
-                </button>
-              );
-            })}
-            {list.length < s.moves.length && (
-              <button className="studio-mv" onClick={() => setPanel('method')}>
-                <span className="studio-mv__n">+</span>
-                <span className="studio-mv__b">
-                  <span className="studio-mv__t">{s.moves.length - list.length} moves turned off</span>
-                  <span className="studio-mv__s">Nothing was deleted — turn them back on any time</span>
-                </span>
-                <span className="studio-mv__k">Method</span>
-              </button>
-            )}
-          </>
-        )}
+          <button className="btn btn--ghost" onClick={onGoUnit}>
+            Begin move 01 →
+          </button>
+          {seriesId && (
+            <button className="btn btn--ghost" disabled={publishing} onClick={publish}>
+              {publishing ? 'Publishing…' : 'Publish days to series'}
+            </button>
+          )}
+        </div>
+        {msg && <p className="studio-hint">{msg}</p>}
+        {publishMsg && <p className="studio-hint">{publishMsg}</p>}
+        {!seriesId && <p className="studio-hint">Save the series once before publishing days or attaching essays to it.</p>}
       </div>
+      <div className="studio-card">
+        <h3>Why save the series first</h3>
+        <p className="studio-hint">One workspace, one record.</p>
+        <p>
+          Saving here creates the same row the Series admin page edits — status starts as Draft, so nothing shows on the site until you
+          flip it. Essays can attach to this series as soon as it exists, before a single day is written.
+        </p>
+      </div>
+    </div>
+  );
+}
 
-      <div className="studio-col">
-        <div className="studio-card studio-card--rust">
-          <div className="studio-lab">Exegetical idea</div>
-          <p>{free ? '—' : exeg(s) || <span className="studio-muted">Not yet assembled.</span>}</p>
-          <div className="studio-lab" style={{ marginTop: 12 }}>
-            Reader can, by the last day
-          </div>
-          <p>{free ? '—' : s.capability || <span className="studio-muted">Not yet named.</span>}</p>
-        </div>
+interface EssayRecord {
+  id: string;
+  title: string;
+  slug: string;
+  passage_ref: string | null;
+  series_id: string | null;
+  topic: string | null;
+  summary: string | null;
+  body: string | null;
+  status: 'draft' | 'published';
+}
 
+function EssaysTab({ seriesId }: { seriesId: string | null }) {
+  const [essays, setEssays] = useState<EssayRecord[]>([]);
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [essay, setEssay] = useState<EssayRecord | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState('');
+  const [q, setQ] = useState('');
+
+  function reload() {
+    fetch(`/api/admin/essays?seriesId=${seriesId ?? ''}`)
+      .then((r) => r.json() as Promise<{ essays?: EssayRecord[] }>)
+      .then((json) => setEssays(json.essays || []));
+  }
+
+  useEffect(reload, [seriesId]);
+
+  useEffect(() => {
+    if (!openId) {
+      setEssay(null);
+      return;
+    }
+    fetch(`/api/admin/essays/${openId}`)
+      .then((r) => r.json() as Promise<{ essay?: EssayRecord }>)
+      .then((json) => json.essay && setEssay(json.essay));
+  }, [openId]);
+
+  const filtered = essays.filter((e) => !q.trim() || e.title.toLowerCase().includes(q.trim().toLowerCase()));
+
+  function set<K extends keyof EssayRecord>(key: K, value: EssayRecord[K]) {
+    setEssay((e) => (e ? { ...e, [key]: value } : e));
+  }
+
+  async function saveEssay(status?: 'draft' | 'published') {
+    if (!essay) return;
+    setBusy(true);
+    setMsg('');
+    try {
+      const body = status ? { ...essay, status } : essay;
+      const res = await fetch(`/api/admin/essays/${essay.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      setMsg(res.ok ? 'Saved.' : 'Failed to save.');
+      reload();
+    } catch {
+      setMsg('Failed to save.');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="studio-grid">
+      <div className="studio-col" style={{ gridColumn: '1 / -1' }}>
         <div className="studio-card">
-          <h3>Observation pool</h3>
-          <div className="studio-qc-grid">
-            {(Object.keys(QT) as QTKey[]).map((k) => (
-              <div key={k} className={`studio-qc studio-qc--${QT[k].cls}`}>
-                <div className="studio-qc__n">{counts[k]}</div>
-                <div className="studio-qc__l">{QT[k].short}</div>
+          <h2 className="studio-h2">
+            Essays, <em>on their own terms.</em>
+          </h2>
+          <p className="studio-sub">
+            No moves, no gates, no question types. Write an essay whenever one arrives — attached to this series, or standalone and
+            belonging to nothing.
+          </p>
+          <div className="studio-do">
+            <b>Outside the method by design</b>
+            An essay does not need a dealt day or a tagged observation.
+          </div>
+          <div className="studio-row2" style={{ marginBottom: 8 }}>
+            <input placeholder="Search essays…" value={q} onChange={(e) => setQ(e.target.value)} />
+            <span />
+          </div>
+          {filtered.map((e) => (
+            <div className="studio-row" key={e.id}>
+              <span className={`studio-badge${e.series_id ? ' studio-badge--book' : ''}`}>{e.series_id ? 'This series' : 'Standalone'}</span>
+              <div className="studio-row__main">
+                <div className="studio-row__t">{e.title}</div>
+                <div className="studio-row__s">
+                  {e.passage_ref || 'No reference'} · {e.status}
+                </div>
               </div>
-            ))}
-            <div className="studio-qc">
-              <div className="studio-qc__n">{s.obs.filter((o) => !o.qt).length}</div>
-              <div className="studio-qc__l">Untagged</div>
+              <button className="btn btn--ghost" onClick={() => setOpenId(e.id)}>
+                Open
+              </button>
             </div>
+          ))}
+          {filtered.length === 0 && <p className="studio-note">Nothing yet.</p>}
+        </div>
+
+        {essay && (
+          <div className="studio-card" style={{ marginTop: 16 }}>
+            <h3>{essay.title || 'Untitled essay'}</h3>
+            <div className="studio-row2">
+              <div className="studio-field">
+                <label>Title</label>
+                <input value={essay.title} onChange={(e) => set('title', e.target.value)} />
+              </div>
+              <div className="studio-field">
+                <label>Passage reference</label>
+                <input value={essay.passage_ref || ''} onChange={(e) => set('passage_ref', e.target.value)} />
+              </div>
+            </div>
+            <div className="studio-row2">
+              <div className="studio-field">
+                <label>Belongs to</label>
+                <select
+                  value={essay.series_id ?? ''}
+                  onChange={(e) => set('series_id', e.target.value || null)}
+                >
+                  <option value="">— standalone —</option>
+                  {seriesId && <option value={seriesId}>This series</option>}
+                </select>
+              </div>
+              <div className="studio-field">
+                <label>Topic</label>
+                <input value={essay.topic || ''} onChange={(e) => set('topic', e.target.value)} />
+              </div>
+            </div>
+            <div className="studio-field">
+              <label>One-line summary</label>
+              <input value={essay.summary || ''} onChange={(e) => set('summary', e.target.value)} />
+            </div>
+            <div className="studio-field">
+              <label>Essay</label>
+              <textarea style={{ minHeight: 150 }} value={essay.body || ''} onChange={(e) => set('body', e.target.value)} />
+            </div>
+            <div className="studio-qa">
+              <button className="btn" disabled={busy} onClick={() => saveEssay('published')}>
+                Publish
+              </button>
+              <button className="btn btn--ghost" disabled={busy} onClick={() => saveEssay('draft')}>
+                Save draft
+              </button>
+              <a className="btn btn--ghost" href={`/admin/essays/${essay.id}`} target="_blank" rel="noreferrer">
+                Open full editor
+              </a>
+            </div>
+            {msg && <p className="studio-hint">{msg}</p>}
           </div>
-        </div>
-
-        <div className="studio-card">
-          <h3>Mode</h3>
-          <p className="studio-hint">{free ? 'Free — you are working without the method.' : `Guided — ${onMoves(s).length} of ${s.moves.length} moves active.`}</p>
-          <div className="studio-chips">
-            <button className={`studio-chip${!free ? ' on' : ''}`} onClick={() => update((prev) => ({ ...prev, mode: 'guided' }))}>
-              Guided
-            </button>
-            <button className={`studio-chip${free ? ' on' : ''}`} onClick={() => update((prev) => ({ ...prev, mode: 'free' }))}>
-              Do it myself
-            </button>
-          </div>
-        </div>
-
-        <div className="studio-card">
-          <h3>Publish</h3>
-          <p className="studio-hint">Writes this draft into the shared series table as a draft (same list the admin&rsquo;s Reading Series page uses) — it won&rsquo;t go live on the site until someone flips its status there.</p>
-          <button className="btn" disabled={publishing} onClick={publish} style={{ marginTop: 10 }}>
-            {publishing ? 'Publishing…' : 'Publish to series'}
-          </button>
-          {publishMsg && <p className="studio-hint" style={{ marginTop: 8 }}>{publishMsg}</p>}
-        </div>
-
-        <button
-          className="studio-ghost"
-          onClick={() => {
-            if (!confirm('Reset the workspace to the worked Ruth example? Your method settings are kept.')) return;
-            update((prev) => {
-              const worked = JSON.parse(JSON.stringify(SEED_STATE)) as StudioState;
-              return { ...worked, mode: prev.mode, moves: prev.moves, showChecks: prev.showChecks, free: prev.free };
-            });
-          }}
-        >
-          Reset to the worked example
-        </button>
+        )}
       </div>
     </div>
   );
@@ -971,9 +1214,9 @@ function MethodPanel({ s, update }: { s: StudioState; update: Update }) {
       </div>
 
       <div className="studio-col">
-        <div className="studio-card">
+        <div className="studio-card studio-card--rust">
           <h3>What turning a move off does</h3>
-          <p className="studio-hint">It leaves the rail, is excluded from progress, and its readiness checks stop appearing. Nothing is deleted — the data persists and reappears when re-enabled.</p>
+          <p className="studio-hint">It leaves the tab bar, is excluded from progress, and its readiness checks stop appearing. Nothing is deleted — the data persists and reappears when re-enabled.</p>
         </div>
         <div className="studio-card">
           <h3>Dependency behaviour</h3>
@@ -990,6 +1233,18 @@ function MethodPanel({ s, update }: { s: StudioState; update: Update }) {
             </button>
           </div>
         </div>
+        <button
+          className="studio-ghost"
+          onClick={() => {
+            if (!confirm('Reset the workspace to the worked Ruth example? Your method settings are kept.')) return;
+            update((prev) => {
+              const worked = JSON.parse(JSON.stringify(SEED_STATE)) as StudioState;
+              return { ...worked, mode: prev.mode, moves: prev.moves, showChecks: prev.showChecks, free: prev.free };
+            });
+          }}
+        >
+          Reset to the worked example
+        </button>
       </div>
     </div>
   );
