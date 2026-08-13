@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import RichEditor from '@/components/rich-editor/RichEditor';
 
 export default function TemplateEditor({
   templateKey,
@@ -43,8 +44,13 @@ export default function TemplateEditor({
         <input value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="(built-in default)" />
       </div>
       <div className="field">
-        <label>Intro HTML</label>
-        <textarea value={introHtml} onChange={(e) => setIntroHtml(e.target.value)} placeholder="(none)" />
+        <label>Intro</label>
+        <RichEditor value={introHtml} onChange={setIntroHtml} placeholder="(none)" />
+        <p className="hint">
+          This is sent by the mailer worker directly from this text — bold, italic, and underline render normally in
+          email; highlight, circle, and margin notes are best reserved for Broadcasts, which this app sends and can
+          render for email clients.
+        </p>
       </div>
       <div className="admin-block__actions">
         <button className="btn" disabled={busy} onClick={save}>

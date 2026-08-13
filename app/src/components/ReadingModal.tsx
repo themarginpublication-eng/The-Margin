@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { moveOf } from '@/lib/moves';
+import MarginProse from './MarginProse';
+import { isRichTextEmpty } from '@/lib/rich-text';
 
 interface DayReading {
   context: string;
@@ -91,23 +93,23 @@ export default function ReadingModal({
           </div>
           <div className="sheet__verse">{data?.verse ?? ''}</div>
 
-          {data?.reading ? (
+          {data?.reading && !isRichTextEmpty(data.reading.context) ? (
             <>
               <div className="beat">
                 <h4>Read in context.</h4>
-                <p>{data.reading.context}</p>
+                <MarginProse html={data.reading.context} ariaLabel="Read in context" />
               </div>
               <div className="beat">
                 <h4>Read closely.</h4>
-                <p>{data.reading.closeRead}</p>
+                <MarginProse html={data.reading.closeRead} ariaLabel="Read closely" />
               </div>
               <div className="beat">
                 <h4>What scholars see.</h4>
-                <p>{data.reading.scholars}</p>
+                <MarginProse html={data.reading.scholars} ariaLabel="What scholars see" />
               </div>
               <div className="beat beat--you">
                 <h4>For you</h4>
-                <p>{data.reading.forYou}</p>
+                <MarginProse html={data.reading.forYou} ariaLabel="For you" />
               </div>
             </>
           ) : data ? (

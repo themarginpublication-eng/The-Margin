@@ -13,6 +13,8 @@ import {
   StudioState,
   plan as planFor,
 } from '@/lib/studio-data';
+import RichEditor from '@/components/rich-editor/RichEditor';
+import { isRichTextEmpty } from '@/lib/rich-text';
 import './studio.css';
 
 type Tab = 'series' | MoveKey | 'free' | 'essays';
@@ -42,7 +44,7 @@ function usedIds(s: StudioState) {
 
 function moveInfo(s: StudioState, k: MoveKey) {
   const dealt = s.days.filter((d) => d.obs).length;
-  const composed = s.days.filter((d) => d.hook && d.book && d.look && d.took).length;
+  const composed = s.days.filter((d) => !isRichTextEmpty(d.hook) && !isRichTextEmpty(d.book) && !isRichTextEmpty(d.look) && !isRichTextEmpty(d.took)).length;
   switch (k) {
     case 'unit':
       return {
@@ -132,7 +134,7 @@ const CHECK_DEFS: { owner: MoveKey; title: string; note: string; pass: (s: Studi
     owner: 'compose',
     title: 'Day one needs no further research',
     note: 'If day one still needs work the series is queued, not cut.',
-    pass: (s) => s.days.length > 0 && (['hook', 'book', 'look', 'took'] as const).every((f) => s.days[0][f]),
+    pass: (s) => s.days.length > 0 && (['hook', 'book', 'look', 'took'] as const).every((f) => !isRichTextEmpty(s.days[0][f])),
   },
 ];
 
@@ -621,7 +623,7 @@ function EssaysTab({ seriesId }: { seriesId: string | null }) {
             </div>
             <div className="studio-field">
               <label>Essay</label>
-              <textarea style={{ minHeight: 150 }} value={essay.body || ''} onChange={(e) => set('body', e.target.value)} />
+              <RichEditor minHeight={220} value={essay.body || ''} onChange={(html) => set('body', html)} placeholder="The essay itself…" />
             </div>
             <div className="studio-qa">
               <button className="btn" disabled={busy} onClick={() => saveEssay('published')}>
@@ -671,11 +673,11 @@ function FreePanel({ s, update }: { s: StudioState; update: Update }) {
                   update((p) => ({ ...p, free: { ...p.free, days: p.free.days.map((x, j) => (j === i ? { ...x, t: e.target.value } : x)) } }))
                 }
               />
-              <textarea
+              <RichEditor
                 placeholder="The day itself"
                 value={d.b}
-                onChange={(e) =>
-                  update((p) => ({ ...p, free: { ...p.free, days: p.free.days.map((x, j) => (j === i ? { ...x, b: e.target.value } : x)) } }))
+                onChange={(html) =>
+                  update((p) => ({ ...p, free: { ...p.free, days: p.free.days.map((x, j) => (j === i ? { ...x, b: html } : x)) } }))
                 }
               />
             </div>
@@ -1072,32 +1074,53 @@ function ComposePanel({ s, update, cDay, setCDay }: { s: StudioState; update: Up
 
         <div className="studio-field">
           <label>Hook — the detail that should not be there</label>
-          <textarea value={d.hook} onChange={(e) => setField('hook', e.target.value)} />
+          <RichEditor value={d.hook} onChange={(html) => setField('hook', html)} placeholder="The detail that should not be there…" />
         </div>
         <div className="studio-field">
           <label>Book — the text, quoted</label>
-          <textarea value={d.book} onChange={(e) => setField('book', e.target.value)} />
+          <RichEditor value={d.book} onChange={(html) => setField('book', html)} placeholder="The text, quoted…" />
         </div>
         <div className="studio-field">
           <label>Look — what follows from it</label>
-          <textarea value={d.look} onChange={(e) => setField('look', e.target.value)} />
+          <RichEditor value={d.look} onChange={(html) => setField('look', html)} placeholder="What follows from it…" />
         </div>
         <div className="studio-field">
           <label>Took — what the reader does today</label>
-          <textarea value={d.took} onChange={(e) => setField('took', e.target.value)} />
+          <RichEditor value={d.took} onChange={(html) => setField('took', html)} placeholder="One instruction…" />
           <p className="studio-hint">One instruction. Never &ldquo;share this.&rdquo;</p>
         </div>
       </div>
 
       <div className="studio-col">
         <div className="studio-card">
-          <div className="studio-card__head">{['hook', 'book', 'look', 'took'].filter((f) => d[f as keyof typeof d]).length} of 4 moves written</div>
+          <div className="studio-card__head">
+            {(['hook', 'book', 'look', 'took'] as const).filter((f) => !isRichTextEmpty(d[f])).length} of 4 moves written
+          </div>
           <div className="studio-pv">
             <div className="studio-pv__k">{d.frame || '—'} · Day {i + 1}</div>
-            <div className="studio-pv__hook">{d.hook || <span className="studio-muted">Hook — the detail that should not be there</span>}</div>
-            <div className="studio-pv__book">{d.book || <span className="studio-muted">Book — the text, quoted</span>}</div>
-            <div className="studio-pv__look">{d.look || <span className="studio-muted">Look — what follows from it</span>}</div>
-            <div className="studio-pv__took"><b>Today</b> {d.took || <span className="studio-muted">Took — one instruction</span>}</div>
+            {isRichTextEmpty(d.hook) ? (
+              <div className="studio-pv__hook"><span className="studio-muted">Hook — the detail that should not be there</span></div>
+            ) : (
+              <div className="studio-pv__hook" dangerouslySetInnerHTML={{ __html: d.hook }} />
+            )}
+            {isRichTextEmpty(d.book) ? (
+              <div className="studio-pv__book"><span className="studio-muted">Book — the text, quoted</span></div>
+            ) : (
+              <div className="studio-pv__book" dangerouslySetInnerHTML={{ __html: d.book }} />
+            )}
+            {isRichTextEmpty(d.look) ? (
+              <div className="studio-pv__look"><span className="studio-muted">Look — what follows from it</span></div>
+            ) : (
+              <div className="studio-pv__look" dangerouslySetInnerHTML={{ __html: d.look }} />
+            )}
+            <div className="studio-pv__took">
+              <b>Today</b>{' '}
+              {isRichTextEmpty(d.took) ? (
+                <span className="studio-muted">Took — one instruction</span>
+              ) : (
+                <span dangerouslySetInnerHTML={{ __html: d.took }} />
+              )}
+            </div>
           </div>
         </div>
         <div className="studio-card">

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { requireAdmin } from '@/lib/admin';
 import { listWaitlist } from '@/lib/repo';
+import SubscriberList from './SubscriberList';
 
 export default async function SubscribersHome() {
   const admin = await requireAdmin();
@@ -37,18 +38,8 @@ export default async function SubscribersHome() {
         ))}
       </div>
 
-      <div className="card" style={{ marginTop: 16 }}>
-        {waitlist.map((w) => (
-          <div className="row" key={w.id}>
-            <div className="row__main">
-              <div className="row__t">{w.email}</div>
-              <div className="row__s">
-                Joined {new Date(w.created_at).toLocaleDateString()} · {w.source || 'unknown source'}
-              </div>
-            </div>
-          </div>
-        ))}
-        {waitlist.length === 0 && <p className="note">No subscribers yet.</p>}
+      <div style={{ marginTop: 16 }}>
+        <SubscriberList initial={waitlist} />
       </div>
     </>
   );

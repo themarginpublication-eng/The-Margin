@@ -1,0 +1,4 @@
+ALTER TABLE waitlist ADD COLUMN name TEXT;
+ALTER TABLE waitlist ADD COLUMN tags TEXT;
+ALTER TABLE waitlist ADD COLUMN notes TEXT;
+ALTER TABLE waitlist ADD COLUMN status TEXT NOT NULL DEFAULT 'active';
