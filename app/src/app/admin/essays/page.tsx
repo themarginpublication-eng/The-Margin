@@ -10,31 +10,32 @@ export default async function EssaysHome() {
   const essays = await listEssays();
 
   return (
-    <div className="admin">
+    <>
+      <p className="crumb">Content</p>
       <h1>Essays</h1>
-      <p className="admin__lede">The biweekly long-form article — separate from daily series readings.</p>
-      <div className="admin__nav">
-        <a href="/admin">← Admin home</a>
-      </div>
+      <p className="sub">The biweekly long-form article — separate from daily series readings.</p>
 
-      <div className="admin-group">
-        <h2>All essays</h2>
-        <ul className="admin-list">
-          {essays.map((e) => (
-            <li key={e.id}>
-              <a href={`/admin/essays/${e.id}`}>
-                <span className="admin-list__title">
-                  {e.title} {e.status === 'draft' && <span className="admin-block__flag">draft</span>}
-                  {e.archived_at && <span className="admin-block__flag">archived</span>}
-                </span>
-                <span className="admin-list__meta">{e.passage_ref || e.topic || 'untitled topic'} →</span>
-              </a>
-            </li>
-          ))}
-          {essays.length === 0 && <p className="admin__lede">No essays yet.</p>}
-        </ul>
-        <NewEssayButton />
+      <div className="card">
+        <div className="toolbar">
+          <span className="spacer" />
+          <NewEssayButton />
+        </div>
+        {essays.map((e) => (
+          <div className="row" key={e.id}>
+            <span className={`badge${e.status === 'published' ? ' badge--live' : ' badge--draft'}`}>
+              {e.archived_at ? 'archived' : e.status}
+            </span>
+            <div className="row__main">
+              <div className="row__t">{e.title}</div>
+              <div className="row__s">{e.passage_ref || e.topic || 'untitled topic'}</div>
+            </div>
+            <a className="btn btn--ghost btn--sm" href={`/admin/essays/${e.id}`}>
+              Edit
+            </a>
+          </div>
+        ))}
+        {essays.length === 0 && <p className="note">No essays yet.</p>}
       </div>
-    </div>
+    </>
   );
 }

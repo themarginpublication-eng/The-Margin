@@ -69,16 +69,14 @@ export default function SiteContentEditor() {
   const pages = Array.from(new Set(blocks.map((b) => b.pageTitle)));
 
   return (
-    <div className="admin">
-      <h1>Site wording</h1>
-      <p className="admin__lede">
+    <>
+      <p className="crumb">Site</p>
+      <h1>Site copy</h1>
+      <p className="sub">
         Each block below is a section of the live marketing site. Edit the wording directly, or replace a block
         entirely with your own HTML — whatever you paste in becomes exactly what renders. Leave a block untouched and
-        it keeps using the copy that's already in the code.
+        it keeps using the copy that&rsquo;s already in the code.
       </p>
-      <div className="admin__nav">
-        <a href="/admin">← Admin home</a>
-      </div>
 
       {pages.map((pageTitle) => (
         <div className="admin-group" key={pageTitle}>
@@ -118,6 +116,6 @@ export default function SiteContentEditor() {
             ))}
         </div>
       ))}
-    </div>
+    </>
   );
 }
