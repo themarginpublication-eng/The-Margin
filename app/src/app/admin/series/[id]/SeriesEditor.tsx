@@ -62,7 +62,7 @@ export default function SeriesEditor({ id }: { id: string }) {
         {' forYou } }'} objects, one per morning. Edit text in place, or add/remove days by editing the array.
       </p>
       <div className="admin__nav">
-        <a href="/admin">← Admin home</a>
+        <a href="/admin/series">← All series</a>
       </div>
 
       <div className="admin-group">

@@ -153,3 +153,89 @@ em{font-style:italic;}
   .bigday{text-align:left;}
   .track__movs{display:none;}
 }
+
+/* ---------- ADMIN SHELL (sidebar redesign) ---------- */
+/* Everything here is scoped under .admin-shell so it only affects /admin/*
+   pages — .btn/.field/h1 are redefined with the sidebar design's values
+   (sharp corners, ink buttons) without touching the public site's use of
+   those same class names (login, dashboard, reading modal). */
+.admin-shell{display:grid;grid-template-columns:230px 1fr;min-height:100vh;background:var(--parchment);}
+.admin-shell a{color:var(--rust);}
+.admin-shell a:hover{color:var(--rust-deep);}
+
+.admin-shell .side{background:var(--ink);color:var(--parchment);padding:24px 0;display:flex;flex-direction:column;gap:4px;}
+.admin-shell .side__mark{display:flex;align-items:center;gap:10px;padding:0 22px 20px;border-bottom:1px solid rgba(250,246,236,.12);margin-bottom:14px;}
+.admin-shell .side__bar{width:4px;height:24px;background:var(--rust);}
+.admin-shell .side__type{font-family:var(--font-display);font-weight:600;font-size:17px;}
+.admin-shell .side__tag{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,246,236,.5);}
+.admin-shell .snav{display:flex;flex-direction:column;}
+.admin-shell .snav a{appearance:none;background:none;border:none;text-align:left;cursor:pointer;text-decoration:none;font-family:var(--font-sans);font-weight:500;font-size:13.5px;color:rgba(250,246,236,.72);padding:11px 22px;border-left:3px solid transparent;min-height:44px;display:flex;align-items:center;}
+.admin-shell .snav a:hover{color:var(--parchment);}
+.admin-shell .snav a.on{color:var(--parchment);border-left-color:var(--rust);background:rgba(250,246,236,.06);}
+.admin-shell .snav .sep{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(250,246,236,.38);padding:18px 22px 6px;}
+.admin-shell .side__foot{margin-top:auto;padding:18px 22px 0;font-size:11.5px;color:rgba(250,246,236,.45);}
+.admin-shell .side__foot a{color:rgba(250,246,236,.7);}
+
+.admin-shell .main{padding:32px 40px 64px;max-width:1060px;}
+.admin-shell .crumb{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ash);margin:0 0 6px;}
+.admin-shell h1{font-family:var(--font-display);font-weight:600;font-size:30px;margin:0 0 6px;letter-spacing:normal;}
+.admin-shell .sub{color:var(--ash);margin:0 0 28px;font-size:14.5px;}
+
+.admin-shell .grid{display:grid;gap:16px;}
+.admin-shell .grid--stats{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));}
+.admin-shell .grid--2{grid-template-columns:1fr 1fr;}
+.admin-shell .card{background:var(--vellum);border:1px solid var(--margin-soft);padding:20px 22px;}
+.admin-shell .card--top{border-top:4px solid var(--rust);}
+.admin-shell .stat__n{font-family:var(--font-display);font-weight:600;font-size:34px;line-height:1;}
+.admin-shell .stat__l{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);margin-top:8px;}
+.admin-shell .stat__d{font-size:12px;color:var(--green);margin-top:4px;}
+.admin-shell .card h3{font-family:var(--font-display);font-weight:600;font-size:17px;margin:0 0 4px;}
+.admin-shell .card .hint{font-size:12.5px;color:var(--ash);margin:0 0 14px;}
+
+.admin-shell .badge{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--margin);border-radius:999px;color:var(--ash);background:var(--vellum);}
+.admin-shell .badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ash);}
+.admin-shell .badge--book{color:var(--rust-deep);border-color:rgba(168,89,60,.45);}.admin-shell .badge--book::before{background:var(--rust);}
+.admin-shell .badge--person{color:var(--green);border-color:rgba(91,107,74,.45);}.admin-shell .badge--person::before{background:var(--green);}
+.admin-shell .badge--passage{color:var(--gilt);border-color:rgba(182,138,71,.5);}.admin-shell .badge--passage::before{background:var(--gilt);}
+.admin-shell .badge--idea{color:var(--blue);border-color:rgba(74,91,107,.45);}.admin-shell .badge--idea::before{background:var(--blue);}
+.admin-shell .badge--live{color:var(--green);border-color:rgba(91,107,74,.5);}.admin-shell .badge--live::before{background:var(--green);}
+.admin-shell .badge--draft{color:var(--ash);}.admin-shell .badge--sched{color:var(--gilt);border-color:rgba(182,138,71,.5);}.admin-shell .badge--sched::before{background:var(--gilt);}
+
+.admin-shell .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--ink);color:var(--parchment);border:none;cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:12.5px;padding:11px 20px;min-height:44px;border-radius:0;transition:background .15s;}
+.admin-shell .btn:hover{background:var(--rust-deep);}
+.admin-shell .btn--ghost{background:transparent;color:var(--ink);border:1px solid var(--margin);}
+.admin-shell .btn--ghost:hover{background:var(--vellum);color:var(--ink);}
+.admin-shell .btn--sm{min-height:36px;padding:7px 14px;font-size:12px;}
+
+.admin-shell .row{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--margin-soft);}
+.admin-shell .row:last-child{border-bottom:none;}
+.admin-shell .row__main{flex:1;min-width:0;}
+.admin-shell .row__t{font-family:var(--font-serif);font-weight:600;font-size:16px;}
+.admin-shell .row__s{font-size:12.5px;color:var(--ash);margin-top:2px;}
+.admin-shell .row .badge{flex:0 0 auto;}
+.admin-shell .drag{cursor:grab;color:var(--margin);font-size:16px;flex:0 0 auto;user-select:none;}
+
+.admin-shell .field{margin-bottom:16px;}
+.admin-shell .field label{display:block;font-weight:600;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);margin-bottom:6px;}
+.admin-shell .field input,.admin-shell .field textarea,.admin-shell .field select{width:100%;padding:11px 14px;font-family:var(--font-serif);font-size:15px;color:var(--ink);background:#fff;border:1px solid var(--margin);border-radius:0;}
+.admin-shell .field input:focus,.admin-shell .field textarea:focus,.admin-shell .field select:focus{outline:2px solid var(--rust);outline-offset:-1px;border-color:var(--margin);}
+.admin-shell .field textarea{min-height:96px;resize:vertical;}
+
+.admin-shell .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 20px;}
+.admin-shell .toolbar input[type="search"],.admin-shell .toolbar select{flex:1 1 220px;padding:10px 14px;font-family:var(--font-serif);font-size:14.5px;border:1px solid var(--margin);background:var(--vellum);min-height:44px;}
+.admin-shell .spacer{flex:1;}
+.admin-shell .note{font-family:var(--font-serif);font-style:italic;font-size:13.5px;color:var(--ash);}
+.admin-shell .kbd{font-size:11px;border:1px solid var(--margin);border-radius:4px;padding:1px 6px;background:var(--vellum);}
+.admin-shell .qa{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+
+@media (max-width:860px){
+  .admin-shell{grid-template-columns:1fr;}
+  .admin-shell .side{flex-direction:row;flex-wrap:wrap;align-items:center;padding:10px 8px;}
+  .admin-shell .side__mark{border:none;padding:6px 14px;margin:0;}
+  .admin-shell .snav{flex-direction:row;flex-wrap:wrap;}
+  .admin-shell .snav .sep,.admin-shell .side__foot{display:none;}
+  .admin-shell .snav a{border-left:none;border-bottom:3px solid transparent;min-height:0;padding:8px 12px;}
+  .admin-shell .snav a.on{border-bottom-color:var(--rust);}
+  .admin-shell .main{padding:24px 20px 48px;}
+  .admin-shell .grid--2{grid-template-columns:1fr;}
+}

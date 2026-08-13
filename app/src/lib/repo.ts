@@ -246,6 +246,17 @@ export async function listSeries(): Promise<SeriesRow[]> {
   return results ?? [];
 }
 
+export async function createSeries(title: string): Promise<SeriesRow> {
+  const db = getDb();
+  const id = uuid();
+  const slug = await uniqueSlug(db, title);
+  await db
+    .prepare(`INSERT INTO series (id, slug, title, total_days, days_json, kind, status) VALUES (?, ?, ?, 0, '[]', 'idea', 'draft')`)
+    .bind(id, slug, title)
+    .run();
+  return (await getSeriesById(id))!;
+}
+
 export async function updateSeries(
   id: string,
   fields: {
@@ -368,6 +379,21 @@ export async function updateEssay(
 export async function deleteEssay(id: string): Promise<void> {
   const db = getDb();
   await db.prepare('DELETE FROM essays WHERE id = ?').bind(id).run();
+}
+
+// --- Waitlist (subscribers) -------------------------------------------------
+
+export interface WaitlistRow {
+  id: string;
+  email: string;
+  source: string | null;
+  created_at: string;
+}
+
+export async function listWaitlist(): Promise<WaitlistRow[]> {
+  const db = getDb();
+  const { results } = await db.prepare('SELECT * FROM waitlist ORDER BY created_at DESC').all<WaitlistRow>();
+  return results ?? [];
 }
 
 // --- Broadcasts -------------------------------------------------------------
