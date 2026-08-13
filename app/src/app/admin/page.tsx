@@ -31,7 +31,7 @@ export default async function AdminHome() {
           <li>
             <a href="/admin/studio">
               <span className="admin-list__title">Draft a new series</span>
-              <span className="admin-list__meta">seed → six-move method → publishable days →</span>
+              <span className="admin-list__meta">seed → six-move method → days, plus its essays, in one workspace →</span>
             </a>
           </li>
         </ul>

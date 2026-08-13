@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/admin';
-import { createEssay, listEssays } from '@/lib/repo';
+import { createEssay, listEssays, listEssaysForWorkspace } from '@/lib/repo';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   const admin = await requireAdmin();
   if (!admin) return NextResponse.json({ error: 'Not authorized.' }, { status: 403 });
-  return NextResponse.json({ essays: await listEssays() });
+
+  const seriesId = req.nextUrl.searchParams.get('seriesId');
+  const essays = seriesId !== null ? await listEssaysForWorkspace(seriesId || null) : await listEssays();
+  return NextResponse.json({ essays });
 }
 
 export async function POST(req: NextRequest) {

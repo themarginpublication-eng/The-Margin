@@ -520,6 +520,7 @@ export interface StudioDraftRow {
   user_id: string;
   title: string;
   data_json: string;
+  series_id: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -567,6 +568,73 @@ export async function deleteStudioDraft(id: string): Promise<void> {
   await db.prepare('DELETE FROM studio_drafts WHERE id = ?').bind(id).run();
 }
 
+export async function linkStudioDraftSeries(draftId: string, seriesId: string): Promise<void> {
+  const db = getDb();
+  await db.prepare('UPDATE studio_drafts SET series_id = ? WHERE id = ?').bind(seriesId, draftId).run();
+}
+
+/**
+ * Essays for a Studio workspace's Essays tab: essays already attached to
+ * this workspace's linked series, plus every standalone essay (series_id
+ * IS NULL) app-wide — the Studio Essays tab and the Admin Essays page are
+ * two views of the same collection, so standalone essays are visible from
+ * any workspace, not owned by one.
+ */
+export async function listEssaysForWorkspace(seriesId: string | null): Promise<EssayRow[]> {
+  const db = getDb();
+  const { results } = seriesId
+    ? await db
+        .prepare('SELECT * FROM essays WHERE series_id = ? OR series_id IS NULL ORDER BY created_at DESC')
+        .bind(seriesId)
+        .all<EssayRow>()
+    : await db.prepare('SELECT * FROM essays WHERE series_id IS NULL ORDER BY created_at DESC').all<EssayRow>();
+  return results ?? [];
+}
+
+async function uniqueSlug(db: ReturnType<typeof getDb>, title: string): Promise<string> {
+  const base = slugify(title);
+  let slug = base;
+  let n = 1;
+  while (await db.prepare('SELECT 1 FROM series WHERE slug = ?').bind(slug).first()) {
+    slug = `${base}-${++n}`;
+  }
+  return slug;
+}
+
+/**
+ * Creates the series row a Studio workspace's Series tab is building, or
+ * updates it if one is already linked. Returns the series and whether it
+ * was newly created (callers link the new id back onto the draft).
+ */
+export async function upsertWorkspaceSeries(
+  existingSeriesId: string | null,
+  fields: {
+    title: string;
+    subtitle: string | null;
+    kind: SeriesRow['kind'];
+    status: SeriesRow['status'];
+    description: string | null;
+  }
+): Promise<{ series: SeriesRow; created: boolean }> {
+  if (existingSeriesId) {
+    const series = await updateSeries(existingSeriesId, fields);
+    if (series) return { series, created: false };
+    // Linked id no longer exists (e.g. deleted directly) — fall through and create fresh.
+  }
+
+  const db = getDb();
+  const id = uuid();
+  const slug = await uniqueSlug(db, fields.title);
+  await db
+    .prepare(
+      `INSERT INTO series (id, slug, title, subtitle, passage, total_days, days_json, kind, status, description)
+       VALUES (?, ?, ?, ?, NULL, 0, '[]', ?, ?, ?)`
+    )
+    .bind(id, slug, fields.title, fields.subtitle, fields.kind, fields.status, fields.description)
+    .run();
+  return { series: (await getSeriesById(id))!, created: true };
+}
+
 function slugify(title: string): string {
   return (
     title
@@ -578,28 +646,38 @@ function slugify(title: string): string {
 }
 
 /**
- * Publishes a Studio draft into the shared `series` table as a draft row
- * (status='draft'), matching the kind/access/free_days convention already
+ * Publishes a Studio draft's days into the shared `series` table. If the
+ * draft already has a linked series (from the Series tab), updates that
+ * row in place rather than creating a duplicate; otherwise inserts a new
+ * draft-status row, matching the kind/access/free_days convention already
  * used there so it shows up in the existing admin's Reading Series list.
  */
 export async function publishStudioDraftAsSeries(
+  existingSeriesId: string | null,
   title: string,
   subtitle: string | null,
   passage: string | null,
   kind: string,
   days: SeriesDay[]
 ): Promise<SeriesRow> {
-  const db = getDb();
+  const days_json = JSON.stringify(days);
 
-  const base = slugify(title);
-  let slug = base;
-  let n = 1;
-  while (await db.prepare('SELECT 1 FROM series WHERE slug = ?').bind(slug).first()) {
-    slug = `${base}-${++n}`;
+  if (existingSeriesId) {
+    const updated = await updateSeries(existingSeriesId, {
+      title,
+      subtitle,
+      passage,
+      total_days: days.length,
+      days_json,
+      kind: kind as SeriesRow['kind'],
+    });
+    if (updated) return updated;
+    // Linked id no longer exists — fall through and create fresh below.
   }
 
+  const db = getDb();
   const id = uuid();
-  const days_json = JSON.stringify(days);
+  const slug = await uniqueSlug(db, title);
   await db
     .prepare(
       `INSERT INTO series (id, slug, title, subtitle, passage, total_days, days_json, kind, status)
