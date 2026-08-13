@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import RichEditor from '@/components/rich-editor/RichEditor';
+import { isRichTextEmpty } from '@/lib/rich-text';
 
 interface SeriesDay {
   day: number;
@@ -94,7 +96,7 @@ export default function NotesEditor({ seriesOptions, initialSeriesId }: { series
         {!days && <p className="note">Loading…</p>}
         {days &&
           days.map((d, i) => {
-            const empty = !d.verse && !d.reading?.context;
+            const empty = !d.verse && isRichTextEmpty(d.reading?.context);
             return (
               <div className="row" key={i}>
                 <div className="row__main">
@@ -138,30 +140,34 @@ export default function NotesEditor({ seriesOptions, initialSeriesId }: { series
           <div className="grid grid--2">
             <div className="field">
               <label>Context</label>
-              <textarea
+              <RichEditor
                 value={day.reading?.context || ''}
-                onChange={(e) => updateDay(openDay, (d) => ({ ...d, reading: { ...(d.reading || emptyReading), context: e.target.value } }))}
+                onChange={(html) => updateDay(openDay, (d) => ({ ...d, reading: { ...(d.reading || emptyReading), context: html } }))}
+                placeholder="Read the verse in its surrounding lines first…"
               />
             </div>
             <div className="field">
               <label>Close read</label>
-              <textarea
+              <RichEditor
                 value={day.reading?.closeRead || ''}
-                onChange={(e) => updateDay(openDay, (d) => ({ ...d, reading: { ...(d.reading || emptyReading), closeRead: e.target.value } }))}
+                onChange={(html) => updateDay(openDay, (d) => ({ ...d, reading: { ...(d.reading || emptyReading), closeRead: html } }))}
+                placeholder="Word by word — which one is doing the most work?"
               />
             </div>
             <div className="field">
               <label>What scholars see</label>
-              <textarea
+              <RichEditor
                 value={day.reading?.scholars || ''}
-                onChange={(e) => updateDay(openDay, (d) => ({ ...d, reading: { ...(d.reading || emptyReading), scholars: e.target.value } }))}
+                onChange={(html) => updateDay(openDay, (d) => ({ ...d, reading: { ...(d.reading || emptyReading), scholars: html } }))}
+                placeholder="What the commentaries and the original language add…"
               />
             </div>
             <div className="field">
               <label>For you</label>
-              <textarea
+              <RichEditor
                 value={day.reading?.forYou || ''}
-                onChange={(e) => updateDay(openDay, (d) => ({ ...d, reading: { ...(d.reading || emptyReading), forYou: e.target.value } }))}
+                onChange={(html) => updateDay(openDay, (d) => ({ ...d, reading: { ...(d.reading || emptyReading), forYou: html } }))}
+                placeholder="What this is asking of the reader this morning…"
               />
             </div>
           </div>

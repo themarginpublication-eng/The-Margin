@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import RichEditor from '@/components/rich-editor/RichEditor';
 
 interface Essay {
   id: string;
@@ -116,13 +117,17 @@ export default function EssayEditor({ id }: { id: string }) {
           <textarea style={{ minHeight: 100 }} value={essay.passage_text || ''} onChange={(e) => set('passage_text', e.target.value)} />
         </div>
         <div className="field">
-          <label>Body (HTML)</label>
-          <textarea style={{ minHeight: 300 }} value={essay.body || ''} onChange={(e) => set('body', e.target.value)} />
+          <label>Body</label>
+          <RichEditor minHeight={300} value={essay.body || ''} onChange={(html) => set('body', html)} placeholder="The essay itself…" />
+          <p className="hint">
+            Use Highlight or Circle with &ldquo;+ Margin note&rdquo; to attach a margin annotation directly to a phrase — that
+            replaces hand-writing the JSON below.
+          </p>
         </div>
         <div className="field">
-          <label>Annotations (JSON array of {'{ anchor, note, type }'})</label>
+          <label>Legacy annotations (JSON array of {'{ anchor, note, type }'})</label>
           <textarea
-            style={{ minHeight: 140, fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: 12.5 }}
+            style={{ minHeight: 100, fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: 12.5 }}
             value={essay.annotations_json}
             onChange={(e) => set('annotations_json', e.target.value)}
           />

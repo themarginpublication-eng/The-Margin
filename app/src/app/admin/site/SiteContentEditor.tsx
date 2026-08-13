@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import RichEditor from '@/components/rich-editor/RichEditor';
 
 interface Block {
   key: string;
@@ -92,11 +93,15 @@ export default function SiteContentEditor() {
                   </span>
                   {b.override !== null && <span className="admin-block__flag">Customized</span>}
                 </div>
-                <textarea
-                  value={drafts[b.key] ?? ''}
-                  placeholder={b.injection ? 'e.g. <script>…</script> or extra markup' : undefined}
-                  onChange={(e) => setDrafts((d) => ({ ...d, [b.key]: e.target.value }))}
-                />
+                {b.injection ? (
+                  <textarea
+                    value={drafts[b.key] ?? ''}
+                    placeholder="e.g. <script>…</script> or extra markup"
+                    onChange={(e) => setDrafts((d) => ({ ...d, [b.key]: e.target.value }))}
+                  />
+                ) : (
+                  <RichEditor value={drafts[b.key] ?? ''} onChange={(html) => setDrafts((d) => ({ ...d, [b.key]: html }))} />
+                )}
                 <div className="admin-block__actions">
                   <button className="btn" disabled={busy[b.key]} onClick={() => save(b.key)}>
                     Save

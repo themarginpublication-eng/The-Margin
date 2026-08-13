@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/admin';
 import { getEnv } from '@/lib/db';
+import { toEmailSafeHtml } from '@/lib/rich-text';
 
 export async function POST(req: NextRequest) {
   const admin = await requireAdmin();
@@ -23,11 +24,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'subject, bodyHtml, and recipientFilter are required.' }, { status: 400 });
   }
 
+  const emailSafeBody = { ...body, bodyHtml: toEmailSafeHtml(body.bodyHtml) };
+
   try {
     const res = await fetch(`${env.MAILER_URL}/broadcast`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-trigger-key': env.MAILER_INTERNAL_KEY },
-      body: JSON.stringify(body),
+      body: JSON.stringify(emailSafeBody),
     });
     const json = await res.json();
     if (!res.ok) return NextResponse.json({ error: (json as { message?: string })?.message || 'Mailer rejected the request.' }, { status: 502 });

@@ -388,12 +388,42 @@ export interface WaitlistRow {
   email: string;
   source: string | null;
   created_at: string;
+  name: string | null;
+  tags: string | null;
+  notes: string | null;
+  status: 'active' | 'unsubscribed';
 }
 
 export async function listWaitlist(): Promise<WaitlistRow[]> {
   const db = getDb();
   const { results } = await db.prepare('SELECT * FROM waitlist ORDER BY created_at DESC').all<WaitlistRow>();
   return results ?? [];
+}
+
+export async function getWaitlistEntry(id: string): Promise<WaitlistRow | null> {
+  const db = getDb();
+  const row = await db.prepare('SELECT * FROM waitlist WHERE id = ?').bind(id).first<WaitlistRow>();
+  return row ?? null;
+}
+
+export async function updateSubscriber(
+  id: string,
+  fields: { email?: string; name?: string | null; tags?: string | null; notes?: string | null; status?: 'active' | 'unsubscribed' }
+): Promise<WaitlistRow | null> {
+  const db = getDb();
+  const current = await getWaitlistEntry(id);
+  if (!current) return null;
+  const next = { ...current, ...Object.fromEntries(Object.entries(fields).filter(([, v]) => v !== undefined)) };
+  await db
+    .prepare('UPDATE waitlist SET email = ?, name = ?, tags = ?, notes = ?, status = ? WHERE id = ?')
+    .bind(next.email.toLowerCase(), next.name, next.tags, next.notes, next.status, id)
+    .run();
+  return getWaitlistEntry(id);
+}
+
+export async function deleteSubscriber(id: string): Promise<void> {
+  const db = getDb();
+  await db.prepare('DELETE FROM waitlist WHERE id = ?').bind(id).run();
 }
 
 // --- Broadcasts -------------------------------------------------------------

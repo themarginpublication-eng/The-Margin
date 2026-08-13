@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import RichEditor from '@/components/rich-editor/RichEditor';
+import { isRichTextEmpty } from '@/lib/rich-text';
 
 export default function BroadcastComposer({ series }: { series: { id: string; title: string }[] }) {
   const [subject, setSubject] = useState('');
@@ -12,7 +14,7 @@ export default function BroadcastComposer({ series }: { series: { id: string; ti
   const [status, setStatus] = useState('');
 
   async function send() {
-    if (!subject.trim() || !bodyHtml.trim()) {
+    if (!subject.trim() || isRichTextEmpty(bodyHtml)) {
       setStatus('Subject and body are required.');
       return;
     }
@@ -62,8 +64,9 @@ export default function BroadcastComposer({ series }: { series: { id: string; ti
         <input value={subject} onChange={(e) => setSubject(e.target.value)} />
       </div>
       <div className="field">
-        <label>Body (HTML)</label>
-        <textarea style={{ minHeight: 160 }} value={bodyHtml} onChange={(e) => setBodyHtml(e.target.value)} />
+        <label>Body</label>
+        <RichEditor minHeight={200} value={bodyHtml} onChange={setBodyHtml} placeholder="What today's send says…" />
+        <p className="hint">Highlights, circles, and their margin notes are converted to email-safe styling automatically when this sends.</p>
       </div>
       <div className="field">
         <label>Recipients</label>

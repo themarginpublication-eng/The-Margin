@@ -178,7 +178,7 @@ em{font-style:italic;}
 
 .admin-shell .main{padding:32px 40px 64px;max-width:1060px;}
 .admin-shell .crumb{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ash);margin:0 0 6px;}
-.admin-shell h1{font-family:var(--font-display);font-weight:600;font-size:30px;margin:0 0 6px;letter-spacing:normal;}
+.admin-shell h1{font-family:var(--font-display);font-weight:900;font-size:30px;margin:0 0 6px;letter-spacing:normal;}
 .admin-shell .sub{color:var(--ash);margin:0 0 28px;font-size:14.5px;}
 
 .admin-shell .grid{display:grid;gap:16px;}
@@ -190,7 +190,7 @@ em{font-style:italic;}
 .admin-shell .stat__l{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);margin-top:8px;}
 .admin-shell .stat__d{font-size:12px;color:var(--green);margin-top:4px;}
 .admin-shell .card h3{font-family:var(--font-display);font-weight:600;font-size:17px;margin:0 0 4px;}
-.admin-shell .card .hint{font-size:12.5px;color:var(--ash);margin:0 0 14px;}
+.admin-shell .hint{font-size:12.5px;color:var(--ash);margin:0 0 14px;}
 
 .admin-shell .badge{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--margin);border-radius:999px;color:var(--ash);background:var(--vellum);}
 .admin-shell .badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ash);}

@@ -1,0 +1,126 @@
+.rte {
+  border: 1px solid var(--margin-soft);
+  background: #fff;
+}
+.rte--loading {
+  background: var(--vellum);
+}
+
+.rte__toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px;
+  border-bottom: 1px solid var(--margin-soft);
+  background: var(--vellum);
+}
+
+.rte__btn {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 7px 10px;
+  min-height: 32px;
+  cursor: pointer;
+  border-radius: 0;
+}
+.rte__btn:hover {
+  border-color: var(--margin);
+}
+.rte__btn.on {
+  background: var(--ink);
+  color: var(--parchment);
+}
+
+.rte__sep {
+  width: 1px;
+  align-self: stretch;
+  background: var(--margin-soft);
+  margin: 2px 4px;
+}
+
+.rte__panel {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--margin-soft);
+  background: rgba(168, 89, 60, 0.05);
+}
+.rte__panel label {
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ash);
+  margin-bottom: 6px;
+}
+.rte__panel textarea {
+  width: 100%;
+  min-height: 70px;
+  font-family: var(--font-serif);
+  font-size: 14.5px;
+  border: 1px solid var(--margin);
+  border-radius: 0;
+  padding: 8px 10px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+.rte__panel-acts {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.rte__content {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink);
+  padding: 14px 16px;
+  outline: none;
+}
+.rte__content p {
+  margin: 0 0 1em;
+}
+.rte__content p:last-child {
+  margin-bottom: 0;
+}
+.rte__content strong {
+  font-weight: 600;
+}
+.rte__content em {
+  font-style: italic;
+}
+.rte__content u {
+  text-decoration: underline;
+}
+.rte__content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  color: var(--ash);
+  opacity: 0.7;
+  pointer-events: none;
+  font-style: italic;
+}
+
+/* margin-annotation marks — shared with public rendering in MarginProse */
+.tm-hl,
+.rte__content mark.tm-hl {
+  background: linear-gradient(transparent 55%, rgba(182, 138, 71, 0.32) 55%);
+  color: inherit;
+}
+.tm-circle,
+.rte__content span.tm-circle {
+  border: 2px solid var(--rust);
+  border-radius: 999px;
+  padding: 0 8px;
+}

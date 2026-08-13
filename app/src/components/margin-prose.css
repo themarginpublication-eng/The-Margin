@@ -1,0 +1,103 @@
+.mp__spread {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 28px;
+}
+
+.mp__text mark.tm-hl {
+  background: linear-gradient(transparent 55%, rgba(182, 138, 71, 0.32) 55%);
+  color: inherit;
+  cursor: pointer;
+}
+.mp__text span.tm-circle {
+  border: 2px solid var(--rust);
+  border-radius: 999px;
+  padding: 0 8px;
+  cursor: pointer;
+}
+.mp__text .mp__anchor:hover,
+.mp__text .mp__anchor.active {
+  background: rgba(168, 89, 60, 0.14);
+}
+
+.mp__rail {
+  position: relative;
+  border-left: 1px solid var(--margin-soft);
+}
+.mp__note {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  padding: 0 0 0 18px;
+  opacity: 0.85;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.mp__note::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: var(--margin);
+}
+.mp__note.active {
+  opacity: 1;
+}
+.mp__note.active::before {
+  background: var(--rust);
+}
+.mp__note p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ash);
+  margin: 0;
+}
+.mp__note.active p {
+  color: var(--rust-deep);
+}
+
+.mp__wire {
+  position: absolute;
+  height: 1px;
+  background: var(--rust);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.mp__wire.on {
+  opacity: 0.5;
+}
+
+.mp__inline {
+  display: none;
+  margin: 10px 0 16px;
+  padding: 10px 14px;
+  border-left: 3px solid var(--rust);
+  background: rgba(168, 89, 60, 0.05);
+}
+.mp__inline p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--rust-deep);
+  margin: 0;
+}
+
+@media (max-width: 760px) {
+  .mp__spread {
+    display: block;
+  }
+  .mp__rail,
+  .mp__wire {
+    display: none;
+  }
+  .mp__inline {
+    display: block;
+  }
+}
